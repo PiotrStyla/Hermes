@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import os
+import time
 from typing import Any
 
 import httpx
-from openai import OpenAI
+from openai import OpenAI, APIStatusError
 
 
 class BaseAgent:
@@ -23,9 +24,9 @@ class BaseAgent:
         self,
         model: str | None = None,
         temperature: float = 0.7,
-        max_tokens: int = 4096,
+        max_tokens: int = 1024,
     ):
-        self.model = model or os.getenv("DEFAULT_MODEL", "anthropic/claude-opus-4.6")
+        self.model = model or os.getenv("DEFAULT_MODEL", "deepseek/deepseek-v4-flash")
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.client = self._create_client()
@@ -72,16 +73,26 @@ class BaseAgent:
 
         messages.append({"role": "user", "content": task})
 
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-        )
+        max_retries = 3
 
-        result = response.choices[0].message.content or ""
-        self.conversation_history.append({"task": task, "result": result})
-        return result
+        for attempt in range(max_retries):
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens,
+                )
+                result = response.choices[0].message.content or ""
+                self.conversation_history.append({"task": task, "result": result})
+                return result
+            except APIStatusError as e:
+                if e.status_code == 429 and attempt < max_retries - 1:
+                    wait = 30 * (attempt + 1)
+                    print(f"  Rate limited, retrying in {wait}s...")
+                    time.sleep(wait)
+                    continue
+                raise
 
     def reset(self) -> None:
         """Clear conversation history."""
