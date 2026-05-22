@@ -1,0 +1,21 @@
+# Orchestrator Configuration
+
+pipeline:
+  # Maximum revision rounds before accepting output
+  max_revision_rounds: 3
+
+  # Enable/disable phases
+  phases:
+    research: true
+    writing: true
+    review: true
+
+memory:
+  # Persist shared memory to disk between runs
+  persist: true
+  path: "memory_store/shared.json"
+
+output:
+  # Save final output to file
+  save_to_file: false
+  output_dir: "output/"
