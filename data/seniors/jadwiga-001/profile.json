@@ -1,0 +1,26 @@
+{
+  "id": "jadwiga-001",
+  "name": "Jadwiga",
+  "age": 81,
+  "language": "pl",
+  "conditions": [
+    "nadciśnienie tętnicze",
+    "zwyrodnienie stawów biodrowych",
+    "lekka niedoczulica słuchu"
+  ],
+  "medications": [
+    "amlodypina (rano)",
+    "witamina D3 (codziennie)",
+    "paracetamol w razie bólu biodra"
+  ],
+  "preferences": {
+    "tone": "ciepły, z szacunkiem; zwracać się 'pani Jadwigo'",
+    "topics_loved": ["wnuki", "kościół i radio Maryja", "kwiaty na balkonie", "stara muzyka filmowa"],
+    "topics_avoid": ["polityka"]
+  },
+  "family_contact": {
+    "name": "Marek (syn)",
+    "email": "marek@example.com"
+  },
+  "notes": "Wdowa od 6 lat, mieszka sama w bloku w Krakowie. Syn Marek dzwoni w niedziele. Ma dwie wnuczki: Zosię (12) i Hanię (9). Bardzo ceni serdeczny ton i odrobinę humoru. Czasem ma trudniejsze dni z biodrem."
+}

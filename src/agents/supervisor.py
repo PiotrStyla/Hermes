@@ -28,7 +28,7 @@ class SupervisorAgent(BaseAgent):
 
     def __init__(self, model: str | None = None):
         model = model or os.getenv("SUPERVISOR_MODEL")
-        super().__init__(model=model, temperature=0.2, max_tokens=1500)
+        super().__init__(model=model, temperature=0.2, max_tokens=3000)
 
     @property
     def system_prompt(self) -> str:
@@ -92,8 +92,32 @@ Respond with **ONLY a JSON object** matching this schema. No prose before or aft
 
 Return your JSON evaluation now."""
 
-        raw = self.run(prompt)
+        messages = [
+            {"role": "system", "content": self.system_prompt},
+            {"role": "user", "content": prompt},
+        ]
+
+        raw = self._chat_json(messages)
         return self._parse_json(raw)
+
+    def _chat_json(self, messages: list[dict[str, str]]) -> str:
+        """Send a chat completion that asks the model to return strict JSON.
+
+        Tries response_format=json_object first (most providers); if the model
+        rejects it, falls back to plain chat (the prompt itself still asks for
+        JSON-only output).
+        """
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                response_format={"type": "json_object"},
+            )
+            return response.choices[0].message.content or ""
+        except Exception:
+            return self.chat(messages)
 
     @staticmethod
     def _parse_json(text: str) -> dict[str, Any]:
@@ -114,11 +138,14 @@ Return your JSON evaluation now."""
         try:
             return json.loads(text)
         except json.JSONDecodeError as e:
-            # Return a minimal safe structure rather than crashing the pipeline.
+            preview = text[:300].replace("\n", " ")
             return {
                 "scores": {"warmth": 0, "listening": 0, "info_quality": 0, "brevity": 0},
                 "strengths": [],
-                "issues": [f"Supervisor returned unparseable JSON: {e}"],
+                "issues": [
+                    f"Supervisor returned unparseable JSON: {e}",
+                    f"Raw preview: {preview}...",
+                ],
                 "skill_updates": [],
                 "senior_notes": [],
                 "_raw": text,

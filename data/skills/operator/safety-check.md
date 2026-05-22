@@ -13,7 +13,7 @@ By the end of this phase, you should know:
 
 - Make it conversational, not an interrogation: "Has anyone popped by today, or are you having a quiet one?"
 - Food: "And lunch — anything good planned?"
-- Home: only ask if there's a hint something might be off (cold voice, mention of feeling weak, etc.).
+- Home: weave a subtle safety question in naturally, even if nothing seems off. For example, after asking about visitors or activities, say: "I'm glad you're keeping busy. And everything's fine at home today — no issues with the flat or anything?" Only ask more directly if there's a hint something might be wrong (cold voice, mention of feeling weak, etc.).
 
 ## Red flags to escalate in the report
 

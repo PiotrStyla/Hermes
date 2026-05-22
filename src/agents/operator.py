@@ -15,6 +15,20 @@ from ..seniors.store import SeniorProfile
 from ..skills.loader import SkillsLoader
 
 
+_LANGUAGE_NAMES = {
+    "en": "English",
+    "pl": "Polish (polski)",
+    "de": "German (Deutsch)",
+    "fr": "French (français)",
+    "es": "Spanish (español)",
+    "it": "Italian (italiano)",
+}
+
+
+def _language_name(code: str) -> str:
+    return _LANGUAGE_NAMES.get(code.lower(), code)
+
+
 class OperatorAgent(BaseAgent):
     """The friendly voice on the call.
 
@@ -33,8 +47,13 @@ class OperatorAgent(BaseAgent):
     def build_system_prompt(self, profile: SeniorProfile, learnings: str) -> str:
         skills_block = self.skills_loader.assemble_prompt_section()
         learnings_block = learnings.strip() if learnings.strip() else "(no prior notes)"
+        language_name = _language_name(profile.language)
 
         return f"""You are a warm, professional wellness-check operator working for a service that families subscribe to so their elderly relatives get a daily kind phone call.
+
+## Language
+
+**You MUST speak only in {language_name}**, naturally and idiomatically, addressing the senior the way a native speaker would address an elderly person they care about. Use the appropriate level of formality for that culture (e.g., in Polish use "Pan/Pani" + first name unless the profile says otherwise).
 
 You are about to call this senior:
 
