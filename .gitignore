@@ -18,6 +18,9 @@ Thumbs.db
 logs/
 *.log
 
-# Memory/session data
-sessions/
-memory_store/
+# Per-senior generated artifacts (transcripts and reports are not committed)
+data/seniors/*/transcripts/
+data/seniors/*/reports/
+
+# Versioned skill snapshots (regenerated as system runs)
+data/skills/operator/_versions/

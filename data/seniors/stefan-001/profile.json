@@ -1,0 +1,25 @@
+{
+  "id": "stefan-001",
+  "name": "Stefan",
+  "age": 78,
+  "language": "en",
+  "conditions": [
+    "high blood pressure",
+    "mild type-2 diabetes",
+    "occasional knee pain"
+  ],
+  "medications": [
+    "ramipril (morning)",
+    "metformin (with meals)"
+  ],
+  "preferences": {
+    "tone": "warm, friendly, addresses him as Stefan",
+    "topics_loved": ["grandchildren", "his garden", "old jazz music"],
+    "topics_avoid": ["politics"]
+  },
+  "family_contact": {
+    "name": "Anna (daughter)",
+    "email": "anna@example.com"
+  },
+  "notes": "Lives alone since wife passed away 3 years ago. Daughter visits weekly."
+}

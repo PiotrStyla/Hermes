@@ -6,7 +6,6 @@ import os
 import time
 from typing import Any
 
-import httpx
 from openai import OpenAI, APIStatusError
 
 
@@ -93,6 +92,41 @@ class BaseAgent:
                     time.sleep(wait)
                     continue
                 raise
+
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> str:
+        """Send a list of messages and return the assistant reply.
+
+        Used for multi-turn conversations where the caller manages history.
+        """
+        max_retries = 3
+        last_error: APIStatusError | None = None
+
+        for attempt in range(max_retries):
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=messages,
+                    temperature=temperature if temperature is not None else self.temperature,
+                    max_tokens=max_tokens if max_tokens is not None else self.max_tokens,
+                )
+                return response.choices[0].message.content or ""
+            except APIStatusError as e:
+                last_error = e
+                if e.status_code == 429 and attempt < max_retries - 1:
+                    wait = 30 * (attempt + 1)
+                    print(f"  Rate limited, retrying in {wait}s...")
+                    time.sleep(wait)
+                    continue
+                raise
+
+        if last_error is not None:
+            raise last_error
+        raise RuntimeError("chat() failed without error")
 
     def reset(self) -> None:
         """Clear conversation history."""

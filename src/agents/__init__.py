@@ -1,6 +1,13 @@
 from .base import BaseAgent
-from .researcher import ResearcherAgent
-from .writer import WriterAgent
-from .reviewer import ReviewerAgent
+from .operator import OperatorAgent
+from .supervisor import SupervisorAgent
+from .manager import ManagerAgent
+from .senior_persona import SeniorPersonaAgent
 
-__all__ = ["BaseAgent", "ResearcherAgent", "WriterAgent", "ReviewerAgent"]
+__all__ = [
+    "BaseAgent",
+    "OperatorAgent",
+    "SupervisorAgent",
+    "ManagerAgent",
+    "SeniorPersonaAgent",
+]

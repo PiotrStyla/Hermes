@@ -1,100 +1,129 @@
-# Hermes Multi-Agent System
+# Hermes Elderly Care — Multi-Agent Wellness Call System
 
-A multi-agent orchestration system built on [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research.
+A self-improving multi-agent system that conducts daily wellness check-in conversations with elderly people, generates reports for their families, and continuously refines its own conversational skills based on supervisor feedback.
+
+> **MVP Phase 1 — text mode.** The senior is currently played by an LLM persona. Voice (ElevenLabs + Whisper) and real telephony (Twilio) are planned for later phases.
+
+## What it does
+
+Every day, the system:
+
+1. **Calls** a senior (currently text simulation; voice + phone later).
+2. **Holds a warm 5-minute conversation** about their mood, health, and safety — never sounding like a script.
+3. **Reviews the conversation** with a Supervisor agent that scores warmth, listening, info quality, and brevity.
+4. **Improves itself** — the Manager rewrites operator skill files based on supervisor patches, versioning the old ones.
+5. **Remembers the senior** — supervisor-flagged details get appended to the senior's `learnings/notes.md` for future calls.
+6. **Reports to the family** — a clear, factual markdown report with mood, health notes, conversation highlights, and follow-ups.
 
 ## Architecture
 
-Three specialized agents coordinating together:
-
-| Agent | Role | Responsibility |
-|-------|------|---------------|
-| **Researcher** | Information Gathering | Web search, document analysis, fact verification |
-| **Writer** | Content Creation | Drafting, structuring, formatting output |
-| **Reviewer** | Quality Assurance | Reviewing output, catching errors, suggesting improvements |
-
 ```
-┌─────────────────────────────────────────────┐
-│              Orchestrator                     │
-│         (routes tasks, manages flow)         │
-├──────────┬──────────────┬───────────────────┤
-│          │              │                   │
-▼          ▼              ▼                   │
-┌────────┐ ┌────────────┐ ┌──────────┐        │
-│Research│ │   Writer   │ │ Reviewer │        │
-│ Agent  │ │   Agent    │ │  Agent   │        │
-└────┬───┘ └─────┬──────┘ └────┬─────┘        │
-     │           │              │              │
-     └───────────┴──────────────┘              │
-              Shared Memory                    │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                    MANAGER (Orchestrator)                     │
+│  Loads profile + skills, runs the call, applies supervisor   │
+│  patches to skills (with versioning), saves learnings,       │
+│  triggers report generation.                                  │
+└──────────┬─────────────────────────────────────────┬─────────┘
+           │ start                                    │ apply feedback
+           ▼                                          │
+┌──────────────────────┐    conversation    ┌─────────┴─────────┐
+│      OPERATOR        │ ◄────────────────► │  SENIOR PERSONA   │
+│  Reads MD skills →   │                    │  LLM playing the  │
+│  warm wellness call  │   max 18 turns     │  senior (MVP only)│
+└──────────┬───────────┘                    └───────────────────┘
+           │ transcript
+           ▼
+┌──────────────────────┐
+│     SUPERVISOR       │ → JSON: scores, issues, skill patches, senior_notes
+└──────────┬───────────┘
+           ▼
+┌──────────────────────┐
+│   REPORT GENERATOR   │ → Markdown report for the family
+└──────────────────────┘
 ```
 
-## Prerequisites
+## Quick start
 
-- [Hermes Agent](https://github.com/NousResearch/hermes-agent) v0.14+ installed
-- Python 3.11+
-- OpenRouter API key (or any supported LLM provider)
-
-## Quick Start
-
-```bash
-# 1. Clone this repo
-git clone https://github.com/PiotrStyla/Hermes.git
-cd Hermes
-
-# 2. Install dependencies
+```powershell
+# 1. Install
 pip install -r requirements.txt
 
-# 3. Copy environment template
-cp .env.example .env
-# Edit .env with your API key
+# 2. Configure your OpenRouter API key
+copy .env.example .env
+# Edit .env and set OPENROUTER_API_KEY
 
-# 4. Run the orchestrator
-python -m src.orchestrator
+# 3. List the seniors on file
+python -m src list-seniors
+
+# 4. Run a full call cycle
+python -m src call stefan-001
+
+# 5. Inspect what was created
+python -m src view-history stefan-001
 ```
 
-## Project Structure
+After a call, look in:
+- `data/seniors/<id>/transcripts/` — full conversation
+- `data/seniors/<id>/reports/` — report for the family
+- `data/seniors/<id>/learnings/notes.md` — accumulated context about this senior
+- `data/skills/operator/` — current operator skills (continuously refined)
+- `data/skills/operator/_versions/` — historical snapshots of skills before each update
+
+## Project structure
 
 ```
-├── src/
-│   ├── orchestrator.py      # Main coordinator - routes tasks between agents
-│   ├── agents/
-│   │   ├── base.py          # Base agent class with shared functionality
-│   │   ├── researcher.py    # Research & information gathering agent
-│   │   ├── writer.py        # Content creation agent
-│   │   └── reviewer.py      # Quality assurance agent
-│   ├── memory/
-│   │   ├── shared.py        # Shared memory store between agents
-│   │   └── context.py       # Context management and retrieval
-│   └── tools/
-│       ├── web_search.py    # Web search tool
-│       └── file_ops.py      # File operation tools
-├── skills/                  # Custom Hermes skills for each agent
-│   ├── research.md
-│   ├── writing.md
-│   └── review.md
-├── config/
-│   ├── agents.yaml          # Agent configurations
-│   └── orchestrator.yaml    # Orchestration rules
-├── tests/
-│   └── ...
-├── .env.example
-├── requirements.txt
-└── README.md
+src/
+├── agents/
+│   ├── base.py             # OpenRouter client + retry/rate-limit handling
+│   ├── manager.py          # Orchestrates the full cycle, rewrites skills
+│   ├── operator.py         # Conducts the call, reads skill markdown files
+│   ├── senior_persona.py   # LLM playing the senior (MVP testing only)
+│   └── supervisor.py       # Reviews transcript, returns structured JSON
+├── conversation/
+│   ├── session.py          # Operator ↔ Senior turn loop
+│   └── transcript.py       # Markdown formatting
+├── seniors/store.py        # Profile / transcripts / reports / learnings I/O
+├── skills/
+│   ├── loader.py           # Reads operator skill markdown files
+│   └── updater.py          # Versions and overwrites skills after a patch
+├── reports/generator.py    # Transcript + feedback → family report
+├── cli.py                  # argparse entry point
+└── __main__.py             # `python -m src ...`
+
+data/
+├── seniors/<id>/           # Per-senior data directory
+└── skills/operator/        # Markdown skill files (continuously self-updated)
 ```
 
-## How It Works
+## CLI commands
 
-1. **Task arrives** → Orchestrator analyzes and routes it
-2. **Researcher** gathers relevant information and context
-3. **Writer** produces content based on research
-4. **Reviewer** evaluates output, requests revisions if needed
-5. **Loop** continues until quality threshold is met
-6. **Output** is delivered with full provenance chain
+| Command | Description |
+|---------|-------------|
+| `python -m src call <senior-id>` | Run a full wellness call cycle |
+| `python -m src list-seniors` | List all seniors on file |
+| `python -m src view-history <senior-id>` | Show transcripts and reports for a senior |
+| `python -m src view-skills` | List the current operator skills |
+
+## Roadmap
+
+- **Phase 1 (current):** Text-mode MVP, LLM senior persona, single-senior, manual triggering
+- **Phase 2:** ElevenLabs TTS + Whisper STT — local voice conversations
+- **Phase 3:** Twilio integration — real phone calls
+- **Phase 4:** Polish + multi-language, scheduling, family dashboard, GDPR compliance
 
 ## Configuration
 
-Edit `config/agents.yaml` to customize each agent's behavior, model, and tools.
+Default LLM is `deepseek/deepseek-v4-flash` via OpenRouter. Override per-agent in `.env`:
+
+```env
+OPENROUTER_API_KEY=...
+DEFAULT_MODEL=deepseek/deepseek-v4-flash
+# OPERATOR_MODEL=anthropic/claude-sonnet-4
+# SUPERVISOR_MODEL=anthropic/claude-opus-4.6
+# MANAGER_MODEL=...
+# REPORT_MODEL=...
+# SENIOR_PERSONA_MODEL=...
+```
 
 ## License
 

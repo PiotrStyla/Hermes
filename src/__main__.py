@@ -1,5 +1,5 @@
-"""Allow running as: python -m src"""
+"""Entry point: `python -m src ...`"""
 
-from .orchestrator import main
+from .cli import main
 
-main()
+raise SystemExit(main())
