@@ -22,10 +22,7 @@ from .base import BaseAgent
 from .operator import OperatorAgent
 from .senior_persona import SeniorPersonaAgent
 from .supervisor import SupervisorAgent
-from ..conversation.session import CallSession
-from ..conversation.transcript import format_transcript
-from ..reports.generator import ReportGenerator
-from ..seniors.store import SeniorProfile, SeniorStore
+from ..seniors.store import SeniorStore
 from ..skills.loader import SkillsLoader
 from ..skills.updater import SkillsUpdater
 
@@ -72,11 +69,25 @@ Output ONLY the new markdown content. No commentary, no fences."""
 
     # ---- Full call cycle ----
 
-    def run_call_cycle(self, senior_id: str, console: Console | None = None) -> dict[str, Any]:
+    def run_call_cycle(
+        self,
+        senior_id: str,
+        console: Console | None = None,
+        voice_mode: bool = False,
+    ) -> dict[str, Any]:
         """Run one full cycle: call → review → skill updates → learnings → report.
+
+        Set `voice_mode=True` to use ElevenLabs TTS for the Operator and the
+        microphone + Whisper for the Senior side instead of the persona LLM.
 
         Returns a summary dict with paths to artifacts created.
         """
+        # Lazy imports to break a circular dependency:
+        # conversation.session -> agents.operator -> agents/__init__ -> manager.
+        from ..conversation.session import CallSession
+        from ..conversation.transcript import format_transcript
+        from ..reports.generator import ReportGenerator
+
         console = console or Console()
         store = SeniorStore()
         loader = SkillsLoader()
@@ -88,10 +99,17 @@ Output ONLY the new markdown content. No commentary, no fences."""
         profile = store.load(senior_id)
 
         # --- Phase 1: the call ---
-        console.print(Panel(f"[bold]Calling {profile.name} ({profile.id})[/bold]", title="Phase 1: Call"))
+        title = "Phase 1: Call" + (" (voice)" if voice_mode else "")
+        console.print(Panel(f"[bold]Calling {profile.name} ({profile.id})[/bold]", title=title))
         operator = OperatorAgent()
-        senior_agent = SeniorPersonaAgent()
-        session = CallSession(operator=operator, senior=senior_agent, store=store, console=console)
+        senior_agent = None if voice_mode else SeniorPersonaAgent()
+        session = CallSession(
+            operator=operator,
+            senior=senior_agent,
+            store=store,
+            console=console,
+            voice_mode=voice_mode,
+        )
         history = session.run(profile)
 
         transcript_md = format_transcript(profile.name, history)

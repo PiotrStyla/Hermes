@@ -99,17 +99,42 @@ data/
 
 | Command | Description |
 |---------|-------------|
-| `python -m src call <senior-id>` | Run a full wellness call cycle |
+| `python -m src call <senior-id>` | Run a full wellness call cycle (text mode) |
+| `python -m src call <senior-id> --voice` | Run with ElevenLabs voice + microphone |
 | `python -m src list-seniors` | List all seniors on file |
 | `python -m src view-history <senior-id>` | Show transcripts and reports for a senior |
 | `python -m src view-skills` | List the current operator skills |
 
+## Voice mode (Phase 2)
+
+In voice mode the Operator speaks through your speakers using **ElevenLabs TTS**, and **you** play the senior — the system records from your microphone, transcribes with **OpenAI Whisper**, and feeds the text back to the Operator. Everything else (Supervisor review, skill updates, family report) runs identically.
+
+Prerequisites:
+
+1. Install voice dependencies (already in `requirements.txt`):
+   ```powershell
+   pip install elevenlabs sounddevice numpy
+   ```
+2. Add API keys to `.env`:
+   ```env
+   ELEVENLABS_API_KEY=...
+   OPENAI_API_KEY=...
+   ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM   # optional, default is Rachel
+   ```
+3. Run:
+   ```powershell
+   python -m src call jadwiga-001 --voice
+   ```
+
+After the Operator finishes speaking, the system listens until you stop talking (~1.6 s of silence). Polish is supported end-to-end (`eleven_multilingual_v2` for TTS, Whisper auto-detects but uses the senior's `language` field).
+
 ## Roadmap
 
-- **Phase 1 (current):** Text-mode MVP, LLM senior persona, single-senior, manual triggering
-- **Phase 2:** ElevenLabs TTS + Whisper STT — local voice conversations
-- **Phase 3:** Twilio integration — real phone calls
-- **Phase 4:** Polish + multi-language, scheduling, family dashboard, GDPR compliance
+- ✅ **Phase 1:** Text-mode MVP — LLM persona, self-improving skills loop
+- ✅ **Phase 2:** ElevenLabs TTS + Whisper STT — local voice conversations
+- ✅ **Polish:** Multi-language ready (PL tested)
+- **Phase 3 (next):** Twilio integration — real phone calls
+- **Phase 4:** Scheduling, family dashboard, GDPR compliance
 
 ## Configuration
 

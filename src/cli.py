@@ -24,8 +24,15 @@ console = Console()
 def cmd_call(args: argparse.Namespace) -> int:
     manager = ManagerAgent()
     try:
-        result = manager.run_call_cycle(args.senior_id, console=console)
+        result = manager.run_call_cycle(
+            args.senior_id,
+            console=console,
+            voice_mode=args.voice,
+        )
     except FileNotFoundError as e:
+        console.print(f"[red]{e}[/red]")
+        return 1
+    except RuntimeError as e:
         console.print(f"[red]{e}[/red]")
         return 1
 
@@ -104,6 +111,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_call = sub.add_parser("call", help="Run a full wellness call cycle for a senior.")
     p_call.add_argument("senior_id", help="ID of the senior to call (e.g., stefan-001)")
+    p_call.add_argument(
+        "--voice",
+        action="store_true",
+        help="Voice mode: Operator speaks via ElevenLabs, Senior side uses microphone + Whisper.",
+    )
     p_call.set_defaults(func=cmd_call)
 
     p_list = sub.add_parser("list-seniors", help="List all seniors on file.")
