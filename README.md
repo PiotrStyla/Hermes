@@ -104,6 +104,13 @@ data/
 | `python -m src list-seniors` | List all seniors on file |
 | `python -m src view-history <senior-id>` | Show transcripts and reports for a senior |
 | `python -m src view-skills` | List the current operator skills |
+| `python -m src consent show <senior-id>` | Show RODO consent state |
+| `python -m src consent grant <senior-id>` | Record granted consent |
+| `python -m src consent revoke <senior-id>` | Revoke previously granted consent |
+| `python -m src purge [--senior-id X] [--dry-run]` | Delete artifacts older than retention policy |
+| `python -m src forget <senior-id> [--dry-run] [--yes]` | Right-to-erasure: wipe all data for a senior |
+| `python -m src audit [-n N] [--senior-id X]` | Tail the append-only audit log |
+| `python -m src compliance-review <file> --kind <kind>` | LLM advisor over an artifact for RODO concerns |
 
 ## Voice mode (Phase 2)
 
@@ -128,13 +135,28 @@ Prerequisites:
 
 After the Operator finishes speaking, the system listens until you stop talking (~1.6 s of silence). Polish is supported end-to-end (`eleven_multilingual_v2` for TTS, Whisper auto-detects but uses the senior's `language` field).
 
+## Compliance (Phase 2.5)
+
+Before any call runs, the Manager checks the senior's consent record. By default it requires `store_transcript` and `share_with_family`; voice mode additionally requires `transcribe`. A revoked record blocks the call outright. For local development you may pass `--allow-no-consent` to bypass the gate (audited).
+
+```powershell
+python -m src consent grant jadwiga-001 --notes "Verbal consent during onboarding"
+python -m src call jadwiga-001 --voice
+python -m src audit -n 20
+```
+
+Every artifact stored on disk goes through `redact_pii` (emails, phone numbers, PESEL, IBAN, Polish street addresses). Retention is per-senior in `data/seniors/<id>/retention.json`; `purge` enforces it. `forget` performs full right-to-erasure.
+
+The `ComplianceReviewerAgent` is an *advisor* — it produces structured concerns over prompts, reports or code changes for human review. It never enforces anything by itself.
+
 ## Roadmap
 
 - ✅ **Phase 1:** Text-mode MVP — LLM persona, self-improving skills loop
 - ✅ **Phase 2:** ElevenLabs TTS + Whisper STT — local voice conversations
 - ✅ **Polish:** Multi-language ready (PL tested)
+- ✅ **Phase 2.5:** Compliance foundations — consent gate, retention, audit log, redaction, RODO reviewer
 - **Phase 3 (next):** Twilio integration — real phone calls
-- **Phase 4:** Scheduling, family dashboard, GDPR compliance
+- **Phase 4:** Scheduling, family dashboard, event bus
 
 ## Configuration
 

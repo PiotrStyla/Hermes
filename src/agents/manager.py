@@ -74,11 +74,15 @@ Output ONLY the new markdown content. No commentary, no fences."""
         senior_id: str,
         console: Console | None = None,
         voice_mode: bool = False,
+        allow_no_consent: bool = False,
     ) -> dict[str, Any]:
         """Run one full cycle: call → review → skill updates → learnings → report.
 
         Set `voice_mode=True` to use ElevenLabs TTS for the Operator and the
         microphone + Whisper for the Senior side instead of the persona LLM.
+
+        Set `allow_no_consent=True` to bypass the consent gate in development
+        (refuses to run if RODO scopes are missing or revoked otherwise).
 
         Returns a summary dict with paths to artifacts created.
         """
@@ -87,16 +91,78 @@ Output ONLY the new markdown content. No commentary, no fences."""
         from ..conversation.session import CallSession
         from ..conversation.transcript import format_transcript
         from ..reports.generator import ReportGenerator
+        from ..compliance import (
+            AuditLog,
+            ConsentStatus,
+            ConsentStore,
+            redact_pii,
+        )
+        from ..compliance.consent import (
+            SCOPE_SHARE_WITH_FAMILY,
+            SCOPE_STORE_TRANSCRIPT,
+            SCOPE_TRANSCRIBE,
+        )
 
         console = console or Console()
         store = SeniorStore()
         loader = SkillsLoader()
         updater = SkillsUpdater()
+        audit = AuditLog()
+        consent_store = ConsentStore()
 
         if not store.exists(senior_id):
             raise FileNotFoundError(f"Senior {senior_id!r} does not exist.")
 
         profile = store.load(senior_id)
+
+        # --- Phase 0: consent gate ---
+        consent = consent_store.load(senior_id)
+        required_scopes = [SCOPE_STORE_TRANSCRIPT, SCOPE_SHARE_WITH_FAMILY]
+        if voice_mode:
+            required_scopes.append(SCOPE_TRANSCRIBE)
+        missing = [s for s in required_scopes if not consent.covers(s)]
+
+        if consent.status == ConsentStatus.REVOKED:
+            audit.record(
+                "call_blocked",
+                actor="manager",
+                senior_id=senior_id,
+                details={"reason": "consent_revoked"},
+            )
+            raise RuntimeError(
+                f"Consent for {senior_id!r} was REVOKED on {consent.revoked_at}. "
+                f"Refusing to run a call."
+            )
+        if missing and not allow_no_consent:
+            audit.record(
+                "call_blocked",
+                actor="manager",
+                senior_id=senior_id,
+                details={"reason": "consent_missing", "missing_scopes": missing},
+            )
+            raise RuntimeError(
+                f"Consent missing scopes for {senior_id!r}: {missing}. "
+                f"Grant via `python -m src consent grant {senior_id}` or pass "
+                f"--allow-no-consent for dev."
+            )
+        if missing and allow_no_consent:
+            console.print(
+                f"[yellow]⚠ Running without consent scopes {missing} "
+                f"(allow_no_consent=True). Do NOT use against real seniors.[/yellow]"
+            )
+            audit.record(
+                "call_consent_bypassed",
+                actor="manager",
+                senior_id=senior_id,
+                details={"missing_scopes": missing, "voice_mode": voice_mode},
+            )
+
+        audit.record(
+            "call_started",
+            actor="manager",
+            senior_id=senior_id,
+            details={"voice_mode": voice_mode, "consent_status": consent.status.value},
+        )
 
         # --- Phase 1: the call ---
         title = "Phase 1: Call" + (" (voice)" if voice_mode else "")
@@ -115,6 +181,12 @@ Output ONLY the new markdown content. No commentary, no fences."""
         transcript_md = format_transcript(profile.name, history)
         transcript_path = store.save_transcript(senior_id, transcript_md)
         console.print(f"[green]Transcript saved:[/green] {transcript_path}")
+        audit.record(
+            "transcript_saved",
+            actor="manager",
+            senior_id=senior_id,
+            details={"path": str(transcript_path), "turns": len(history)},
+        )
 
         # --- Phase 2: supervisor review ---
         console.print(Panel("Supervisor reviewing transcript", title="Phase 2: Review"))
@@ -157,12 +229,28 @@ Output ONLY the new markdown content. No commentary, no fences."""
             store.append_learning(senior_id, note_block)
             console.print(f"[green]Saved {len(senior_notes)} learning(s) about {profile.name}.[/green]")
 
-        # --- Phase 5: family report ---
+        # --- Phase 5: family report (with PII redaction before persistence) ---
         console.print(Panel("Generating family report", title="Phase 5: Report"))
         reporter = ReportGenerator()
-        report_md = reporter.generate(profile, transcript_md, feedback)
+        report_md_raw = reporter.generate(profile, transcript_md, feedback)
+        report_md = redact_pii(report_md_raw)
         report_path = store.save_report(senior_id, report_md)
         console.print(f"[green]Report saved:[/green] {report_path}")
+        audit.record(
+            "report_generated",
+            actor="manager",
+            senior_id=senior_id,
+            details={
+                "path": str(report_path),
+                "redacted_chars": len(report_md_raw) - len(report_md),
+            },
+        )
+        audit.record(
+            "call_completed",
+            actor="manager",
+            senior_id=senior_id,
+            details={"scores": scores, "skill_updates_applied": applied},
+        )
 
         return {
             "transcript_path": str(transcript_path),
