@@ -111,6 +111,10 @@ data/
 | `python -m src forget <senior-id> [--dry-run] [--yes]` | Right-to-erasure: wipe all data for a senior |
 | `python -m src audit [-n N] [--senior-id X]` | Tail the append-only audit log |
 | `python -m src compliance-review <file> --kind <kind>` | LLM advisor over an artifact for RODO concerns |
+| `python -m src review-queue list [--status pending\|approved\|flagged]` | List human-review entries (AI Act high-risk) |
+| `python -m src review-queue show <id>` | Inspect a single review entry |
+| `python -m src review-queue approve <id> [--by] [--comment]` | Human approves the report |
+| `python -m src review-queue flag <id> [--by] [--comment]` | Human flags the entry for follow-up |
 
 ## Voice mode (Phase 2)
 
@@ -135,9 +139,13 @@ Prerequisites:
 
 After the Operator finishes speaking, the system listens until you stop talking (~1.6 s of silence). Polish is supported end-to-end (`eleven_multilingual_v2` for TTS, Whisper auto-detects but uses the senior's `language` field).
 
-## Compliance (Phase 2.5)
+## Compliance (Phase 2.5 + 2.6)
 
-Before any call runs, the Manager checks the senior's consent record. By default it requires `store_transcript` and `share_with_family`; voice mode additionally requires `transcribe`. A revoked record blocks the call outright. For local development you may pass `--allow-no-consent` to bypass the gate (audited).
+Built directly against the project's legal analysis (RODO + Prawo Komunikacji Elektronicznej + EU AI Act).
+
+### Pre-call gate
+
+Before any call runs, the Manager checks the senior's consent record. Required scopes by default: `store_transcript`, `share_with_family`; voice mode adds `transcribe`. A `REVOKED` record blocks the call outright. For local development you may pass `--allow-no-consent` to bypass the gate (audited).
 
 ```powershell
 python -m src consent grant jadwiga-001 --notes "Verbal consent during onboarding"
@@ -145,9 +153,47 @@ python -m src call jadwiga-001 --voice
 python -m src audit -n 20
 ```
 
-Every artifact stored on disk goes through `redact_pii` (emails, phone numbers, PESEL, IBAN, Polish street addresses). Retention is per-senior in `data/seniors/<id>/retention.json`; `purge` enforces it. `forget` performs full right-to-erasure.
+### Granular scopes
 
-The `ComplianceReviewerAgent` is an *advisor* — it produces structured concerns over prompts, reports or code changes for human review. It never enforces anything by itself.
+Two extra scopes are deliberately opt-in (not in defaults):
+
+- `process_health_data` — Art. 9 RODO special category; without it, the Operator is instructed not to ask about medications, diagnoses or symptoms.
+- `train_on_transcripts` — needed for the self-improving skills loop. Without it, the Manager runs the call but **skips** skill updates after review.
+
+```powershell
+python -m src consent grant jadwiga-001 --scope process_health_data --scope train_on_transcripts
+```
+
+### Mid-call withdrawal (RODO Art. 7(3))
+
+The session listens for explicit withdrawal phrases in either PL or EN (`wycofuję zgodę`, `koniec rozmowy`, `proszę nie nagrywać`, `stop calling me`, `I withdraw my consent`, ...). A match instantly: (a) revokes consent in storage, (b) audits the event, (c) injects a directive prompting the Operator to deliver a brief warm goodbye and end the call. Deterministic regex — not LLM judgement.
+
+### Pre-call disclosure (RODO Art. 13 + AI Act)
+
+`data/skills/operator/disclosure.md` forces the Operator's first turn to identify itself as an AI, state the call purpose, and remind the senior they can stop at any time. Listed first in the skills `_index.md` and reinforced as a hard rule in the operator system prompt.
+
+### Human-in-the-loop review (AI Act high-risk)
+
+After every call, the Manager decides whether the report needs human review before being treated as final. Flagging rules:
+
+- First 3 calls per senior (onboarding window).
+- Any Supervisor score below `QUALITY_THRESHOLD` (default 7).
+- Any mid-call consent withdrawal in this call.
+
+Flagged calls land in `data/review_queue/<id>.json` with status `pending`. A human inspects and approves/flags via CLI; both decisions are audited.
+
+```powershell
+python -m src review-queue list --status pending
+python -m src review-queue show <id>
+python -m src review-queue approve <id> --by piotr --comment "Looks good"
+```
+
+### Cross-cutting
+
+- Every report saved to disk goes through `redact_pii` (emails, phones, PESEL, IBAN, Polish street addresses).
+- Retention is per-senior in `data/seniors/<id>/retention.json`; `purge` enforces it.
+- `forget` performs full right-to-erasure for one senior.
+- The `ComplianceReviewerAgent` is an LLM **advisor** over artifacts (prompts, reports, code changes). It never enforces anything by itself — the deterministic safeguards above do.
 
 ## Roadmap
 
@@ -155,6 +201,7 @@ The `ComplianceReviewerAgent` is an *advisor* — it produces structured concern
 - ✅ **Phase 2:** ElevenLabs TTS + Whisper STT — local voice conversations
 - ✅ **Polish:** Multi-language ready (PL tested)
 - ✅ **Phase 2.5:** Compliance foundations — consent gate, retention, audit log, redaction, RODO reviewer
+- ✅ **Phase 2.6:** Disclosure skill, granular scopes (health / training), mid-call withdrawal, human-review queue
 - **Phase 3 (next):** Twilio integration — real phone calls
 - **Phase 4:** Scheduling, family dashboard, event bus
 

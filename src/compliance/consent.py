@@ -29,12 +29,30 @@ class ConsentStatus(str, Enum):
 
 
 # Granular scopes the senior can opt into independently.
-SCOPE_RECORD_AUDIO = "record_audio"           # store raw audio
-SCOPE_TRANSCRIBE = "transcribe"               # send audio to STT provider
-SCOPE_STORE_TRANSCRIPT = "store_transcript"   # keep text on disk
-SCOPE_SHARE_WITH_FAMILY = "share_with_family"  # send reports to family contact
+#
+# Note on Art. 9 RODO: `process_health_data` is a SEPARATE explicit consent —
+# under RODO it cannot be lumped into a general "ok to talk" consent.
+#
+# Note on AI training: `train_on_transcripts` is also a separate consent — using
+# a transcript to update operator skills counts as a different processing
+# purpose than simply storing/sharing the same transcript with family.
+SCOPE_RECORD_AUDIO = "record_audio"               # store raw audio
+SCOPE_TRANSCRIBE = "transcribe"                   # send audio to STT provider
+SCOPE_STORE_TRANSCRIPT = "store_transcript"       # keep text on disk
+SCOPE_SHARE_WITH_FAMILY = "share_with_family"     # send reports to family contact
+SCOPE_PROCESS_HEALTH_DATA = "process_health_data"  # Art. 9 RODO special category
+SCOPE_TRAIN_ON_TRANSCRIPTS = "train_on_transcripts"  # use transcripts to update skills
 
 DEFAULT_SCOPES = (SCOPE_TRANSCRIBE, SCOPE_STORE_TRANSCRIPT, SCOPE_SHARE_WITH_FAMILY)
+
+ALL_SCOPES = (
+    SCOPE_RECORD_AUDIO,
+    SCOPE_TRANSCRIBE,
+    SCOPE_STORE_TRANSCRIPT,
+    SCOPE_SHARE_WITH_FAMILY,
+    SCOPE_PROCESS_HEALTH_DATA,
+    SCOPE_TRAIN_ON_TRANSCRIPTS,
+)
 
 
 @dataclass

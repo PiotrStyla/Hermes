@@ -29,5 +29,8 @@ data/seniors/*/retention.json
 # Append-only audit log — contains PII, do not commit
 data/audit/
 
+# Human review queue entries — reference per-senior data, do not commit
+data/review_queue/
+
 # Versioned skill snapshots (regenerated as system runs)
 data/skills/operator/_versions/

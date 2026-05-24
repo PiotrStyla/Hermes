@@ -15,6 +15,7 @@ from .compliance import (
     AuditLog,
     ConsentStore,
     RetentionStore,
+    ReviewQueue,
 )
 from .compliance.consent import DEFAULT_SCOPES
 from .seniors.store import SeniorStore
@@ -255,6 +256,79 @@ def cmd_compliance_review(args: argparse.Namespace) -> int:
     return 0
 
 
+# ---- Review queue commands ----
+
+
+def cmd_review_list(args: argparse.Namespace) -> int:
+    entries = ReviewQueue().list(status=args.status)
+    if not entries:
+        console.print("[yellow]Review queue is empty.[/yellow]")
+        return 0
+    table = Table(title="Human review queue")
+    table.add_column("ID")
+    table.add_column("Created")
+    table.add_column("Senior")
+    table.add_column("Status")
+    table.add_column("Reasons")
+    for e in entries:
+        table.add_row(
+            e.id, e.created_at, e.senior_id, e.status, "; ".join(e.reasons),
+        )
+    console.print(table)
+    return 0
+
+
+def cmd_review_show(args: argparse.Namespace) -> int:
+    entry = ReviewQueue().get(args.entry_id)
+    if entry is None:
+        console.print(f"[red]Entry {args.entry_id!r} not found[/red]")
+        return 1
+    console.print(f"[bold]Entry {entry.id}[/bold]")
+    console.print(f"  senior:       {entry.senior_id}")
+    console.print(f"  created_at:   {entry.created_at}")
+    console.print(f"  status:       {entry.status}")
+    console.print(f"  reasons:      {entry.reasons}")
+    console.print(f"  scores:       {entry.scores}")
+    console.print(f"  transcript:   {entry.transcript_path}")
+    console.print(f"  report:       {entry.report_path}")
+    if entry.decided_at:
+        console.print(f"  decided_at:   {entry.decided_at}")
+        console.print(f"  decided_by:   {entry.decided_by}")
+    if entry.comment:
+        console.print(f"  comment:      {entry.comment}")
+    return 0
+
+
+def _decide(args: argparse.Namespace, status: str) -> int:
+    try:
+        entry = ReviewQueue().decide(
+            args.entry_id,
+            status=status,
+            decided_by=args.by or "cli",
+            comment=args.comment or "",
+        )
+    except FileNotFoundError as e:
+        console.print(f"[red]{e}[/red]")
+        return 1
+    AuditLog().record(
+        f"review_{status}",
+        actor="cli",
+        senior_id=entry.senior_id,
+        details={"entry_id": entry.id, "comment": entry.comment},
+    )
+    color = "green" if status == "approved" else "yellow"
+    console.print(f"[{color}]Entry {entry.id} marked as {status}.[/{color}]")
+    return 0
+
+
+def cmd_review_approve(args: argparse.Namespace) -> int:
+    return _decide(args, "approved")
+
+
+def cmd_review_flag(args: argparse.Namespace) -> int:
+    return _decide(args, "flagged")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="hermes-elderly-care",
@@ -357,6 +431,35 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_review.add_argument("--context", help="Optional extra context for the reviewer.")
     p_review.set_defaults(func=cmd_compliance_review)
+
+    # ---- Human review queue (AI Act high-risk oversight) ----
+
+    p_rq = sub.add_parser("review-queue", help="Inspect and decide human-review entries.")
+    rq_sub = p_rq.add_subparsers(dest="rq_cmd", required=True)
+
+    rq_list = rq_sub.add_parser("list", help="List review queue entries.")
+    rq_list.add_argument(
+        "--status",
+        choices=["pending", "approved", "flagged"],
+        help="Filter by status.",
+    )
+    rq_list.set_defaults(func=cmd_review_list)
+
+    rq_show = rq_sub.add_parser("show", help="Show a single entry.")
+    rq_show.add_argument("entry_id")
+    rq_show.set_defaults(func=cmd_review_show)
+
+    rq_approve = rq_sub.add_parser("approve", help="Mark entry as approved by a human.")
+    rq_approve.add_argument("entry_id")
+    rq_approve.add_argument("--by", help="Reviewer name / identifier.")
+    rq_approve.add_argument("--comment", help="Optional decision notes.")
+    rq_approve.set_defaults(func=cmd_review_approve)
+
+    rq_flag = rq_sub.add_parser("flag", help="Mark entry as flagged for follow-up.")
+    rq_flag.add_argument("entry_id")
+    rq_flag.add_argument("--by", help="Reviewer name / identifier.")
+    rq_flag.add_argument("--comment", help="Optional decision notes.")
+    rq_flag.set_defaults(func=cmd_review_flag)
 
     return parser
 

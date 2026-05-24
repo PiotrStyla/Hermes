@@ -12,8 +12,15 @@ from rich.console import Console
 
 from ..agents.operator import OperatorAgent
 from ..agents.senior_persona import SeniorPersonaAgent
+from ..compliance import AuditLog, ConsentStore, is_withdrawal
 from ..seniors.store import SeniorProfile, SeniorStore
 from .transcript import has_end_token, strip_end_token
+
+
+# Tag appended to a senior's transcribed line when our regex detects an
+# explicit withdrawal phrase. The Operator sees this in the next turn and
+# is expected to produce a brief warm goodbye + <<END_CALL>>.
+WITHDRAWAL_TAG = "[CONSENT WITHDRAWN BY SENIOR — END THE CALL WARMLY NOW.]"
 
 
 # 5 minutes ≈ ~20 turns. We cap at 18 to leave room for a graceful goodbye.
@@ -127,6 +134,8 @@ class CallSession:
         )
 
         history: list[dict[str, str]] = []
+        audit = AuditLog()
+        consent_store = ConsentStore()
 
         for _ in range(MAX_TURNS):
             op_message = self._operator_turn(operator_system, history)
@@ -140,6 +149,30 @@ class CallSession:
 
             senior_message = self._senior_turn(profile, senior_system, history)
             history.append({"role": "senior", "content": senior_message})
+
+            # RODO Art. 7(3) — mid-call consent withdrawal.
+            if is_withdrawal(senior_message):
+                self.console.print(
+                    "[red bold]⚠ Withdrawal phrase detected — "
+                    "revoking consent and ending the call.[/red bold]"
+                )
+                consent_store.revoke(
+                    profile.id,
+                    notes=f"Mid-call withdrawal detected: {senior_message!r}",
+                )
+                audit.record(
+                    "consent_withdrawn_mid_call",
+                    actor="session",
+                    senior_id=profile.id,
+                    details={"utterance": senior_message},
+                )
+                # Inject internal directive so the Operator produces a warm goodbye.
+                op_close = self._operator_turn(
+                    operator_system,
+                    history + [{"role": "senior", "content": WITHDRAWAL_TAG}],
+                )
+                history.append({"role": "operator", "content": op_close})
+                break
         else:
             # Hit MAX_TURNS without operator saying goodbye — force a wrap-up.
             self.console.print(

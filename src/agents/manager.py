@@ -95,11 +95,14 @@ Output ONLY the new markdown content. No commentary, no fences."""
             AuditLog,
             ConsentStatus,
             ConsentStore,
+            ReviewQueue,
             redact_pii,
         )
         from ..compliance.consent import (
+            SCOPE_PROCESS_HEALTH_DATA,
             SCOPE_SHARE_WITH_FAMILY,
             SCOPE_STORE_TRANSCRIPT,
+            SCOPE_TRAIN_ON_TRANSCRIPTS,
             SCOPE_TRANSCRIBE,
         )
 
@@ -157,17 +160,30 @@ Output ONLY the new markdown content. No commentary, no fences."""
                 details={"missing_scopes": missing, "voice_mode": voice_mode},
             )
 
+        health_consent = consent.covers(SCOPE_PROCESS_HEALTH_DATA)
+        training_consent = consent.covers(SCOPE_TRAIN_ON_TRANSCRIPTS)
+
         audit.record(
             "call_started",
             actor="manager",
             senior_id=senior_id,
-            details={"voice_mode": voice_mode, "consent_status": consent.status.value},
+            details={
+                "voice_mode": voice_mode,
+                "consent_status": consent.status.value,
+                "health_consent": health_consent,
+                "training_consent": training_consent,
+            },
         )
+
+        # Snapshot prior call count BEFORE this call runs (used later to decide
+        # if this call falls within the onboarding human-review window).
+        prior_call_count = len(store.list_reports(senior_id))
 
         # --- Phase 1: the call ---
         title = "Phase 1: Call" + (" (voice)" if voice_mode else "")
         console.print(Panel(f"[bold]Calling {profile.name} ({profile.id})[/bold]", title=title))
         operator = OperatorAgent()
+        operator.health_consent = health_consent  # type: ignore[attr-defined]
         senior_agent = None if voice_mode else SeniorPersonaAgent()
         session = CallSession(
             operator=operator,
@@ -203,6 +219,19 @@ Output ONLY the new markdown content. No commentary, no fences."""
         # --- Phase 3: apply skill updates ---
         skill_updates = feedback.get("skill_updates") or []
         applied: list[str] = []
+        if skill_updates and not training_consent:
+            console.print(
+                "[yellow]⚠ Skipping skill updates: senior has not granted "
+                "`train_on_transcripts` consent. Set it with "
+                "`consent grant --scope train_on_transcripts <id>`.[/yellow]"
+            )
+            audit.record(
+                "skill_updates_skipped",
+                actor="manager",
+                senior_id=senior_id,
+                details={"reason": "missing_training_consent", "count": len(skill_updates)},
+            )
+            skill_updates = []
         if skill_updates:
             console.print(Panel("Applying skill updates", title="Phase 3: Self-improvement"))
         for upd in skill_updates:
@@ -245,11 +274,47 @@ Output ONLY the new markdown content. No commentary, no fences."""
                 "redacted_chars": len(report_md_raw) - len(report_md),
             },
         )
+        # --- Phase 6: human-in-the-loop review queue (AI Act high-risk) ---
+        # Re-read consent: if it was revoked mid-call, force a review entry.
+        post_consent = consent_store.load(senior_id)
+        withdrew_consent = post_consent.status == ConsentStatus.REVOKED
+        reasons = ReviewQueue.needs_review(
+            prior_call_count=prior_call_count,
+            scores=scores,
+            withdrew_consent=withdrew_consent,
+            quality_threshold=QUALITY_THRESHOLD,
+        )
+        review_entry_id: str | None = None
+        if reasons:
+            entry = ReviewQueue().enqueue(
+                senior_id=senior_id,
+                transcript_path=transcript_path,
+                report_path=report_path,
+                scores=scores,
+                reasons=reasons,
+            )
+            review_entry_id = entry.id
+            console.print(Panel(
+                f"[bold yellow]Human review required[/bold yellow]\n"
+                f"Entry id: {entry.id}\nReasons:\n  - " + "\n  - ".join(reasons),
+                title="Phase 6: Review queue",
+            ))
+            audit.record(
+                "review_enqueued",
+                actor="manager",
+                senior_id=senior_id,
+                details={"entry_id": entry.id, "reasons": reasons},
+            )
+
         audit.record(
             "call_completed",
             actor="manager",
             senior_id=senior_id,
-            details={"scores": scores, "skill_updates_applied": applied},
+            details={
+                "scores": scores,
+                "skill_updates_applied": applied,
+                "review_entry_id": review_entry_id,
+            },
         )
 
         return {
@@ -258,4 +323,6 @@ Output ONLY the new markdown content. No commentary, no fences."""
             "scores": scores,
             "skill_updates_applied": applied,
             "senior_notes_added": senior_notes,
+            "review_entry_id": review_entry_id,
+            "review_reasons": reasons,
         }
