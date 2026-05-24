@@ -115,6 +115,9 @@ data/
 | `python -m src review-queue show <id>` | Inspect a single review entry |
 | `python -m src review-queue approve <id> [--by] [--comment]` | Human approves the report |
 | `python -m src review-queue flag <id> [--by] [--comment]` | Human flags the entry for follow-up |
+| `python -m src twilio-call <senior-id> [--dry-run]` | Place an outbound wellness call via Twilio |
+| `python -m src twilio-serve [--port 8000]` | Run the FastAPI webhook server for Twilio call flow |
+| `python -m src twilio-calls [--status ...]` | List staged / live / completed telephony calls |
 
 ## Voice mode (Phase 2)
 
@@ -138,6 +141,55 @@ Prerequisites:
    ```
 
 After the Operator finishes speaking, the system listens until you stop talking (~1.6 s of silence). Polish is supported end-to-end (`eleven_multilingual_v2` for TTS, Whisper auto-detects but uses the senior's `language` field).
+
+## Telephony / Real Phone Calls (Phase 3)
+
+The same call cycle, but routed through Twilio's PSTN so the Operator actually phones the senior. Architecture:
+
+1. `twilio-call <senior-id>` stages a `CallState` and asks Twilio (via REST) to dial.
+2. When the call connects, Twilio POSTs to `/twilio/start`. We synthesize the disclosure + greeting via ElevenLabs to an MP3, return TwiML with `<Play>` + `<Record>`.
+3. After each `<Record>`, Twilio POSTs the recording URL to `/twilio/turn`. We download the WAV, transcribe with Whisper, run the same withdrawal detector + Operator turn loop as in voice mode, return next `<Play>` + `<Record>` (or `<Hangup/>`).
+4. `/twilio/status` fires when the call ends and hands the captured history to `ManagerAgent.finalize_call` for the standard review/skill-update/report/review-queue pipeline.
+
+### Setup
+
+1. Install deps:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+2. Fill out the Twilio block in `.env` (see `.env.example`): `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`, `TELEPHONY_PUBLIC_URL`.
+3. Add `phone_number` (E.164, e.g. `+48123456789`) to the senior's `data/seniors/<id>/profile.json`.
+4. In dev, expose your local server publicly via ngrok:
+   ```powershell
+   ngrok http 8000
+   # paste the https URL into TELEPHONY_PUBLIC_URL in .env (no trailing slash)
+   ```
+5. Run the webhook server in one terminal, place the call in another:
+   ```powershell
+   python -m src twilio-serve --port 8000
+   python -m src twilio-call jadwiga-001
+   ```
+
+### Dry-run mode (no Twilio account needed)
+
+If any of the four required env vars is missing, `twilio-call` automatically runs in dry-run: it stages the `CallState`, prints what would have been sent to Twilio, and returns. The webhook server still runs and is testable via `curl` — useful for end-to-end testing of the FastAPI handlers without a real PSTN call.
+
+```powershell
+python -m src twilio-call jadwiga-001 --dry-run
+```
+
+### Compliance integration
+
+- The pre-call gate is the same as `call`: `consent.status` must be `granted` and required scopes (`transcribe`, `store_transcript`) must be covered.
+- If `record_audio` scope is **not** granted, the recorded WAV is deleted from Twilio (REST `DELETE`) and from local disk immediately after Whisper transcription. Only the redacted transcript stays.
+- AMD (answering machine detection) prevents talking to a voicemail box — TwiML responds with `<Hangup/>` and the call is audited as `telephony_voicemail_aborted`.
+- Webhook signature: every Twilio request is verified against `TWILIO_AUTH_TOKEN` via HMAC-SHA1. In dry-run / dev (no token) verification is skipped with a warning.
+
+### Limitations
+
+- Each turn is a sequential REST round-trip (TwiML → Twilio → Record → webhook → STT → LLM → TTS → TwiML). Latency is ~2-4 s per turn. For lower latency, Phase 3.1 will use Twilio Media Streams + WebSocket.
+- Outbound only. Inbound (senior calls us) is not implemented yet.
+- Skill updates after a telephony call require `train_on_transcripts` consent, same as text mode.
 
 ## Compliance (Phase 2.5 + 2.6)
 
@@ -202,8 +254,9 @@ python -m src review-queue approve <id> --by piotr --comment "Looks good"
 - ✅ **Polish:** Multi-language ready (PL tested)
 - ✅ **Phase 2.5:** Compliance foundations — consent gate, retention, audit log, redaction, RODO reviewer
 - ✅ **Phase 2.6:** Disclosure skill, granular scopes (health / training), mid-call withdrawal, human-review queue
-- **Phase 3 (next):** Twilio integration — real phone calls
-- **Phase 4:** Scheduling, family dashboard, event bus
+- ✅ **Phase 3.0:** Twilio outbound — TwiML `<Play>`/`<Record>` per-turn loop, dry-run mode, AMD, webhook signature verification
+- **Phase 3.1 (next):** Twilio Media Streams (WebSocket, real-time, ~200ms latency)
+- **Phase 4:** Scheduling, family dashboard, event bus, inbound calls
 
 ## Configuration
 

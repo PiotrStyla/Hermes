@@ -194,6 +194,47 @@ Output ONLY the new markdown content. No commentary, no fences."""
         )
         history = session.run(profile)
 
+        return self.finalize_call(
+            senior_id=senior_id,
+            history=history,
+            prior_call_count=prior_call_count,
+            training_consent=training_consent,
+            console=console,
+        )
+
+    def finalize_call(
+        self,
+        senior_id: str,
+        history: list[dict[str, str]],
+        prior_call_count: int,
+        training_consent: bool,
+        console: Console | None = None,
+    ) -> dict[str, Any]:
+        """Run the post-call pipeline: transcript → review → skills → report → queue.
+
+        This is the part of `run_call_cycle` that runs *after* the conversation
+        has been captured. The telephony layer calls it directly because it
+        already produced the history via Twilio webhooks.
+        """
+        from ..conversation.transcript import format_transcript
+        from ..reports.generator import ReportGenerator
+        from ..compliance import (
+            AuditLog,
+            ConsentStatus,
+            ConsentStore,
+            ReviewQueue,
+            redact_pii,
+        )
+
+        console = console or Console()
+        store = SeniorStore()
+        loader = SkillsLoader()
+        updater = SkillsUpdater()
+        audit = AuditLog()
+        consent_store = ConsentStore()
+
+        profile = store.load(senior_id)
+
         transcript_md = format_transcript(profile.name, history)
         transcript_path = store.save_transcript(senior_id, transcript_md)
         console.print(f"[green]Transcript saved:[/green] {transcript_path}")

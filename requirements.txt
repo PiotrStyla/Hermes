@@ -8,3 +8,9 @@ rich>=13.0.0
 elevenlabs>=1.10.0
 sounddevice>=0.5.0
 numpy>=1.26.0
+
+# Telephony (Phase 3 — only required for `twilio-*` commands)
+twilio>=9.3.0
+fastapi>=0.115.0
+uvicorn>=0.32.0
+python-multipart>=0.0.9  # FastAPI form parsing (Twilio webhooks send form-encoded)

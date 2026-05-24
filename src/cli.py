@@ -329,6 +329,79 @@ def cmd_review_flag(args: argparse.Namespace) -> int:
     return _decide(args, "flagged")
 
 
+# ---- Telephony commands (Phase 3) ----
+
+
+def cmd_twilio_call(args: argparse.Namespace) -> int:
+    from .telephony.runner import start_outbound_call
+
+    try:
+        result = start_outbound_call(
+            args.senior_id,
+            dry_run=args.dry_run,
+            allow_no_consent=args.allow_no_consent,
+            console=console,
+        )
+    except (PermissionError, RuntimeError) as e:
+        console.print(f"[red]{e}[/red]")
+        return 1
+    if result["missing_env"]:
+        console.print(
+            f"[yellow]⚠ Missing env vars (real call would have failed): "
+            f"{result['missing_env']}[/yellow]"
+        )
+    console.print(
+        f"[green]Outbound staged.[/green] call_id={result['call_id']} "
+        f"sid={result['twilio_call_sid']} dry_run={result['dry_run']}"
+    )
+    return 0
+
+
+def cmd_twilio_serve(args: argparse.Namespace) -> int:
+    import uvicorn
+
+    from .telephony.server import create_app
+
+    app = create_app(console=console)
+    console.print(
+        f"[green]Starting Hermes telephony server on "
+        f"http://{args.host}:{args.port}[/green]"
+    )
+    console.print(
+        "[dim]Webhook URLs Twilio should hit (after `ngrok http "
+        f"{args.port}` or equivalent):[/dim]\n"
+        f"  POST  /twilio/start\n  POST  /twilio/turn\n  POST  /twilio/status\n"
+        "  GET   /twilio/audio/<call_sid>/<filename>\n"
+        "  GET   /health"
+    )
+    uvicorn.run(app, host=args.host, port=args.port, log_level="info")
+    return 0
+
+
+def cmd_twilio_calls(args: argparse.Namespace) -> int:
+    from .telephony.session import CallStateStore
+
+    states = CallStateStore().list(status=args.status)
+    if not states:
+        console.print("[yellow]No telephony calls on file.[/yellow]")
+        return 0
+    table = Table(title="Telephony calls")
+    for col in ("CallSid", "Senior", "Status", "Started", "Ended", "Turns", "Reason"):
+        table.add_column(col)
+    for s in states:
+        table.add_row(
+            s.call_sid,
+            s.senior_id,
+            s.status,
+            s.started_at,
+            s.ended_at or "",
+            str(s.turn_count),
+            s.end_reason or "",
+        )
+    console.print(table)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="hermes-elderly-care",
@@ -460,6 +533,47 @@ def build_parser() -> argparse.ArgumentParser:
     rq_flag.add_argument("--by", help="Reviewer name / identifier.")
     rq_flag.add_argument("--comment", help="Optional decision notes.")
     rq_flag.set_defaults(func=cmd_review_flag)
+
+    # ---- Telephony (Phase 3) ----
+
+    p_tcall = sub.add_parser(
+        "twilio-call",
+        help="Place an outbound wellness call via Twilio (or dry-run).",
+    )
+    p_tcall.add_argument("senior_id")
+    p_tcall.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Force dry-run mode even if Twilio creds are present.",
+    )
+    p_tcall.add_argument(
+        "--allow-no-consent",
+        action="store_true",
+        help="DEV ONLY: bypass missing consent scopes.",
+    )
+    p_tcall.set_defaults(func=cmd_twilio_call)
+
+    p_tserve = sub.add_parser(
+        "twilio-serve",
+        help="Run the FastAPI webhook server that handles Twilio call flow.",
+    )
+    p_tserve.add_argument("--host", default="0.0.0.0")
+    p_tserve.add_argument("--port", type=int, default=8000)
+    p_tserve.set_defaults(func=cmd_twilio_serve)
+
+    p_tcalls = sub.add_parser(
+        "twilio-calls",
+        help="List staged / live / completed telephony calls.",
+    )
+    p_tcalls.add_argument(
+        "--status",
+        choices=[
+            "initiated", "ringing", "in_progress", "completed",
+            "failed", "busy", "no-answer", "canceled", "voicemail",
+        ],
+        help="Filter by status.",
+    )
+    p_tcalls.set_defaults(func=cmd_twilio_calls)
 
     return parser
 

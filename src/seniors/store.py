@@ -36,6 +36,7 @@ class SeniorProfile:
     preferences: dict[str, Any]
     family_contact: dict[str, str]
     notes: str
+    phone_number: str = ""  # E.164 format (e.g., +48123456789). PII — never log/commit.
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "SeniorProfile":
@@ -49,6 +50,7 @@ class SeniorProfile:
             preferences=data.get("preferences", {}),
             family_contact=data.get("family_contact", {}),
             notes=data.get("notes", ""),
+            phone_number=data.get("phone_number", ""),
         )
 
     def to_summary(self) -> str:

@@ -32,5 +32,8 @@ data/audit/
 # Human review queue entries — reference per-senior data, do not commit
 data/review_queue/
 
+# Per-call telephony state (history, audio, recordings) — contains PII, do not commit
+data/calls/
+
 # Versioned skill snapshots (regenerated as system runs)
 data/skills/operator/_versions/
