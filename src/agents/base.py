@@ -8,6 +8,8 @@ from typing import Any
 
 from openai import OpenAI, APIStatusError
 
+from ..llm import apply_prompt_cache
+
 
 class BaseAgent:
     """Base class for all agents in the multi-agent system.
@@ -95,14 +97,25 @@ class BaseAgent:
 
     def chat(
         self,
-        messages: list[dict[str, str]],
+        messages: list[dict[str, Any]],
         temperature: float | None = None,
         max_tokens: int | None = None,
+        cache_system_prompt: bool = False,
+        cache_ttl: str = "1h",
     ) -> str:
         """Send a list of messages and return the assistant reply.
 
         Used for multi-turn conversations where the caller manages history.
+
+        When `cache_system_prompt=True`, the system message is rewritten into
+        Anthropic-style structured blocks with `cache_control` markers (the
+        helper is a no-op for non-Anthropic models, so it's always safe to
+        enable). Use `cache_ttl="5m"` or `"1h"` (1h is recommended for
+        skills-heavy agents — see `src/llm/prompt_cache.py`).
         """
+        if cache_system_prompt:
+            messages = apply_prompt_cache(messages, self.model, ttl=cache_ttl)
+
         max_retries = 3
         last_error: APIStatusError | None = None
 

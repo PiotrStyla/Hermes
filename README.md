@@ -255,6 +255,7 @@ python -m src review-queue approve <id> --by piotr --comment "Looks good"
 - ✅ **Phase 2.5:** Compliance foundations — consent gate, retention, audit log, redaction, RODO reviewer
 - ✅ **Phase 2.6:** Disclosure skill, granular scopes (health / training), mid-call withdrawal, human-review queue
 - ✅ **Phase 3.0:** Twilio outbound — TwiML `<Play>`/`<Record>` per-turn loop, dry-run mode, AMD, webhook signature verification
+- ✅ **Anthropic prompt cache (1h TTL)** — Operator/Supervisor system prompts split into stable + dynamic blocks; cache markers emitted only for `anthropic/*` models, no-op everywhere else
 - **Phase 3.1 (next):** Twilio Media Streams (WebSocket, real-time, ~200ms latency)
 - **Phase 4:** Scheduling, family dashboard, event bus, inbound calls
 

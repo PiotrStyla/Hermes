@@ -8,6 +8,7 @@ import re
 from typing import Any
 
 from .base import BaseAgent
+from ..llm import apply_prompt_cache
 
 
 class SupervisorAgent(BaseAgent):
@@ -100,24 +101,28 @@ Return your JSON evaluation now."""
         raw = self._chat_json(messages)
         return self._parse_json(raw)
 
-    def _chat_json(self, messages: list[dict[str, str]]) -> str:
+    def _chat_json(self, messages: list[dict[str, Any]]) -> str:
         """Send a chat completion that asks the model to return strict JSON.
 
         Tries response_format=json_object first (most providers); if the model
         rejects it, falls back to plain chat (the prompt itself still asks for
         JSON-only output).
+
+        The Supervisor's `system_prompt` (rubric + JSON schema) is identical
+        across every transcript, so we cache it on Anthropic models.
         """
+        cached = apply_prompt_cache(messages, self.model, ttl="1h")
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
-                messages=messages,
+                messages=cached,
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
                 response_format={"type": "json_object"},
             )
             return response.choices[0].message.content or ""
         except Exception:
-            return self.chat(messages)
+            return self.chat(messages, cache_system_prompt=True, cache_ttl="1h")
 
     @staticmethod
     def _parse_json(text: str) -> dict[str, Any]:

@@ -16,3 +16,9 @@ _This file is auto-updated by the Supervisor after each call with notes specific
 
 - Senior ended call abruptly with 'KONIEC!'
 - May prefer short calls or was not in the mood to talk today
+
+## 2026-05-24 14:57
+
+- Mentioned going to church today
+- Has grandchildren Zosia and Hania
+- Had possible background noise from TV/radio during call
