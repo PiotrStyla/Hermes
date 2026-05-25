@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Seniors{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-800">Seniors</h1>
+  {% if pending_review > 0 %}
+  <a href="/review" class="inline-flex items-center gap-2 bg-amber-100 text-amber-800 border border-amber-300 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-200 transition">
+    ⚠ {{ pending_review }} pending review{{ "s" if pending_review != 1 else "" }}
+  </a>
+  {% endif %}
+</div>
+
+{% if seniors %}
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {% for s in seniors %}
+  <a href="/seniors/{{ s.id }}" class="block bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md hover:border-indigo-300 transition group">
+    <div class="flex items-start justify-between mb-3">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-700 transition">{{ s.name }}</h2>
+        <p class="text-sm text-gray-500">{{ s.age }} y/o &middot; {{ s.language.upper() }}</p>
+      </div>
+      <!-- Consent badge -->
+      {% if s.consent_status == "granted" %}
+        <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Consent ✓</span>
+      {% elif s.consent_status == "revoked" %}
+        <span class="text-xs font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Revoked</span>
+      {% elif s.consent_status == "declined" %}
+        <span class="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Declined</span>
+      {% else %}
+        <span class="text-xs font-medium bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">No consent</span>
+      {% endif %}
+    </div>
+
+    <!-- Score pills -->
+    {% if s.last_scores %}
+    <div class="flex flex-wrap gap-1 mb-3">
+      {% for axis, val in s.last_scores.items() %}
+      <span class="text-xs px-2 py-0.5 rounded-full
+        {% if val >= 8 %}bg-green-50 text-green-700
+        {% elif val >= 6 %}bg-yellow-50 text-yellow-700
+        {% else %}bg-red-50 text-red-700{% endif %}">
+        {{ axis[:3] }} {{ val }}
+      </span>
+      {% endfor %}
+      <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-semibold">avg {{ s.last_avg }}</span>
+    </div>
+    {% endif %}
+
+    <div class="text-xs text-gray-400 flex items-center justify-between">
+      <span>{{ s.call_count }} call{{ "s" if s.call_count != 1 else "" }}</span>
+      <span>{% if s.last_call %}Last: {{ s.last_call }}{% else %}No calls yet{% endif %}</span>
+    </div>
+
+    {% if s.schedule %}
+    <p class="mt-2 text-xs text-indigo-600 truncate">⏰ {{ s.schedule }}</p>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="text-center py-20 text-gray-400">
+  <p class="text-5xl mb-4">🪶</p>
+  <p class="text-lg font-medium">No seniors yet.</p>
+  <p class="text-sm mt-1">Add one with <code class="bg-gray-100 px-1 rounded">hermes add-senior</code>.</p>
+</div>
+{% endif %}
+{% endblock %}

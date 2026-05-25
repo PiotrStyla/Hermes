@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Schedule{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-800">Call Schedules</h1>
+  <p class="text-sm text-gray-400">Managed via <code class="bg-gray-100 px-1 rounded">hermes schedule set</code></p>
+</div>
+
+{% if schedules %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-xs text-gray-400 uppercase tracking-wide bg-gray-50 border-b">
+        <th class="text-left px-4 py-3">Senior</th>
+        <th class="text-left px-4 py-3">Time</th>
+        <th class="text-left px-4 py-3">Timezone</th>
+        <th class="text-left px-4 py-3">Days</th>
+        <th class="text-center px-4 py-3">Status</th>
+        <th class="text-left px-4 py-3">Updated</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      {% for s in schedules %}
+      <tr class="hover:bg-gray-50 transition">
+        <td class="px-4 py-3 font-medium">
+          <a href="/seniors/{{ s.senior_id }}" class="hover:text-indigo-600 transition">{{ s.senior_id }}</a>
+        </td>
+        <td class="px-4 py-3 font-mono font-semibold text-indigo-700">{{ s.call_time }}</td>
+        <td class="px-4 py-3 text-gray-600">{{ s.timezone }}</td>
+        <td class="px-4 py-3">
+          <div class="flex gap-1 flex-wrap">
+            {% for day in s.days_of_week %}
+            <span class="text-xs bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-medium">{{ day }}</span>
+            {% endfor %}
+          </div>
+        </td>
+        <td class="px-4 py-3 text-center">
+          {% if s.enabled %}
+          <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold">enabled</span>
+          {% else %}
+          <span class="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-semibold">disabled</span>
+          {% endif %}
+        </td>
+        <td class="px-4 py-3 text-xs text-gray-400 font-mono">{{ s.updated_at[:16] if s.updated_at else "—" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-6 bg-indigo-50 border border-indigo-200 rounded-xl p-5 text-sm text-indigo-800">
+  <p class="font-semibold mb-1">Starting the daemon</p>
+  <code class="block bg-indigo-100 px-3 py-2 rounded font-mono text-xs mt-1">hermes scheduler start</code>
+  <p class="mt-2 text-indigo-600 text-xs">or fire all calls now: <code class="bg-indigo-100 px-1 rounded">hermes scheduler start --once</code></p>
+</div>
+
+{% else %}
+<div class="text-center py-20 text-gray-400">
+  <p class="text-5xl mb-4">📅</p>
+  <p class="text-lg font-medium">No schedules configured.</p>
+  <p class="mt-2 text-sm">
+    <code class="bg-gray-100 px-2 py-1 rounded">hermes schedule set &lt;senior-id&gt; --time 10:00 --timezone Europe/Warsaw</code>
+  </p>
+</div>
+{% endif %}
+{% endblock %}

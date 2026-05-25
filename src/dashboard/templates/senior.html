@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.name }}{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <a href="/" class="text-sm text-indigo-600 hover:underline">← All seniors</a>
+</div>
+
+<div class="grid lg:grid-cols-3 gap-6">
+
+  <!-- Left: Profile card -->
+  <div class="lg:col-span-1 space-y-4">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ profile.name }}</h1>
+      <p class="text-sm text-gray-500 mb-4">{{ profile.age }} y/o &middot; {{ profile.language.upper() }}</p>
+
+      {% if profile.conditions %}
+      <div class="mb-3">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Conditions</p>
+        <div class="flex flex-wrap gap-1">
+          {% for c in profile.conditions %}
+          <span class="text-xs bg-red-50 text-red-700 px-2 py-0.5 rounded-full">{{ c }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if profile.medications %}
+      <div class="mb-3">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Medications</p>
+        <div class="flex flex-wrap gap-1">
+          {% for m in profile.medications %}
+          <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">{{ m }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="mb-3">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Consent</p>
+        {% set cs = consent.status.value %}
+        {% if cs == "granted" %}
+          <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Granted ✓</span>
+        {% elif cs == "revoked" %}
+          <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full font-medium">Revoked</span>
+        {% else %}
+          <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">{{ cs }}</span>
+        {% endif %}
+      </div>
+
+      {% if schedule %}
+      <div>
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Schedule</p>
+        <p class="text-sm text-indigo-700">⏰ {{ schedule.call_time }} {{ schedule.timezone }}</p>
+        <p class="text-xs text-gray-500">{{ schedule.apscheduler_day_of_week }}</p>
+        {% if not schedule.enabled %}
+        <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">disabled</span>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Recent reports -->
+    {% if reports %}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+      <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Recent Reports</h2>
+      <ul class="space-y-1">
+        {% for r in reports[:8] %}
+        <li>
+          <span class="text-xs text-gray-600 font-mono">{{ r.name | replace(".md","") }}</span>
+        </li>
+        {% endfor %}
+        {% if reports | length > 8 %}
+        <li class="text-xs text-gray-400">+{{ reports | length - 8 }} more</li>
+        {% endif %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Right: Score chart + history -->
+  <div class="lg:col-span-2 space-y-4">
+
+    {% if records %}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h2 class="text-base font-semibold text-gray-700 mb-4">Score Trend</h2>
+      <canvas id="scoreChart" height="100"></canvas>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h2 class="text-base font-semibold text-gray-700 mb-4">Call History</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-xs text-gray-400 uppercase tracking-wide border-b">
+              <th class="text-left py-2 pr-4">Date</th>
+              <th class="text-center py-2 px-2">Warmth</th>
+              <th class="text-center py-2 px-2">Listen</th>
+              <th class="text-center py-2 px-2">Info</th>
+              <th class="text-center py-2 px-2">Brevity</th>
+              <th class="text-center py-2 px-2">Avg</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in records | reverse %}
+            {% set sc = r.scores %}
+            {% set vals = sc.values() | list %}
+            {% set avg = (vals | sum / vals | length) | round(1) if vals else "-" %}
+            <tr class="border-b border-gray-50 hover:bg-gray-50">
+              <td class="py-2 pr-4 text-gray-600 font-mono text-xs">{{ r.date[:16] }}</td>
+              {% for ax in ["warmth", "listening", "info_quality", "brevity"] %}
+              {% set v = sc.get(ax) %}
+              <td class="text-center py-2 px-2">
+                {% if v is not none %}
+                <span class="font-semibold {% if v >= 8 %}text-green-600{% elif v >= 6 %}text-yellow-600{% else %}text-red-600{% endif %}">{{ v }}</span>
+                {% else %}—{% endif %}
+              </td>
+              {% endfor %}
+              <td class="text-center py-2 px-2 font-bold text-indigo-600">{{ avg }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-10 text-center text-gray-400">
+      <p class="text-4xl mb-3">📞</p>
+      <p class="font-medium">No calls recorded yet.</p>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% if records %}
+<script>
+const labels = {{ chart_labels | safe }};
+const datasets = {{ chart_datasets | safe }};
+const colors = {
+  warmth:       { border: "#6366f1", bg: "rgba(99,102,241,0.1)" },
+  listening:    { border: "#10b981", bg: "rgba(16,185,129,0.1)" },
+  info_quality: { border: "#f59e0b", bg: "rgba(245,158,11,0.1)" },
+  brevity:      { border: "#ef4444", bg: "rgba(239,68,68,0.1)" },
+};
+const chartDatasets = Object.entries(datasets).map(([key, data]) => ({
+  label: key.replace("_", " "),
+  data,
+  borderColor: colors[key]?.border ?? "#888",
+  backgroundColor: colors[key]?.bg ?? "rgba(136,136,136,0.1)",
+  borderWidth: 2,
+  pointRadius: 4,
+  tension: 0.3,
+  fill: false,
+}));
+new Chart(document.getElementById("scoreChart"), {
+  type: "line",
+  data: { labels, datasets: chartDatasets },
+  options: {
+    scales: { y: { min: 0, max: 10, ticks: { stepSize: 2 } } },
+    plugins: { legend: { position: "bottom" } },
+  },
+});
+</script>
+{% endif %}
+{% endblock %}

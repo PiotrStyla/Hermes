@@ -12,6 +12,9 @@ numpy>=1.26.0
 # Scheduling (Phase 4 — only required for `scheduler start` / `schedule *` commands)
 apscheduler>=3.10.0
 
+# Dashboard (Phase 4 — only required for `dashboard` command)
+jinja2>=3.1.0
+
 # Telephony (Phase 3 — only required for `twilio-*` commands)
 twilio>=9.3.0
 fastapi>=0.115.0

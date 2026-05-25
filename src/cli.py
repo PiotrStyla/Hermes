@@ -405,6 +405,18 @@ def cmd_scheduler_start(args: argparse.Namespace) -> int:
     return 0
 
 
+# ---- Dashboard (Phase 4) ----
+
+
+def cmd_dashboard(args: argparse.Namespace) -> int:
+    import uvicorn
+    from .dashboard.app import create_app
+    app = create_app()
+    console.print(f"[bold green]Dashboard running at http://{args.host}:{args.port}[/bold green]")
+    uvicorn.run(app, host=args.host, port=args.port)
+    return 0
+
+
 # ---- Telephony commands (Phase 3) ----
 
 
@@ -696,6 +708,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Filter by status.",
     )
     p_tcalls.set_defaults(func=cmd_twilio_calls)
+
+    # ---- Dashboard (Phase 4) ----
+    p_dash = sub.add_parser(
+        "dashboard",
+        help="Start the family dashboard web UI.",
+    )
+    p_dash.add_argument("--host", default="127.0.0.1")
+    p_dash.add_argument("--port", type=int, default=8080)
+    p_dash.set_defaults(func=cmd_dashboard)
 
     return parser
 

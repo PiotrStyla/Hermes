@@ -347,6 +347,13 @@ Output ONLY the new markdown content. No commentary, no fences."""
                 details={"entry_id": entry.id, "reasons": reasons},
             )
 
+        store.save_call_record(
+            senior_id,
+            scores=scores,
+            report_path=report_path,
+            transcript_path=transcript_path,
+        )
+
         audit.record(
             "call_completed",
             actor="manager",

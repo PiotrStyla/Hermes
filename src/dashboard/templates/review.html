@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Review Queue{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-800">Human Review Queue</h1>
+  <div class="flex gap-2 text-sm">
+    {% for s, label in [("pending","Pending"), ("approved","Approved"), ("flagged","Flagged"), ("all","All")] %}
+    <a href="/review?status={{ s }}"
+       class="px-3 py-1 rounded-full border transition
+              {% if current_status == s %}bg-indigo-600 text-white border-indigo-600{% else %}bg-white text-gray-600 border-gray-300 hover:border-indigo-400{% endif %}">
+      {{ label }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% if entries %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="text-xs text-gray-400 uppercase tracking-wide bg-gray-50 border-b">
+        <th class="text-left px-4 py-3">Senior</th>
+        <th class="text-left px-4 py-3">Created</th>
+        <th class="text-left px-4 py-3">Reasons</th>
+        <th class="text-center px-4 py-3">Scores</th>
+        <th class="text-center px-4 py-3">Status</th>
+        {% if current_status == "pending" or current_status == "all" %}
+        <th class="text-center px-4 py-3">Action</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      {% for e in entries %}
+      <tr id="row-{{ e.id }}" class="hover:bg-gray-50 transition">
+        <td class="px-4 py-3 font-medium text-gray-800">
+          <a href="/seniors/{{ e.senior_id }}" class="hover:text-indigo-600">{{ e.senior_id }}</a>
+        </td>
+        <td class="px-4 py-3 text-gray-500 font-mono text-xs">{{ e.created_at[:16] }}</td>
+        <td class="px-4 py-3">
+          <ul class="space-y-0.5">
+            {% for r in e.reasons %}
+            <li class="text-xs text-gray-600">
+              {% if "onboarding" in r %}🔰{% elif "low_score" in r %}📉{% elif "consent" in r %}⚠{% endif %}
+              {{ r }}
+            </li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td class="px-4 py-3 text-center">
+          {% if e.scores %}
+          <div class="flex justify-center gap-1 flex-wrap">
+            {% for ax, v in e.scores.items() %}
+            <span class="text-xs px-1.5 py-0.5 rounded
+              {% if v >= 8 %}bg-green-50 text-green-700
+              {% elif v >= 6 %}bg-yellow-50 text-yellow-700
+              {% else %}bg-red-50 text-red-700{% endif %}">
+              {{ ax[:3] }}:{{ v }}
+            </span>
+            {% endfor %}
+          </div>
+          {% else %}—{% endif %}
+        </td>
+        <td class="px-4 py-3 text-center" id="status-{{ e.id }}">
+          {% if e.status == "pending" %}
+            <span class="px-2 py-1 rounded text-xs font-semibold bg-amber-100 text-amber-800">PENDING</span>
+          {% elif e.status == "approved" %}
+            <span class="px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-800">APPROVED</span>
+          {% else %}
+            <span class="px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-800">FLAGGED</span>
+          {% endif %}
+        </td>
+        {% if current_status == "pending" or current_status == "all" %}
+        <td class="px-4 py-3 text-center">
+          {% if e.status == "pending" %}
+          <div class="flex justify-center gap-2">
+            <button
+              hx-post="/review/{{ e.id }}/decide"
+              hx-vals='{"action":"approved","comment":""}'
+              hx-target="#status-{{ e.id }}"
+              hx-swap="innerHTML"
+              class="text-xs px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded transition font-medium">
+              Approve
+            </button>
+            <button
+              hx-post="/review/{{ e.id }}/decide"
+              hx-vals='{"action":"flagged","comment":""}'
+              hx-target="#status-{{ e.id }}"
+              hx-swap="innerHTML"
+              class="text-xs px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded transition font-medium">
+              Flag
+            </button>
+          </div>
+          {% else %}
+          <span class="text-xs text-gray-400">{{ e.decided_by or "" }}</span>
+          {% endif %}
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="text-center py-20 text-gray-400">
+  <p class="text-5xl mb-4">✅</p>
+  <p class="text-lg font-medium">
+    {% if current_status == "pending" %}No pending reviews.{% else %}Queue is empty.{% endif %}
+  </p>
+</div>
+{% endif %}
+{% endblock %}

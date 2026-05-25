@@ -5,6 +5,7 @@ Each senior lives in `data/seniors/<senior-id>/` with:
 - transcripts/<timestamp>.md
 - reports/<timestamp>.md
 - learnings/notes.md
+- call_records.json   (append-only list of per-call metadata + scores)
 
 The persona file lives in `data/personas/<senior-id>.md`.
 """
@@ -135,6 +136,40 @@ class SeniorStore:
     def list_reports(self, senior_id: str) -> list[Path]:
         d = self.base_dir / senior_id / "reports"
         return sorted(d.glob("*.md")) if d.exists() else []
+
+    def save_call_record(
+        self,
+        senior_id: str,
+        scores: dict,
+        report_path: Path | None = None,
+        transcript_path: Path | None = None,
+    ) -> None:
+        """Append one call metadata entry (used by the dashboard for score history)."""
+        path = self.base_dir / senior_id / "call_records.json"
+        records: list[dict] = []
+        if path.exists():
+            try:
+                records = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:  # noqa: BLE001
+                records = []
+        records.append({
+            "date": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            "scores": dict(scores),
+            "report": str(report_path) if report_path else None,
+            "transcript": str(transcript_path) if transcript_path else None,
+        })
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(records, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    def list_call_records(self, senior_id: str) -> list[dict]:
+        """Return all saved call records for this senior (oldest first)."""
+        path = self.base_dir / senior_id / "call_records.json"
+        if not path.exists():
+            return []
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            return []
 
     # ---- Internal ----
 
