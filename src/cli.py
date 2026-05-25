@@ -18,6 +18,8 @@ from .compliance import (
     ReviewQueue,
 )
 from .compliance.consent import DEFAULT_SCOPES
+from .scheduling.store import ScheduleStore
+from .scheduling.schedule import DAYS_OF_WEEK
 from .seniors.store import SeniorStore
 from .skills.loader import SkillsLoader
 
@@ -329,6 +331,80 @@ def cmd_review_flag(args: argparse.Namespace) -> int:
     return _decide(args, "flagged")
 
 
+# ---- Scheduling commands (Phase 4) ----
+
+
+def cmd_schedule_set(args: argparse.Namespace) -> int:
+    days = [d.strip() for d in args.days.split(",")] if args.days else None
+    try:
+        s = ScheduleStore().set(
+            args.senior_id,
+            call_time=args.time,
+            timezone=args.timezone,
+            days_of_week=days,
+        )
+    except (ValueError, FileNotFoundError) as e:
+        console.print(f"[red]{e}[/red]")
+        return 1
+    console.print(f"[green]Schedule saved:[/green] {s.summary()}")
+    return 0
+
+
+def cmd_schedule_list(args: argparse.Namespace) -> int:
+    schedules = ScheduleStore().list_all()
+    if not schedules:
+        console.print("[yellow]No call schedules configured.[/yellow]")
+        return 0
+    table = Table(title="Call schedules")
+    table.add_column("Senior ID")
+    table.add_column("Time")
+    table.add_column("Timezone")
+    table.add_column("Days")
+    table.add_column("Enabled")
+    for s in schedules:
+        table.add_row(
+            s.senior_id, s.call_time, s.timezone,
+            s.apscheduler_day_of_week,
+            "[green]yes[/green]" if s.enabled else "[red]no[/red]",
+        )
+    console.print(table)
+    return 0
+
+
+def cmd_schedule_remove(args: argparse.Namespace) -> int:
+    removed = ScheduleStore().remove(args.senior_id)
+    if removed:
+        console.print(f"[green]Schedule removed for {args.senior_id}.[/green]")
+    else:
+        console.print(f"[yellow]No schedule found for {args.senior_id}.[/yellow]")
+    return 0
+
+
+def _toggle_schedule(senior_id: str, enabled: bool) -> int:
+    try:
+        s = ScheduleStore().set_enabled(senior_id, enabled)
+    except FileNotFoundError as e:
+        console.print(f"[red]{e}[/red]")
+        return 1
+    state = "[green]enabled[/green]" if enabled else "[yellow]disabled[/yellow]"
+    console.print(f"Schedule for {senior_id} is now {state}.")
+    return 0
+
+
+def cmd_schedule_enable(args: argparse.Namespace) -> int:
+    return _toggle_schedule(args.senior_id, True)
+
+
+def cmd_schedule_disable(args: argparse.Namespace) -> int:
+    return _toggle_schedule(args.senior_id, False)
+
+
+def cmd_scheduler_start(args: argparse.Namespace) -> int:
+    from .scheduling.daemon import start_daemon
+    start_daemon(once=args.once, console=console)
+    return 0
+
+
 # ---- Telephony commands (Phase 3) ----
 
 
@@ -533,6 +609,52 @@ def build_parser() -> argparse.ArgumentParser:
     rq_flag.add_argument("--by", help="Reviewer name / identifier.")
     rq_flag.add_argument("--comment", help="Optional decision notes.")
     rq_flag.set_defaults(func=cmd_review_flag)
+
+    # ---- Scheduling (Phase 4) ----
+
+    p_sched = sub.add_parser("schedule", help="Manage per-senior call schedules.")
+    sched_sub = p_sched.add_subparsers(dest="sched_cmd", required=True)
+
+    sc_set = sched_sub.add_parser("set", help="Create or update a senior's call schedule.")
+    sc_set.add_argument("senior_id")
+    sc_set.add_argument("--time", required=True, help="Call time in HH:MM (24h) format.")
+    sc_set.add_argument("--timezone", default="UTC", help="Olson timezone name, e.g. Europe/Warsaw.")
+    sc_set.add_argument(
+        "--days",
+        help=(
+            "Comma-separated days: mon,tue,wed,thu,fri,sat,sun. "
+            "Default: mon,tue,wed,thu,fri."
+        ),
+    )
+    sc_set.set_defaults(func=cmd_schedule_set)
+
+    sc_list = sched_sub.add_parser("list", help="List all configured call schedules.")
+    sc_list.set_defaults(func=cmd_schedule_list)
+
+    sc_rm = sched_sub.add_parser("remove", help="Remove a senior's call schedule.")
+    sc_rm.add_argument("senior_id")
+    sc_rm.set_defaults(func=cmd_schedule_remove)
+
+    sc_en = sched_sub.add_parser("enable", help="Enable a previously disabled schedule.")
+    sc_en.add_argument("senior_id")
+    sc_en.set_defaults(func=cmd_schedule_enable)
+
+    sc_dis = sched_sub.add_parser("disable", help="Disable a schedule without deleting it.")
+    sc_dis.add_argument("senior_id")
+    sc_dis.set_defaults(func=cmd_schedule_disable)
+
+    p_scheduler = sub.add_parser(
+        "scheduler",
+        help="Run the APScheduler daemon that fires scheduled calls.",
+    )
+    scheduler_sub = p_scheduler.add_subparsers(dest="scheduler_cmd", required=True)
+    sch_start = scheduler_sub.add_parser("start", help="Start the cron daemon.")
+    sch_start.add_argument(
+        "--once",
+        action="store_true",
+        help="Run all enabled calls immediately instead of starting a long-running daemon.",
+    )
+    sch_start.set_defaults(func=cmd_scheduler_start)
 
     # ---- Telephony (Phase 3) ----
 
