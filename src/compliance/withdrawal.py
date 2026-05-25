@@ -23,7 +23,7 @@ _PATTERNS = [
     re.compile(r"\bdon'?t\s+call\s+(?:me\s+)?again\b", re.IGNORECASE),
     re.compile(r"\bstop\s+calling\b", re.IGNORECASE),
     re.compile(r"\bremove\s+me\b", re.IGNORECASE),
-    re.compile(r"\bi\s+want\s+to\s+end\s+(?:this|the\s+call)\b", re.IGNORECASE),
+    re.compile(r"\bi\s+want\s+to\s+end\s+(?:this|the)\s+call\b", re.IGNORECASE),
     # Polish
     re.compile(r"\bwycofuj[eę]\s+(?:moj[ąa]\s+)?zgod[eę]\b", re.IGNORECASE),
     re.compile(r"\bnie\s+zgadzam\s+si[eę]\b", re.IGNORECASE),
