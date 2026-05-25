@@ -315,6 +315,26 @@ Output ONLY the new markdown content. No commentary, no fences."""
                 "redacted_chars": len(report_md_raw) - len(report_md),
             },
         )
+        # --- Phase 5b: email report to family ---
+        from ..notifications.email import EmailSender
+        family_email = profile.family_contact.get("email", "")
+        sent = EmailSender().send_report(
+            to_addr=family_email,
+            senior_name=profile.name,
+            report_md=report_md,
+            scores=scores,
+        )
+        if sent:
+            console.print(f"[green]Report emailed to:[/green] {family_email}")
+            audit.record(
+                "report_emailed",
+                actor="manager",
+                senior_id=senior_id,
+                details={"to": family_email},
+            )
+        elif family_email and not EmailSender().is_configured():
+            console.print("[yellow]Email not configured (SMTP_HOST/USER/PASSWORD not set) — skipping.[/yellow]")
+
         # --- Phase 6: human-in-the-loop review queue (AI Act high-risk) ---
         # Re-read consent: if it was revoked mid-call, force a review entry.
         post_consent = consent_store.load(senior_id)

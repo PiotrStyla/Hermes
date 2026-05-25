@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import time
 from typing import Any
@@ -9,6 +10,29 @@ from typing import Any
 from openai import OpenAI, APIStatusError
 
 from ..llm import apply_prompt_cache
+from ..llm.prompt_cache import is_anthropic_model
+
+log = logging.getLogger(__name__)
+
+
+def _log_cache_usage(response: Any, model: str) -> None:
+    """If the response carries Anthropic cache usage, log it at DEBUG level."""
+    if not is_anthropic_model(model):
+        return
+    usage = getattr(response, "usage", None)
+    if usage is None:
+        return
+    created = getattr(usage, "cache_creation_input_tokens", None)
+    read = getattr(usage, "cache_read_input_tokens", None)
+    if created or read:
+        log.debug(
+            "[cache] model=%s  created=%s  read=%s  input=%s  output=%s",
+            model,
+            created or 0,
+            read or 0,
+            getattr(usage, "prompt_tokens", "?"),
+            getattr(usage, "completion_tokens", "?"),
+        )
 
 
 class BaseAgent:
@@ -127,6 +151,7 @@ class BaseAgent:
                     temperature=temperature if temperature is not None else self.temperature,
                     max_tokens=max_tokens if max_tokens is not None else self.max_tokens,
                 )
+                _log_cache_usage(response, self.model)
                 return response.choices[0].message.content or ""
             except APIStatusError as e:
                 last_error = e

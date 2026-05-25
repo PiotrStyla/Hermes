@@ -113,6 +113,24 @@ class SeniorStore:
 
     # ---- Write ----
 
+    def save_profile(self, profile: SeniorProfile) -> Path:
+        path = self.base_dir / profile.id / "profile.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = {
+            "id": profile.id,
+            "name": profile.name,
+            "age": profile.age,
+            "language": profile.language,
+            "conditions": profile.conditions,
+            "medications": profile.medications,
+            "preferences": profile.preferences,
+            "family_contact": profile.family_contact,
+            "notes": profile.notes,
+            "phone_number": profile.phone_number,
+        }
+        path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+        return path
+
     def save_transcript(self, senior_id: str, content: str) -> Path:
         return self._save_timestamped(senior_id, "transcripts", content)
 

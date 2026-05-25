@@ -405,6 +405,143 @@ def cmd_scheduler_start(args: argparse.Namespace) -> int:
     return 0
 
 
+# ---- Onboarding wizard ----
+
+
+def cmd_onboard(args: argparse.Namespace) -> int:
+    """Interactive wizard that guides through setting up a new senior."""
+    from rich.prompt import Confirm, Prompt
+
+    from .compliance.consent import DEFAULT_SCOPES, SCOPE_PROCESS_HEALTH_DATA, SCOPE_TRAIN_ON_TRANSCRIPTS
+    from .notifications.email import EmailSender
+    from .seniors.store import SeniorProfile
+
+    console.rule("[bold]Hermes Onboarding Wizard[/bold]")
+    console.print("This wizard sets up a new senior and verifies your configuration.\n")
+
+    # ---- 1. Senior profile ----
+    console.rule("Step 1: Senior profile")
+    name = Prompt.ask("Full name")
+    senior_id = name.lower().replace(" ", "-")
+    age_str = Prompt.ask("Age", default="75")
+    try:
+        age = int(age_str)
+    except ValueError:
+        console.print("[red]Invalid age — must be a number.[/red]")
+        return 1
+    language = Prompt.ask("Language", default="pl", choices=["pl", "en", "de", "fr", "es"])
+    conditions_str = Prompt.ask("Medical conditions (comma-separated, or leave blank)", default="")
+    medications_str = Prompt.ask("Medications (comma-separated, or leave blank)", default="")
+    phone = Prompt.ask("Phone number E.164 e.g. +48123456789 (or leave blank)", default="")
+    fam_name = Prompt.ask("Family contact name")
+    fam_email = Prompt.ask("Family contact email")
+
+    store = SeniorStore()
+    if store.exists(senior_id):
+        from rich.prompt import Confirm as _C
+        if not _C.ask(f"[yellow]Senior {senior_id!r} already exists. Overwrite?[/yellow]"):
+            console.print("Aborted.")
+            return 1
+
+    profile = SeniorProfile(
+        id=senior_id,
+        name=name,
+        age=age,
+        language=language,
+        conditions=[c.strip() for c in conditions_str.split(",") if c.strip()],
+        medications=[m.strip() for m in medications_str.split(",") if m.strip()],
+        preferences={"tone": "warm and friendly"},
+        family_contact={"name": fam_name, "email": fam_email},
+        notes="",
+        phone_number=phone,
+    )
+    store.save_profile(profile)
+    console.print(f"[green]✓ Profile saved:[/green] {senior_id}")
+
+    # ---- 2. Consent ----
+    console.rule("Step 2: RODO / GDPR consent")
+    console.print(
+        f"Under RODO Art. 6 and 9, [bold]{name}[/bold] must give explicit consent "
+        "before we record, transcribe, or share their data."
+    )
+    scopes = list(DEFAULT_SCOPES)
+    if Confirm.ask("Grant Art. 9 consent for processing health data?", default=False):
+        scopes.append(SCOPE_PROCESS_HEALTH_DATA)
+    if Confirm.ask("Grant consent to use transcripts for AI training (skill updates)?", default=False):
+        scopes.append(SCOPE_TRAIN_ON_TRANSCRIPTS)
+
+    ConsentStore().grant(senior_id, scopes=scopes, method="verbal")
+    AuditLog().record(
+        "consent_granted", actor="onboarding_wizard", senior_id=senior_id,
+        details={"scopes": scopes, "method": "verbal"},
+    )
+    console.print(f"[green]✓ Consent recorded:[/green] {', '.join(scopes)}")
+
+    # ---- 3. Schedule ----
+    console.rule("Step 3: Call schedule")
+    if Confirm.ask("Set up an automatic call schedule?", default=True):
+        call_time = Prompt.ask("Daily call time (HH:MM, 24h)", default="10:00")
+        tz = Prompt.ask("Timezone", default="Europe/Warsaw")
+        days_str = Prompt.ask(
+            "Days of week (comma-separated: mon,tue,wed,thu,fri,sat,sun)",
+            default="mon,tue,wed,thu,fri",
+        )
+        days = [d.strip() for d in days_str.split(",")]
+        try:
+            ScheduleStore().set(senior_id, call_time=call_time, timezone=tz, days_of_week=days)
+            console.print(f"[green]✓ Schedule:[/green] {call_time} {tz} [{days_str}]")
+        except ValueError as exc:
+            console.print(f"[yellow]Schedule not saved (invalid input): {exc}[/yellow]")
+
+    # ---- 4. Test email ----
+    console.rule("Step 4: Test email")
+    sender = EmailSender()
+    if fam_email and sender.is_configured():
+        if Confirm.ask(f"Send a test email to {fam_email}?", default=True):
+            sent = sender.send_report(
+                to_addr=fam_email,
+                senior_name=name,
+                report_md=(
+                    f"# Test — {name}\n\n"
+                    "This is a test message from Hermes.\n\n"
+                    "Configuration is working correctly."
+                ),
+                scores=None,
+            )
+            if sent:
+                console.print(f"[green]✓ Test email sent to {fam_email}[/green]")
+            else:
+                console.print("[red]✗ Email failed — check SMTP_* env vars.[/red]")
+    else:
+        console.print("[yellow]Email not configured (SMTP_HOST/USER/PASSWORD missing) — skipping.[/yellow]")
+        console.print("  See .env.example for Gmail / SendGrid setup.")
+
+    # ---- 5. Dry-run call ----
+    console.rule("Step 5: Dry-run call verification")
+    if Confirm.ask("Run a dry-run text call to verify the LLM pipeline?", default=True):
+        try:
+            result = ManagerAgent().run_call_cycle(
+                senior_id,
+                console=console,
+                voice_mode=False,
+                allow_no_consent=False,
+            )
+            scores = result.get("scores", {})
+            avg = round(sum(scores.values()) / len(scores), 1) if scores else "?"
+            console.print(f"[green]✓ Dry-run complete. Avg score: {avg}/10[/green]")
+        except Exception as exc:  # noqa: BLE001
+            console.print(f"[red]✗ Dry-run failed: {exc}[/red]")
+            return 1
+
+    # ---- Done ----
+    console.rule()
+    console.print(f"\n[bold green]✓ Onboarding complete for {name}![/bold green]\n")
+    console.print(f"  Start scheduler:  [cyan]hermes scheduler start[/cyan]")
+    console.print(f"  Open dashboard:   [cyan]hermes dashboard[/cyan]")
+    console.print(f"  Manual call:      [cyan]hermes call {senior_id}[/cyan]")
+    return 0
+
+
 # ---- Dashboard (Phase 4) ----
 
 
@@ -708,6 +845,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Filter by status.",
     )
     p_tcalls.set_defaults(func=cmd_twilio_calls)
+
+    # ---- Onboarding wizard ----
+    p_onboard = sub.add_parser(
+        "onboard",
+        help="Interactive wizard: create a senior, record consent, set schedule, verify email + LLM.",
+    )
+    p_onboard.set_defaults(func=cmd_onboard)
 
     # ---- Dashboard (Phase 4) ----
     p_dash = sub.add_parser(
