@@ -66,6 +66,7 @@ class CallSession:
         self._tts = ElevenLabsTTS()
         self._stt = WhisperSTT()
         self._mic = Microphone()
+        self.console.print(f"[dim]Voice activity detection: {self._mic.backend}[/dim]")
 
     # ---- Turn helpers ----
 

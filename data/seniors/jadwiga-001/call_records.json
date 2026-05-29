@@ -1,0 +1,24 @@
+[
+  {
+    "date": "2026-05-25T19:56:51",
+    "scores": {
+      "warmth": 9,
+      "listening": 9,
+      "info_quality": 7,
+      "brevity": 10
+    },
+    "report": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\reports\\2026-05-25T19-56-51.md",
+    "transcript": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\transcripts\\2026-05-25T19-56-12.md"
+  },
+  {
+    "date": "2026-05-29T17:56:16",
+    "scores": {
+      "warmth": 9,
+      "listening": 8,
+      "info_quality": 6,
+      "brevity": 10
+    },
+    "report": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\reports\\2026-05-29T17-56-16.md",
+    "transcript": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\transcripts\\2026-05-29T17-55-35.md"
+  }
+]

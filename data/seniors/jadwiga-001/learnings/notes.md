@@ -22,3 +22,19 @@ _This file is auto-updated by the Supervisor after each call with notes specific
 - Mentioned going to church today
 - Has grandchildren Zosia and Hania
 - Had possible background noise from TV/radio during call
+
+## 2026-05-25 19:56
+
+- Has gołębie nesting on balcony — recently hatched chicks; father gołąb guards during day
+- Mood lifted significantly after talking about gołębie — emotional boost topic
+- Goes to bed relatively early (around 20:00)
+- Tended to minimize complaints ('nothing special') — may need gentle prompting
+- Has son named Marek who arranged the service
+
+## 2026-05-29 17:55
+
+- Lives alone, son Marek arranged the service.
+- Does her own shopping, found it heavy/cumbersome today.
+- Drinks water with lemon — possible small talk hook.
+- Didn't mention any visitors or social contact today.
+- Ended the call herself by saying 'dobrze, kończymy' — she values brevity.
