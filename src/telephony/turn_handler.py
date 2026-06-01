@@ -6,6 +6,7 @@ disclosure, withdrawal detection, hangup conditions, and TwiML construction.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -43,6 +44,22 @@ def build_initial_turn(
     state.turn_count = 1
     state.status = "in_progress"
 
+    use_stream = os.getenv("TWILIO_STREAM_ENABLED", "1") == "1"
+
+    if use_stream:
+        # Media Streams: greeting is sent over WebSocket, not pre-synthesized.
+        state_store.save(state)
+        stream_url = _stream_url(config, state.call_sid)
+        twiml = _twiml_stream(stream_url)
+        audit.record(
+            "telephony_stream_started",
+            actor="server",
+            senior_id=state.senior_id,
+            details={"call_sid": state.call_sid},
+        )
+        return TurnResult(twiml=twiml, state=state)
+
+    # Legacy play/record path
     tts_path = _synthesize(tts, op_text, state, state_store)
     audit.record(
         "telephony_turn_emitted",
@@ -52,7 +69,6 @@ def build_initial_turn(
     )
 
     if has_end_token(op_text_raw):
-        # Edge case: the disclosure skill itself produced <<END_CALL>>.
         twiml = _twiml_play_then_hangup(_audio_url(config, state.call_sid, tts_path.name))
         return TurnResult(twiml=twiml, state=state, hangup=True)
 
@@ -202,3 +218,21 @@ def _twiml_play_then_hangup(play_url: str) -> str:
     vr.play(play_url)
     vr.hangup()
     return str(vr)
+
+
+def _twiml_stream(stream_url: str) -> str:
+    """TwiML that opens a bidirectional Media Streams WebSocket."""
+    from twilio.twiml.voice_response import Connect, Stream, VoiceResponse
+
+    vr = VoiceResponse()
+    connect = Connect()
+    connect.append(Stream(url=stream_url))
+    vr.append(connect)
+    return str(vr)
+
+
+def _stream_url(config: TelephonyConfig, call_id: str) -> str:
+    base = config.public_base_url or "http://localhost:8000"
+    # Twilio Media Streams requires wss:// in production
+    ws_base = base.replace("https://", "wss://").replace("http://", "ws://")
+    return f"{ws_base}/twilio/stream/{call_id}"

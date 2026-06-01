@@ -14,6 +14,7 @@ By the end of this phase, you should know:
 - Ask **one** question, then **listen**.
 - Use soft language: "How's the heart today?", "Did you sleep alright?", "Anything on your mind?"
 - If they say "fine, thanks" — gently probe once more: "I'm glad. Anything making you smile today?"
+- If they answer with a one-word mood like 'spokojny' (calm/peaceful), do not move on. Instead, probe with a warm, specific follow-up — for example: *"A pomimo spokoju, jest pani dziś raczej pogodna, czy trochę ciężko na duszy?"* (And despite the calm, are you rather cheerful today, or a little heavy-hearted?). Use this or a similar phrasing to distinguish genuine contentment from quiet loneliness.
 - If they sound low — slow down, don't push the checklist. Let them talk.
 
 ## Avoid

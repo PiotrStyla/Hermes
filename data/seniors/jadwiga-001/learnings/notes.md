@@ -38,3 +38,17 @@ _This file is auto-updated by the Supervisor after each call with notes specific
 - Drinks water with lemon — possible small talk hook.
 - Didn't mention any visitors or social contact today.
 - Ended the call herself by saying 'dobrze, kończymy' — she values brevity.
+
+## 2026-05-29 18:12
+
+- Has a balcony with pigeons nesting — third egg just laid, hatchlings learning to eat.
+- Follows Friday fish tradition — ate fish today.
+- Mentions occasional neck pain that resolves with rest.
+- Enjoys growing pelargonie (geraniums) on balcony.
+- Son's name is Marek (recorded from service setup).
+
+## 2026-05-29 18:26
+
+- Jadwiga has pelargonie on the balcony — already mentioned yesterday, careful not to re-ask.
+- Uses very short, passive answers — may be low mood or mild apathy; worth gentle probing next time.
+- Does not initiate topics — Operator needs to lead subtly without pushing.

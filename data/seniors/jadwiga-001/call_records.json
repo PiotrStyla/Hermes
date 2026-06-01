@@ -20,5 +20,27 @@
     },
     "report": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\reports\\2026-05-29T17-56-16.md",
     "transcript": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\transcripts\\2026-05-29T17-55-35.md"
+  },
+  {
+    "date": "2026-05-29T18:13:10",
+    "scores": {
+      "warmth": 9,
+      "listening": 8,
+      "info_quality": 5,
+      "brevity": 9
+    },
+    "report": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\reports\\2026-05-29T18-13-10.md",
+    "transcript": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\transcripts\\2026-05-29T18-11-49.md"
+  },
+  {
+    "date": "2026-05-29T18:27:07",
+    "scores": {
+      "warmth": 10,
+      "listening": 5,
+      "info_quality": 2,
+      "brevity": 8
+    },
+    "report": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\reports\\2026-05-29T18-27-07.md",
+    "transcript": "C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\data\\seniors\\jadwiga-001\\transcripts\\2026-05-29T18-24-58.md"
   }
 ]

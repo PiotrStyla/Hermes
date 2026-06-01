@@ -21,3 +21,4 @@ twilio>=9.3.0
 fastapi>=0.115.0
 uvicorn>=0.32.0
 python-multipart>=0.0.9  # FastAPI form parsing (Twilio webhooks send form-encoded)
+websockets>=13.0          # Media Streams + Deepgram STT

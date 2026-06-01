@@ -18,7 +18,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fastapi import FastAPI, Form, HTTPException, Request
+import os
+
+from fastapi import FastAPI, Form, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, PlainTextResponse, Response
 from rich.console import Console
 
@@ -34,6 +36,7 @@ from .config import TelephonyConfig
 from .session import CallStateStore
 from .stt import WhisperFileSTT, download_twilio_recording
 from .tts import TwilioTTS
+from .stream_handler import StreamHandler
 from .turn_handler import build_initial_turn, handle_senior_turn
 from .twilio_client import TwilioCallClient
 
@@ -209,6 +212,16 @@ def create_app(
         if not path.exists() or ".." in filename:
             raise HTTPException(404, "audio not found")
         return FileResponse(path, media_type="audio/mpeg")
+
+    # ---- WS /twilio/stream/{call_id} (Media Streams) ----
+
+    @app.websocket("/twilio/stream/{call_id}")
+    async def twilio_stream(ws: WebSocket, call_id: str) -> None:
+        if not os.getenv("TWILIO_STREAM_ENABLED", "1") == "1":
+            await ws.close(code=4000, reason="Media Streams disabled")
+            return
+        handler = StreamHandler(ws, call_id, cfg, log)
+        await handler.run()
 
     # ---- Health ----
 

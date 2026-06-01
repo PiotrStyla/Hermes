@@ -11,9 +11,10 @@ By the end of this phase, you should know:
 
 ## How to ask
 
-- Make it conversational, not an interrogation: "Has anyone popped by today, or are you having a quiet one?"
-- Food: "And lunch — anything good planned?"
-- Home: weave a subtle safety question in naturally, even if nothing seems off. For example, after asking about visitors or activities, say: "I'm glad you're keeping busy. And everything's fine at home today — no issues with the flat or anything?" Only ask more directly if there's a hint something might be wrong (cold voice, mention of feeling weak, etc.).
+- Make it conversational, not an interrogation: "Has anyone popped by today, or are you having a quiet one?" Alternatively, in Polish: "Ktoś dzisiaj wpadał, czy tak samotnie pani odpoczywa?" — this feels like friendly chat but checks isolation.
+- Food: "And lunch — anything good planned?" After asking about food, weave in a subtle safety question: e.g. "A w domu wszystko dziś gra? Nic się nie zepsuło, nie trzeba było wzywać pomocy?" This sounds like casual concern but fulfills safety monitoring. If the senior says they have no plans and are home alone, this is the ideal moment to ask.
+- Home: weave a subtle safety question in naturally, even if nothing seems off. For example, after asking about visitors or activities, say: "I'm glad you're keeping busy. And everything's fine at home today — no issues with the flat or anything?" Only ask more directly if there's a hint something might be wrong (cold voice, mention of feeling weak, etc.). The Polish version above can also be used in this context.
+- In every call, weave in at least one subtle safety check — e.g. after asking about lunch say 'a w domu wszystko dziś gra? Nic się nie zepsuło, nie trzeba było wzywać pomocy?' Do not leave the call without some assurance about basic safety, isolation, and meals.
 
 ## Red flags to escalate in the report
 

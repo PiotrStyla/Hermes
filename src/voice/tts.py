@@ -43,16 +43,34 @@ class ElevenLabsTTS:
         if not text.strip():
             return
 
-        chunks = self.client.text_to_speech.convert(
-            voice_id=self.voice_id,
-            model_id=self.model_id,
-            text=text,
-            output_format="pcm_16000",
-        )
-        audio_bytes = b"".join(chunks)
+        audio_bytes = self._synthesize_raw(text)
         if not audio_bytes:
             return
 
         audio = np.frombuffer(audio_bytes, dtype=np.int16)
         sd.play(audio, samplerate=SAMPLE_RATE)
         sd.wait()
+
+    def _synthesize_raw(self, text: str) -> bytes:
+        """Return raw PCM 16 kHz int16 bytes (no playback)."""
+        chunks = self.client.text_to_speech.convert(
+            voice_id=self.voice_id,
+            model_id=self.model_id,
+            text=text,
+            output_format="pcm_16000",
+        )
+        return b"".join(chunks)
+
+    def stream_mulaw(self, text: str):
+        """Generator yielding μ-law 8 kHz chunks for Twilio Media Streams."""
+        from ..telephony.audio_codec import pcm_to_mulaw, resample_16k_to_8k
+
+        raw = self._synthesize_raw(text)
+        if not raw:
+            return
+        pcm = np.frombuffer(raw, dtype=np.int16)
+        pcm_8k = resample_16k_to_8k(pcm)
+        # Yield in ~20ms chunks (160 samples at 8 kHz)
+        chunk_size = 160
+        for i in range(0, len(pcm_8k), chunk_size):
+            yield pcm_to_mulaw(pcm_8k[i:i + chunk_size])
