@@ -22,11 +22,10 @@ from ..agents.manager import ManagerAgent
 from ..agents.operator import OperatorAgent
 from ..agents.senior_persona import SeniorPersonaAgent
 from ..agents.supervisor import SupervisorAgent
-from ..conversation.session import CallSession
 from ..conversation.transcript import format_transcript
 from ..skills.loader import SkillsLoader
 from ..skills.updater import SkillsUpdater
-from .scenario_generator import ScenarioGenerator
+from .scenario_generator import ARCHETYPES, ScenarioGenerator
 
 
 @dataclass
@@ -62,7 +61,7 @@ class TrainingLoop:
         self.console.print(Panel(
             f"[bold]Training loop: {self.rounds} rounds[/bold]\n"
             f"Model: {self.operator.model}\n"
-            f"Archetypes: {len(self.generator.ARCHETYPES)}",
+            f"Archetypes: {len(ARCHETYPES)}",
             title="Hermes Training"
         ))
 
@@ -78,15 +77,21 @@ class TrainingLoop:
                 persona_md, profile = self.generator.generate()
                 arch_name = profile.name
 
-                # Phase 1: conversation
+                # Phase 1: conversation (inline — training profiles have no disk files)
                 senior = SeniorPersonaAgent()
-                session = CallSession(
-                    operator=self.operator,
-                    senior=senior,
-                    voice_mode=False,
-                    console=self.console,
-                )
-                history = session.run(profile)
+                senior_system = senior.build_system_prompt(persona_md)
+                operator_system = self.operator.build_system_prompt(profile, "")
+                history: list[dict[str, str]] = []
+
+                for _ in range(18):  # MAX_TURNS
+                    op_msg = self.operator.turn(operator_system, history)
+                    history.append({"role": "operator", "content": op_msg})
+                    if "<<END_CALL>>" in op_msg:
+                        senior_msg = senior.turn(senior_system, history)
+                        history.append({"role": "senior", "content": senior_msg})
+                        break
+                    senior_msg = senior.turn(senior_system, history)
+                    history.append({"role": "senior", "content": senior_msg})
 
                 # Phase 2: supervisor review
                 transcript_md = format_transcript(profile.name, history)
