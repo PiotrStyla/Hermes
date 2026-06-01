@@ -263,8 +263,10 @@ Output ONLY the new markdown content. No commentary, no fences."""
         if skill_updates and not training_consent:
             console.print(
                 "[yellow]⚠ Skipping skill updates: senior has not granted "
-                "`train_on_transcripts` consent. Set it with "
-                "`consent grant --scope train_on_transcripts <id>`.[/yellow]"
+                "`train_on_transcripts` consent. Run "
+                "`consent grant <id> --scope transcribe --scope store_transcript "
+                "--scope share_with_family --scope train_on_transcripts` "
+                "(grant overwrites all scopes — include existing ones).[/yellow]"
             )
             audit.record(
                 "skill_updates_skipped",

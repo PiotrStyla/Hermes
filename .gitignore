@@ -25,6 +25,7 @@ data/seniors/*/reports/
 # Per-senior compliance state (consent / retention) — contains PII, do not commit
 data/seniors/*/consent.json
 data/seniors/*/retention.json
+data/seniors/*/call_records.json
 
 # Append-only audit log — contains PII, do not commit
 data/audit/

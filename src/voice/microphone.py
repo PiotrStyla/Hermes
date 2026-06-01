@@ -36,7 +36,7 @@ class Microphone:
         sample_rate: int = SAMPLE_RATE,
         chunk_duration: float = 0.1,        # 100 ms blocks (RMS fallback only)
         silence_threshold: float = 0.012,   # RMS energy below this = "silent"
-        silence_duration: float = 2.0,      # consecutive silence to stop
+        silence_duration: float = 1.2,      # consecutive silence to stop
         min_recording: float = 1.5,         # min length before silence stops it
         max_recording: float = 30.0,        # hard cap
         warmup: float = 0.2,                # initial chunks always treated as voice
