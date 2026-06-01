@@ -224,6 +224,90 @@ class TrainingLoop:
         report_path = Path("data/training") / f"report_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
         report_path.parent.mkdir(parents=True, exist_ok=True)
         report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
-        self.console.print(f"\n[green]Report saved:[/green] {report_path}")
+        self.console.print(f"\n[green]JSON report saved:[/green] {report_path}")
+
+        # Markdown report for Obsidian
+        md_path = report_path.with_suffix(".md")
+        md_content = self._build_markdown_report(report)
+        md_path.write_text(md_content, encoding="utf-8")
+        self.console.print(f"[green]Markdown report saved:[/green] {md_path}")
 
         return report
+
+    def _build_markdown_report(self, report: dict[str, Any]) -> str:
+        """Build an Obsidian-compatible markdown training report."""
+        ts = report["timestamp"]
+        avg = report["average_scores"]
+        first = report["first_scores"]
+        last = report["last_scores"]
+
+        lines = [
+            "---",
+            f"date: {ts}",
+            "tags: [hermes, training, ai]",
+            "---",
+            "",
+            f"# Hermes Training Report — {ts[:19]}",
+            "",
+            f"- **Rounds:** {report['rounds']}",
+            f"- **Model:** {report['model']}",
+            f"- **Total time:** {report['total_time_s']:.0f}s ({report['total_time_s']/60:.1f}m)",
+            f"- **Skill updates applied:** {report['total_updates']}",
+            "",
+            "## Score Trend",
+            "",
+            "| Round | Archetype | W | L | I | B | Updates | Time |",
+            "|------:|-----------|--:|--:|--:|--:|--------:|-----:|",
+        ]
+
+        for m in report["rounds_detail"]:
+            s = m["scores"]
+            lines.append(
+                f"| {m['round']} | {m['archetype'][:25]} | "
+                f"{s.get('warmth', '-')} | {s.get('listening', '-')} | "
+                f"{s.get('info_quality', '-')} | {s.get('brevity', '-')} | "
+                f"{len(m['skill_updates'])} | {m['duration_s']:.1f}s |"
+            )
+
+        lines += [
+            "",
+            "## Averages",
+            "",
+            "| Dimension | Score |",
+            "|-----------|------:|",
+        ]
+        for k, v in avg.items():
+            lines.append(f"| {k} | {v:.1f} |")
+
+        if first and last:
+            lines += [
+                "",
+                "## First → Last Delta",
+                "",
+                "| Dimension | First | Last | Δ |",
+                "|-----------|------:|-----:|---:|",
+            ]
+            for k in avg:
+                fv = first.get(k, 0)
+                lv = last.get(k, 0)
+                lines.append(f"| {k} | {fv} | {lv} | {lv - fv:+} |")
+
+        lines += [
+            "",
+            "## Issues Found",
+            "",
+        ]
+        for m in report["rounds_detail"]:
+            for issue in m.get("issues", []):
+                lines.append(f"- [Round {m['round']}] {issue}")
+
+        lines += [
+            "",
+            "## Skill Updates",
+            "",
+        ]
+        for m in report["rounds_detail"]:
+            for sk in m.get("skill_updates", []):
+                lines.append(f"- [Round {m['round']}] `{sk}.md`")
+
+        return "\n".join(lines) + "\n"

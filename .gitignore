@@ -38,6 +38,3 @@ data/calls/
 
 # Versioned skill snapshots (regenerated as system runs)
 data/skills/operator/_versions/
-
-# Training reports (generated artifacts)
-data/training/
