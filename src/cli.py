@@ -627,6 +627,20 @@ def cmd_twilio_calls(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_train(args: argparse.Namespace) -> int:
+    """Run a self-play training loop to improve Operator skills."""
+    from .training import TrainingLoop
+
+    loop = TrainingLoop(
+        rounds=args.rounds,
+        seed=args.seed,
+        console=console,
+    )
+    report = loop.run()
+    console.print(f"[green]Training finished. {report['total_updates']} skill updates across {report['rounds']} rounds.[/green]")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="hermes-elderly-care",
@@ -647,6 +661,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="DEV ONLY: bypass the RODO consent gate. Do not use against real seniors.",
     )
     p_call.set_defaults(func=cmd_call)
+
+    p_train = sub.add_parser("train", help="Run self-play training loop to improve Operator skills.")
+    p_train.add_argument("--rounds", type=int, default=10, help="Number of training rounds (default: 10)")
+    p_train.add_argument("--seed", type=int, default=None, help="Random seed for reproducibility")
+    p_train.set_defaults(func=cmd_train)
 
     p_list = sub.add_parser("list-seniors", help="List all seniors on file.")
     p_list.set_defaults(func=cmd_list_seniors)
