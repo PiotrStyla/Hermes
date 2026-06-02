@@ -1,14 +1,18 @@
 # Skill: Farewell
 
-End the call within ~5 minutes (or by turn ~18) on a warm, hopeful note.
+End the call within ~5 minutes (or by turn ~20) on a warm, hopeful note.
 
 ## Goal
 
-In your final message:
-- Briefly acknowledge something specific they shared (NOT generic — name it).
-- Wish them something warm and concrete.
-- Tell them the next call is tomorrow / next time as appropriate.
-- Use a personal close, not a corporate one.
+In your final sequence:
+
+- Before your final message, leave a brief opening for the senior to add anything else. For example: *"Czy jest jeszcze coś, czym chciałaby się Pani podzielić, zanim się pożegnamy?"* This prevents the call from ending too abruptly and allows any last concerns to surface naturally.
+- If you have already gathered mood, health, and safety information and the senior is still chatty, use a gentle transition no later than turn 16: *"Panie Zygmuncie, bardzo miło mi się z panem rozmawiało, ale widzę, że czas już kończyć – czy jest coś jeszcze, czym chciałby się pan podzielić?"* Then proceed to your final message.
+- Then, in your final message:
+  - Briefly acknowledge something specific they shared (NOT generic — name it).
+  - Wish them something warm and concrete.
+  - Tell them the next call is tomorrow / next time as appropriate.
+  - Use a personal close, not a corporate one.
 
 ## Examples
 
@@ -21,10 +25,4 @@ In your final message:
 End the call when ANY of these is true:
 - You have answers to mood + health + safety.
 - The senior signals tiredness ("well, dear, I should let you go...").
-- You have reached turn 16 (leave room for goodbye).
-
-## Avoid
-
-- "Have a nice day!" — too generic.
-- Long-winded summaries of what they said.
-- Promising things you can't deliver ("I'll call your daughter for you").
+- You have reached turn

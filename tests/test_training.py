@@ -65,3 +65,44 @@ class TestTrainingLoop:
         )
         assert m.round == 1
         assert m.scores["warmth"] == 8
+
+
+class TestEmergencyScenarioGenerator:
+    def test_generates_emergency(self) -> None:
+        from src.training.emergency_generator import EmergencyScenarioGenerator
+        gen = EmergencyScenarioGenerator(seed=42, emergency_probability=1.0)
+        emerg, turn = gen.generate()
+        assert emerg.name
+        assert emerg.trigger_phrase
+        assert emerg.severity in ("low", "medium", "high", "critical")
+        assert 3 <= turn <= 8
+
+    def test_inject_into_history(self) -> None:
+        from src.training.emergency_generator import EmergencyScenarioGenerator, EmergencyType
+        gen = EmergencyScenarioGenerator(seed=42)
+        history = [
+            {"role": "operator", "content": "Hello"},
+            {"role": "senior", "content": "Hi"},
+            {"role": "operator", "content": "How are you?"},
+            {"role": "senior", "content": "Fine"},
+        ]
+        emerg = EmergencyType("Test", "Emergency!", "high", "Response", "test")
+        new_history = gen.inject_into_history(history, 2, emerg)
+        assert len(new_history) == 5
+        assert new_history[3]["content"] == "Emergency!"
+
+    def test_emergency_probability(self) -> None:
+        from src.training.emergency_generator import EmergencyScenarioGenerator
+        gen_never = EmergencyScenarioGenerator(seed=42, emergency_probability=0.0)
+        gen_always = EmergencyScenarioGenerator(seed=42, emergency_probability=1.0)
+        assert not gen_never.should_inject_emergency()
+        assert gen_always.should_inject_emergency()
+
+    def test_all_emergency_types_have_required_fields(self) -> None:
+        from src.training.emergency_generator import EMERGENCY_TYPES
+        for emerg in EMERGENCY_TYPES:
+            assert emerg.name
+            assert emerg.trigger_phrase
+            assert emerg.severity
+            assert emerg.expected_response
+            assert emerg.category

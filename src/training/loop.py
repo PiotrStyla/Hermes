@@ -25,6 +25,7 @@ from ..agents.supervisor import SupervisorAgent
 from ..conversation.transcript import format_transcript
 from ..skills.loader import SkillsLoader
 from ..skills.updater import SkillsUpdater
+from .emergency_generator import EmergencyScenarioGenerator
 from .scenario_generator import ARCHETYPES, ScenarioGenerator
 
 
@@ -36,6 +37,9 @@ class TrainingMetrics:
     skill_updates: list[str]
     duration_s: float
     issues: list[str] = field(default_factory=list)
+    emergency_injected: bool = False
+    emergency_type: str = ""
+    emergency_severity: str = ""
 
 
 class TrainingLoop:
@@ -50,6 +54,7 @@ class TrainingLoop:
         self.rounds = rounds
         self.console = console or Console()
         self.generator = ScenarioGenerator(seed=seed)
+        self.emergency_gen = EmergencyScenarioGenerator(seed=seed, emergency_probability=0.6)
         self.operator = OperatorAgent()
         self.supervisor = SupervisorAgent()
         self.manager = ManagerAgent()
@@ -83,15 +88,28 @@ class TrainingLoop:
                 operator_system = self.operator.build_system_prompt(profile, "")
                 history: list[dict[str, str]] = []
 
-                for _ in range(18):  # MAX_TURNS
+                # Decide if we inject an emergency scenario
+                emergency = None
+                emergency_turn = 0
+                if self.emergency_gen.should_inject_emergency():
+                    emergency, emergency_turn = self.emergency_gen.generate()
+                    self.console.print(f"[yellow]⚠ Emergency injected:[/yellow] {emergency.name} at turn {emergency_turn}")
+
+                for turn_num in range(1, 19):  # MAX_TURNS
                     op_msg = self.operator.turn(operator_system, history)
                     history.append({"role": "operator", "content": op_msg})
                     if "<<END_CALL>>" in op_msg:
                         senior_msg = senior.turn(senior_system, history)
                         history.append({"role": "senior", "content": senior_msg})
                         break
-                    senior_msg = senior.turn(senior_system, history)
-                    history.append({"role": "senior", "content": senior_msg})
+
+                    # Inject emergency at the specified turn
+                    if emergency and turn_num == emergency_turn:
+                        history.append({"role": "senior", "content": emergency.trigger_phrase})
+                        self.console.print(f"[red]🆘 {emergency.name}:[/red] {emergency.trigger_phrase}")
+                    else:
+                        senior_msg = senior.turn(senior_system, history)
+                        history.append({"role": "senior", "content": senior_msg})
 
                 # Phase 2: supervisor review
                 transcript_md = format_transcript(profile.name, history)
@@ -126,6 +144,9 @@ class TrainingLoop:
                     skill_updates=applied,
                     duration_s=elapsed,
                     issues=feedback.get("issues", []),
+                    emergency_injected=emergency is not None,
+                    emergency_type=emergency.name if emergency else "",
+                    emergency_severity=emergency.severity if emergency else "",
                 ))
 
                 avg = self._avg_scores()
@@ -199,6 +220,7 @@ class TrainingLoop:
         self.console.print(f"[bold]Total time:[/bold] {total_time:.0f}s ({total_time/60:.1f}m)")
 
         # Save report
+        emergencies_injected = sum(1 for m in self.metrics if m.emergency_injected)
         report = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "rounds": self.rounds,
@@ -208,6 +230,7 @@ class TrainingLoop:
             "last_scores": last,
             "total_updates": total_updates,
             "total_time_s": total_time,
+            "emergencies_injected": emergencies_injected,
             "rounds_detail": [
                 {
                     "round": m.round,
@@ -216,6 +239,9 @@ class TrainingLoop:
                     "skill_updates": m.skill_updates,
                     "issues": m.issues,
                     "duration_s": m.duration_s,
+                    "emergency_injected": m.emergency_injected,
+                    "emergency_type": m.emergency_type,
+                    "emergency_severity": m.emergency_severity,
                 }
                 for m in self.metrics
             ],
@@ -244,7 +270,7 @@ class TrainingLoop:
         lines = [
             "---",
             f"date: {ts}",
-            "tags: [hermes, training, ai]",
+            "tags: [hermes, training, ai, emergency]",
             "---",
             "",
             f"# Hermes Training Report — {ts[:19]}",
@@ -253,20 +279,22 @@ class TrainingLoop:
             f"- **Model:** {report['model']}",
             f"- **Total time:** {report['total_time_s']:.0f}s ({report['total_time_s']/60:.1f}m)",
             f"- **Skill updates applied:** {report['total_updates']}",
+            f"- **Emergencies injected:** {report.get('emergencies_injected', 0)}",
             "",
             "## Score Trend",
             "",
-            "| Round | Archetype | W | L | I | B | Updates | Time |",
-            "|------:|-----------|--:|--:|--:|--:|--------:|-----:|",
+            "| Round | Archetype | W | L | I | B | Updates | Emergency | Time |",
+            "|------:|-----------|--:|--:|--:|--:|--------:|----------:|-----:|",
         ]
 
         for m in report["rounds_detail"]:
             s = m["scores"]
+            emerg = m.get("emergency_type", "")[:15] if m.get("emergency_injected") else "-"
             lines.append(
                 f"| {m['round']} | {m['archetype'][:25]} | "
                 f"{s.get('warmth', '-')} | {s.get('listening', '-')} | "
                 f"{s.get('info_quality', '-')} | {s.get('brevity', '-')} | "
-                f"{len(m['skill_updates'])} | {m['duration_s']:.1f}s |"
+                f"{len(m['skill_updates'])} | {emerg} | {m['duration_s']:.1f}s |"
             )
 
         lines += [

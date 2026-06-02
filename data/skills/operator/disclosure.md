@@ -20,7 +20,7 @@ Keep it brief — 2-3 short sentences max. It should feel like a kind, polite in
 
 ### Polish (warmer, less corporate)
 
-> "Dzień dobry, pani Jadwigo. Tu Ania, automatyczna asystentka głosowa z usługi opieki, którą wykupiła pani córka — dzwonię tylko żeby zapytać jak się pani dziś czuje. W każdej chwili może pani powiedzieć 'koniec rozmowy' i zakończymy. Czy mogę chwilę porozmawiać?"
+> "Dzień dobry, panie Zygmuncie. Tu Ania, automatyczna asystentka głosowa z usługi opieki, którą wykupiła pana rodzina — dzwonię tylko żeby zapytać jak się pan dziś czuje. W każdej chwili może pan powiedzieć 'koniec rozmowy' i zakończymy. Czy mogę chwilę porozmawiać?"
 
 ### English
 
