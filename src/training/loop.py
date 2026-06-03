@@ -25,7 +25,9 @@ from ..agents.supervisor import SupervisorAgent
 from ..conversation.transcript import format_transcript
 from ..skills.loader import SkillsLoader
 from ..skills.updater import SkillsUpdater
+from .checklist_tracker import ChecklistTracker
 from .emergency_generator import EmergencyScenarioGenerator
+from .recovery_generator import RecoveryScenarioGenerator
 from .scenario_generator import ARCHETYPES, ScenarioGenerator
 from .sound_generator import SoundEventGenerator
 
@@ -44,6 +46,10 @@ class TrainingMetrics:
     sound_injected: bool = False
     sound_type: str = ""
     sound_severity: str = ""
+    distraction_injected: bool = False
+    distraction_type: str = ""
+    checklist_completion: float = 0.0
+    checklist_missed: list[str] = field(default_factory=list)
 
 
 class TrainingLoop:
@@ -60,6 +66,8 @@ class TrainingLoop:
         self.generator = ScenarioGenerator(seed=seed)
         self.emergency_gen = EmergencyScenarioGenerator(seed=seed, emergency_probability=0.6)
         self.sound_gen = SoundEventGenerator(seed=seed, sound_probability=0.6)
+        self.recovery_gen = RecoveryScenarioGenerator(seed=seed, distraction_probability=0.6)
+        self.checklist = ChecklistTracker()
         self.operator = OperatorAgent()
         self.supervisor = SupervisorAgent()
         self.manager = ManagerAgent()
@@ -107,6 +115,13 @@ class TrainingLoop:
                     sound, sound_turn = self.sound_gen.generate()
                     self.console.print(f"[cyan]🔊 Sound injected:[/cyan] {sound.name} at turn {sound_turn}")
 
+                # Decide if we inject a distraction (Stage 3: tests resumption)
+                distraction = None
+                distraction_turn = 0
+                if self.recovery_gen.should_inject_distraction():
+                    distraction, distraction_turn = self.recovery_gen.generate()
+                    self.console.print(f"[green]🚪 Distraction injected:[/green] {distraction.name} at turn {distraction_turn}")
+
                 for turn_num in range(1, 19):  # MAX_TURNS
                     op_msg = self.operator.turn(operator_system, history)
                     history.append({"role": "operator", "content": op_msg})
@@ -124,11 +139,27 @@ class TrainingLoop:
                         sound_announcement = self.sound_gen.format_sound_announcement(sound)
                         history.append({"role": "senior", "content": sound_announcement})
                         self.console.print(f"[magenta]🔔 {sound.name}:[/magenta] {sound.description}")
+                    # Distraction: senior steps away (leave), then returns next turn
+                    elif distraction and turn_num == distraction_turn:
+                        history.append({"role": "senior", "content": distraction.leave_phrase})
+                        self.console.print(f"[green]🚪 {distraction.name}:[/green] {distraction.leave_phrase}")
+                    elif distraction and turn_num == distraction_turn + 1:
+                        history.append({"role": "senior", "content": distraction.return_phrase})
+                        self.console.print(f"[green]↩ Senior returns:[/green] {distraction.return_phrase}")
                     else:
                         senior_msg = senior.turn(senior_system, history)
                         history.append({"role": "senior", "content": senior_msg})
 
-                # Phase 2: supervisor review
+                # Phase 2a: deterministic checklist coverage (Stage 3 metric)
+                checklist_result = self.checklist.evaluate(history)
+                if distraction:
+                    self.console.print(
+                        f"[green]✓ Checklist after distraction:[/green] "
+                        f"{checklist_result.completion_pct}% "
+                        f"(missed: {', '.join(checklist_result.missed_items) or 'none'})"
+                    )
+
+                # Phase 2b: supervisor review
                 transcript_md = format_transcript(profile.name, history)
                 skills_summary = self.loader.assemble_prompt_section()
                 feedback = self.supervisor.review(transcript_md, skills_summary)
@@ -167,6 +198,10 @@ class TrainingLoop:
                     sound_injected=sound is not None,
                     sound_type=sound.name if sound else "",
                     sound_severity=sound.severity if sound else "",
+                    distraction_injected=distraction is not None,
+                    distraction_type=distraction.name if distraction else "",
+                    checklist_completion=checklist_result.completion_pct,
+                    checklist_missed=checklist_result.missed_items,
                 ))
 
                 avg = self._avg_scores()
@@ -242,6 +277,11 @@ class TrainingLoop:
         # Save report
         emergencies_injected = sum(1 for m in self.metrics if m.emergency_injected)
         sounds_injected = sum(1 for m in self.metrics if m.sound_injected)
+        distractions_injected = sum(1 for m in self.metrics if m.distraction_injected)
+        avg_checklist = (
+            round(sum(m.checklist_completion for m in self.metrics) / len(self.metrics), 1)
+            if self.metrics else 0.0
+        )
         report = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "rounds": self.rounds,
@@ -253,6 +293,8 @@ class TrainingLoop:
             "total_time_s": total_time,
             "emergencies_injected": emergencies_injected,
             "sounds_injected": sounds_injected,
+            "distractions_injected": distractions_injected,
+            "average_checklist_completion": avg_checklist,
             "rounds_detail": [
                 {
                     "round": m.round,
@@ -267,6 +309,10 @@ class TrainingLoop:
                     "sound_injected": m.sound_injected,
                     "sound_type": m.sound_type,
                     "sound_severity": m.sound_severity,
+                    "distraction_injected": m.distraction_injected,
+                    "distraction_type": m.distraction_type,
+                    "checklist_completion": m.checklist_completion,
+                    "checklist_missed": m.checklist_missed,
                 }
                 for m in self.metrics
             ],
@@ -295,7 +341,7 @@ class TrainingLoop:
         lines = [
             "---",
             f"date: {ts}",
-            "tags: [hermes, training, ai, emergency, sound]",
+            "tags: [hermes, training, ai, emergency, sound, recovery]",
             "---",
             "",
             f"# Hermes Training Report — {ts[:19]}",
@@ -306,22 +352,26 @@ class TrainingLoop:
             f"- **Skill updates applied:** {report['total_updates']}",
             f"- **Emergencies injected:** {report.get('emergencies_injected', 0)}",
             f"- **Sounds injected:** {report.get('sounds_injected', 0)}",
+            f"- **Distractions injected:** {report.get('distractions_injected', 0)}",
+            f"- **Avg checklist completion:** {report.get('average_checklist_completion', 0)}%",
             "",
             "## Score Trend",
             "",
-            "| Round | Archetype | W | L | I | B | Updates | Emergency | Sound | Time |",
-            "|------:|-----------|--:|--:|--:|--:|--------:|----------:|------:|-----:|",
+            "| Round | Archetype | W | L | I | B | Updates | Emergency | Sound | Distraction | Checklist | Time |",
+            "|------:|-----------|--:|--:|--:|--:|--------:|----------:|------:|------------:|----------:|-----:|",
         ]
 
         for m in report["rounds_detail"]:
             s = m["scores"]
             emerg = m.get("emergency_type", "")[:12] if m.get("emergency_injected") else "-"
             sound = m.get("sound_type", "")[:12] if m.get("sound_injected") else "-"
+            distr = m.get("distraction_type", "")[:12] if m.get("distraction_injected") else "-"
+            chk = f"{m.get('checklist_completion', 0)}%"
             lines.append(
                 f"| {m['round']} | {m['archetype'][:25]} | "
                 f"{s.get('warmth', '-')} | {s.get('listening', '-')} | "
                 f"{s.get('info_quality', '-')} | {s.get('brevity', '-')} | "
-                f"{len(m['skill_updates'])} | {emerg} | {sound} | {m['duration_s']:.1f}s |"
+                f"{len(m['skill_updates'])} | {emerg} | {sound} | {distr} | {chk} | {m['duration_s']:.1f}s |"
             )
 
         lines += [

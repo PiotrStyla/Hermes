@@ -141,3 +141,81 @@ class TestSoundEventGenerator:
             assert sound.severity
             assert sound.expected_response
             assert sound.category
+
+
+class TestRecoveryScenarioGenerator:
+    def test_generates_distraction(self) -> None:
+        from src.training.recovery_generator import RecoveryScenarioGenerator
+        gen = RecoveryScenarioGenerator(seed=42, distraction_probability=1.0)
+        distr, turn = gen.generate()
+        assert distr.name
+        assert distr.leave_phrase
+        assert distr.return_phrase
+        assert 4 <= turn <= 9
+
+    def test_distraction_probability(self) -> None:
+        from src.training.recovery_generator import RecoveryScenarioGenerator
+        gen_never = RecoveryScenarioGenerator(seed=42, distraction_probability=0.0)
+        gen_always = RecoveryScenarioGenerator(seed=42, distraction_probability=1.0)
+        assert not gen_never.should_inject_distraction()
+        assert gen_always.should_inject_distraction()
+
+    def test_all_distraction_events_have_required_fields(self) -> None:
+        from src.training.recovery_generator import DISTRACTION_EVENTS
+        for d in DISTRACTION_EVENTS:
+            assert d.name
+            assert d.leave_phrase
+            assert d.return_phrase
+            assert d.category
+
+
+class TestChecklistTracker:
+    def test_full_coverage(self) -> None:
+        from src.training.checklist_tracker import ChecklistTracker
+        history = [
+            {"role": "operator", "content": "Dzień dobry, jak się Pan czuje dzisiaj?"},
+            {"role": "senior", "content": "Dobrze."},
+            {"role": "operator", "content": "A spał Pan dobrze dzisiaj w nocy?"},
+            {"role": "senior", "content": "Tak."},
+            {"role": "operator", "content": "A zjadł Pan dzisiaj coś konkretnego na śniadanie?"},
+            {"role": "senior", "content": "Tak."},
+            {"role": "operator", "content": "A dziś ktoś do Pana wpada, czy jest Pan sam w domu?"},
+            {"role": "senior", "content": "Sam."},
+            {"role": "operator", "content": "A w domu wszystko w porządku? Jest ogrzewanie, ciepła woda?"},
+            {"role": "senior", "content": "Tak."},
+            {"role": "operator", "content": "A czy czuje się Pan bezpiecznie? Nie ma ryzyka upadku?"},
+            {"role": "senior", "content": "Nie."},
+            {"role": "operator", "content": "A przyjmuje Pan jakieś leki na ciśnienie?"},
+            {"role": "senior", "content": "Tak."},
+        ]
+        result = ChecklistTracker().evaluate(history)
+        assert result.completion_pct == 100.0
+        assert result.missed_items == []
+
+    def test_partial_coverage(self) -> None:
+        from src.training.checklist_tracker import ChecklistTracker
+        history = [
+            {"role": "operator", "content": "Dzień dobry, jak się Pan czuje?"},
+            {"role": "senior", "content": "Dobrze."},
+            {"role": "operator", "content": "A spał Pan dobrze w nocy?"},
+            {"role": "senior", "content": "Tak."},
+        ]
+        result = ChecklistTracker().evaluate(history)
+        assert 0 < result.completion_pct < 100
+        assert "food" in result.missed_items
+        assert "mood" in result.covered_items
+        assert "sleep" in result.covered_items
+
+    def test_empty_history(self) -> None:
+        from src.training.checklist_tracker import ChecklistTracker
+        result = ChecklistTracker().evaluate([])
+        assert result.completion_pct == 0.0
+
+    def test_ignores_senior_turns(self) -> None:
+        from src.training.checklist_tracker import ChecklistTracker
+        # Senior mentions everything, but operator asks nothing → 0%
+        history = [
+            {"role": "senior", "content": "Spałem, jadłem śniadanie, biorę leki, sam w domu, upadek."},
+        ]
+        result = ChecklistTracker().evaluate(history)
+        assert result.completion_pct == 0.0

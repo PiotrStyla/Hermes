@@ -1,0 +1,288 @@
+{
+  "timestamp": "2026-06-03T10:11:26.774682+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 6.9,
+    "listening": 6.6,
+    "info_quality": 4.9,
+    "brevity": 7.0
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 9,
+    "info_quality": 4,
+    "brevity": 10
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 6,
+    "info_quality": 4,
+    "brevity": 7
+  },
+  "total_updates": 19,
+  "total_time_s": 1809.171000000002,
+  "emergencies_injected": 7,
+  "sounds_injected": 8,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 4,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not ask about Jan's health conditions or medications, despite Jan mentioning new medications for his wife that might affect Jan's own health.",
+        "Operator asked the sleep question and food question, but missed asking about isolation (after food), home safety, and fall risk—the four safety questions were not completed consecutively after sleep.",
+        "Operator did not gather information about Jan's own known health conditions or medications—critical for the family report."
+      ],
+      "duration_s": 142.88999999999942,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": ""
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 6,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "safety-check",
+        "mood-checkin",
+        "health-checkin"
+      ],
+      "issues": [
+        "Did not complete the mandatory safety block (food, isolation, home safety, fall risk) at all due to emergency.",
+        "Did not ask any of the four safety questions even after the senior stabilized post-alarm.",
+        "No mood or sleep check-in was completed (sleep question was never asked).",
+        "No health check-in regarding senior's own conditions/medications, despite the wife's health dominating the call.",
+        "Exceeded typical turn limit (22 turns vs ~18 target) due to prolonged emergency handling."
+      ],
+      "duration_s": 180.2970000000023,
+      "emergency_injected": true,
+      "emergency_type": "Dezorientacja czasowa",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium"
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "The operator combined the home safety and fall risk questions in the same turn ('A czuje się Pani bezpiecznie chodząc po domu? Nie boi się Pani, że może się Pani przewrócić?'), violating the safety-check rule that each of the four safety questions must be asked in its own separate turn without combining.",
+        "The operator did not ask a follow-up medication question when Jadzia mentioned waking up at 3 AM repeatedly – this could be relevant for existing conditions and should be documented.",
+        "Operator missed asking about any existing health conditions or medications during the health check-in phase (no question about conditions or meds at all, despite the skill requiring this)."
+      ],
+      "duration_s": 105.21900000000096,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical"
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "disclosure",
+        "health-checkin"
+      ],
+      "issues": [
+        "Health check-in on medications/conditions was rushed at the end; senior cut off and operator did not gently probe further to get a complete list.",
+        "Missed opportunity to offer help or notify family about the burnt bulb in the kitchen.",
+        "Combined the medication inquiry with fall risk question; could have asked about medications earlier in the call."
+      ],
+      "duration_s": 154.29699999999866,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium"
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 6,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator skipped the proactive health conditions/medications inquiry (step 3 of health-checkin.md) — asked about food and sleep but never asked Józef to list his conditions or regular meds before the safety block.",
+        "Safety questions were not asked back-to-back as a continuous block; operator interrupted the sequence with medication discussions and emotional acknowledgments between isolation and home safety, violating the 'no interleaving' rule.",
+        "Home safety and fall risk were merged into a single turn (the operator asked about the broken window AND general home safety together), violating the separate-turn requirement."
+      ],
+      "duration_s": 181.35900000000038,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical"
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "mood-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Did not proactively ask about existing health conditions and medications as required by the health-checkin skill – this is a critical gap for the senior's family report.",
+        "Mood check-in sequence violated the forced rule: after the senior's initial mood answer, the operator combined a brief acknowledgment of the emotional story (zdjęcia) with the sleep question in the same turn, instead of asking the sleep question alone in a separate turn.",
+        "The food question was asked back-to-back with the sleep question follow-up ; though technically separate turns, it could be argued that the operator inserted an acknowledgment of sleep ('A jednak Pan siedzi i wspomina...') before food, which slightly blurred the mandatory back-to-back sequence. However, this is minor given the senior's digressions."
+      ],
+      "duration_s": 219.26599999999962,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high"
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting value: line 1 column 1 (char 0)",
+        "Raw preview: ..."
+      ],
+      "duration_s": 148.06200000000172,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Straż pożarna",
+      "sound_severity": "high"
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting ',' delimiter: line 28 column 6 (char 2260)",
+        "Raw preview: {   \"scores\": {     \"warmth\": 8,     \"listening\": 7,     \"info_quality\": 4,     \"brevity\": 8   },   \"strengths\": [     \"Operator warmly validated the senior's suspicion multiple times without being defensive.\",     \"Quickly recognized breathing distress and prioritized safety over checklist.\",     \"..."
+      ],
+      "duration_s": 125.75,
+      "emergency_injected": true,
+      "emergency_type": "Zadyszka",
+      "emergency_severity": "critical",
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium"
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator asked the sleep question too early (turn 2) before fully acknowledging the senior's mood story about her granddaughter's success, violating the forced sequence in mood-checkin.",
+        "Operator skipped the proactive inquiry about existing health conditions and medications (required by health-checkin skill) before the safety block, missing a chance to gather baseline info.",
+        "Operator combined the isolation question ('A ktoś dziś do Pani Heleny wpada, czy jest Pani sama w domu?') with a transition from the food topic, but did not ask the food question in a separate turn before isolation, violating the safety-check skill's requirement for four separate turns.",
+        "Operator did not ask the mandatory food question ('A zjadła Pani dzisiaj jakieś śniadanie?') in its own separate turn before isolation; it was asked after the sleep question but before the senior's food answer was fully acknowledged, and the isolation question was asked in the same turn as the food question's answer was still pending."
+      ],
+      "duration_s": 362.3909999999996,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": ""
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 8,
+        "listening": 6,
+        "info_quality": 4,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question in the first call segment; after the glass-breaking sound, the call restarted and the sleep question was asked, but the initial segment lacked it.",
+        "Operator failed to ask any of the four safety questions (food, isolation, home safety, fall risk) in either call segment, leaving critical safety information uncollected.",
+        "Operator did not follow the forced sequence for mood check-in: after the senior's initial mood answer, the operator acknowledged it but then asked about sleep in the same turn (combined), violating the rule that the sleep question must be in its own separate turn after acknowledgment.",
+        "Operator missed the opportunity to explore the senior's disorientation about days and his mention of a doctor's visit, which could have provided useful context for family reports."
+      ],
+      "duration_s": 189.63999999999942,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high"
+    }
+  ]
+}
