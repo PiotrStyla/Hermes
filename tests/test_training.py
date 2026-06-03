@@ -106,3 +106,38 @@ class TestEmergencyScenarioGenerator:
             assert emerg.severity
             assert emerg.expected_response
             assert emerg.category
+
+
+class TestSoundEventGenerator:
+    def test_generates_sound(self) -> None:
+        from src.training.sound_generator import SoundEventGenerator
+        gen = SoundEventGenerator(seed=42, sound_probability=1.0)
+        sound, turn = gen.generate()
+        assert sound.name
+        assert sound.description
+        assert sound.severity in ("low", "medium", "high", "critical")
+        assert 2 <= turn <= 10
+
+    def test_sound_probability(self) -> None:
+        from src.training.sound_generator import SoundEventGenerator
+        gen_never = SoundEventGenerator(seed=42, sound_probability=0.0)
+        gen_always = SoundEventGenerator(seed=42, sound_probability=1.0)
+        assert not gen_never.should_inject_sound()
+        assert gen_always.should_inject_sound()
+
+    def test_format_sound_announcement(self) -> None:
+        from src.training.sound_generator import SoundEventGenerator, SoundEvent
+        gen = SoundEventGenerator(seed=42)
+        sound = SoundEvent("Test", "Test desc", "high", "Response", "test")
+        announcement = gen.format_sound_announcement(sound)
+        assert "DŹWIĘK" in announcement
+        assert "TEST" in announcement
+
+    def test_all_sound_events_have_required_fields(self) -> None:
+        from src.training.sound_generator import SOUND_EVENTS
+        for sound in SOUND_EVENTS:
+            assert sound.name
+            assert sound.description
+            assert sound.severity
+            assert sound.expected_response
+            assert sound.category

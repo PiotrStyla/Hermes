@@ -27,6 +27,7 @@ from ..skills.loader import SkillsLoader
 from ..skills.updater import SkillsUpdater
 from .emergency_generator import EmergencyScenarioGenerator
 from .scenario_generator import ARCHETYPES, ScenarioGenerator
+from .sound_generator import SoundEventGenerator
 
 
 @dataclass
@@ -40,6 +41,9 @@ class TrainingMetrics:
     emergency_injected: bool = False
     emergency_type: str = ""
     emergency_severity: str = ""
+    sound_injected: bool = False
+    sound_type: str = ""
+    sound_severity: str = ""
 
 
 class TrainingLoop:
@@ -55,6 +59,7 @@ class TrainingLoop:
         self.console = console or Console()
         self.generator = ScenarioGenerator(seed=seed)
         self.emergency_gen = EmergencyScenarioGenerator(seed=seed, emergency_probability=0.6)
+        self.sound_gen = SoundEventGenerator(seed=seed, sound_probability=0.6)
         self.operator = OperatorAgent()
         self.supervisor = SupervisorAgent()
         self.manager = ManagerAgent()
@@ -95,6 +100,13 @@ class TrainingLoop:
                     emergency, emergency_turn = self.emergency_gen.generate()
                     self.console.print(f"[yellow]⚠ Emergency injected:[/yellow] {emergency.name} at turn {emergency_turn}")
 
+                # Decide if we inject a sound event
+                sound = None
+                sound_turn = 0
+                if self.sound_gen.should_inject_sound():
+                    sound, sound_turn = self.sound_gen.generate()
+                    self.console.print(f"[cyan]🔊 Sound injected:[/cyan] {sound.name} at turn {sound_turn}")
+
                 for turn_num in range(1, 19):  # MAX_TURNS
                     op_msg = self.operator.turn(operator_system, history)
                     history.append({"role": "operator", "content": op_msg})
@@ -107,6 +119,11 @@ class TrainingLoop:
                     if emergency and turn_num == emergency_turn:
                         history.append({"role": "senior", "content": emergency.trigger_phrase})
                         self.console.print(f"[red]🆘 {emergency.name}:[/red] {emergency.trigger_phrase}")
+                    # Inject sound event at the specified turn
+                    elif sound and turn_num == sound_turn:
+                        sound_announcement = self.sound_gen.format_sound_announcement(sound)
+                        history.append({"role": "senior", "content": sound_announcement})
+                        self.console.print(f"[magenta]🔔 {sound.name}:[/magenta] {sound.description}")
                     else:
                         senior_msg = senior.turn(senior_system, history)
                         history.append({"role": "senior", "content": senior_msg})
@@ -147,6 +164,9 @@ class TrainingLoop:
                     emergency_injected=emergency is not None,
                     emergency_type=emergency.name if emergency else "",
                     emergency_severity=emergency.severity if emergency else "",
+                    sound_injected=sound is not None,
+                    sound_type=sound.name if sound else "",
+                    sound_severity=sound.severity if sound else "",
                 ))
 
                 avg = self._avg_scores()
@@ -221,6 +241,7 @@ class TrainingLoop:
 
         # Save report
         emergencies_injected = sum(1 for m in self.metrics if m.emergency_injected)
+        sounds_injected = sum(1 for m in self.metrics if m.sound_injected)
         report = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "rounds": self.rounds,
@@ -231,6 +252,7 @@ class TrainingLoop:
             "total_updates": total_updates,
             "total_time_s": total_time,
             "emergencies_injected": emergencies_injected,
+            "sounds_injected": sounds_injected,
             "rounds_detail": [
                 {
                     "round": m.round,
@@ -242,6 +264,9 @@ class TrainingLoop:
                     "emergency_injected": m.emergency_injected,
                     "emergency_type": m.emergency_type,
                     "emergency_severity": m.emergency_severity,
+                    "sound_injected": m.sound_injected,
+                    "sound_type": m.sound_type,
+                    "sound_severity": m.sound_severity,
                 }
                 for m in self.metrics
             ],
@@ -270,7 +295,7 @@ class TrainingLoop:
         lines = [
             "---",
             f"date: {ts}",
-            "tags: [hermes, training, ai, emergency]",
+            "tags: [hermes, training, ai, emergency, sound]",
             "---",
             "",
             f"# Hermes Training Report — {ts[:19]}",
@@ -280,21 +305,23 @@ class TrainingLoop:
             f"- **Total time:** {report['total_time_s']:.0f}s ({report['total_time_s']/60:.1f}m)",
             f"- **Skill updates applied:** {report['total_updates']}",
             f"- **Emergencies injected:** {report.get('emergencies_injected', 0)}",
+            f"- **Sounds injected:** {report.get('sounds_injected', 0)}",
             "",
             "## Score Trend",
             "",
-            "| Round | Archetype | W | L | I | B | Updates | Emergency | Time |",
-            "|------:|-----------|--:|--:|--:|--:|--------:|----------:|-----:|",
+            "| Round | Archetype | W | L | I | B | Updates | Emergency | Sound | Time |",
+            "|------:|-----------|--:|--:|--:|--:|--------:|----------:|------:|-----:|",
         ]
 
         for m in report["rounds_detail"]:
             s = m["scores"]
-            emerg = m.get("emergency_type", "")[:15] if m.get("emergency_injected") else "-"
+            emerg = m.get("emergency_type", "")[:12] if m.get("emergency_injected") else "-"
+            sound = m.get("sound_type", "")[:12] if m.get("sound_injected") else "-"
             lines.append(
                 f"| {m['round']} | {m['archetype'][:25]} | "
                 f"{s.get('warmth', '-')} | {s.get('listening', '-')} | "
                 f"{s.get('info_quality', '-')} | {s.get('brevity', '-')} | "
-                f"{len(m['skill_updates'])} | {emerg} | {m['duration_s']:.1f}s |"
+                f"{len(m['skill_updates'])} | {emerg} | {sound} | {m['duration_s']:.1f}s |"
             )
 
         lines += [

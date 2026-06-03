@@ -1,0 +1,263 @@
+{
+  "timestamp": "2026-06-02T19:28:50.324041+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 9.1,
+    "listening": 8.6,
+    "info_quality": 6.4,
+    "brevity": 7.7
+  },
+  "first_scores": {
+    "warmth": 10,
+    "listening": 10,
+    "info_quality": 7,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 6,
+    "brevity": 8
+  },
+  "total_updates": 26,
+  "total_time_s": 1577.8910000000033,
+  "emergencies_injected": 7,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 10,
+        "listening": 10,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Missed the mandatory medication check – senior mentioned high blood pressure, but operator never asked if he took his blood pressure medication. This is required per the health-checkin skill."
+      ],
+      "duration_s": 110.18700000000536,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check",
+        "active-listening",
+        "health-checkin",
+        "greeting"
+      ],
+      "issues": [
+        "Safety check was not performed at all: the operator never asked about food, isolation, or home safety in separate turns as required.",
+        "Health check-in regarding the senior's own chronic conditions/medications was not performed; the focus stayed entirely on the wife's illness.",
+        "The senior's name ('Panie Andrzeju') was used only once, late in the call — it should have been used earlier to build rapport.",
+        "Operator missed an opportunity to gently redirect the senior's anger at the healthcare system back to actionable steps (e.g., emphasizing teleporada or a second call) without sounding like advice."
+      ],
+      "duration_s": 146.78200000000652,
+      "emergency_injected": true,
+      "emergency_type": "Dezorientacja czasowa",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 5,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not complete the mandatory safety check (food, isolation, home safety) before the call ended due to the fall.",
+        "Operator did not ask about known health conditions or medications as per the health-checkin skill.",
+        "Operator did not initiate a farewell sequence before the emergency, missing the chance to gather remaining info or end gracefully."
+      ],
+      "duration_s": 172.0,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high"
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask a mandatory safety check question about food in a separate turn; instead, the food question was embedded in the same turn after asking about mood, then the isolation and home safety questions were asked in subsequent turns out of order (isolation → home safety) — neither the food nor the order matches the required sequence.",
+        "Operator did not ask the mandatory sleep question in a separate turn after the senior's initial mood answer; instead, it was combined with an acknowledgment of the senior's leg pain and concerns, violating the requirement to keep it in its own turn.",
+        "Operator did not gather any information about specific known conditions or medications, despite the senior mentioning leg pain and poor sleep.",
+        "No question about medication adherence despite the senior's health complaints."
+      ],
+      "duration_s": 195.01499999998487,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 10,
+        "listening": 10,
+        "info_quality": 6,
+        "brevity": 5
+      },
+      "skill_updates": [
+        "safety-check",
+        "farewell"
+      ],
+      "issues": [
+        "Missed the mandatory home safety question (e.g., 'A w domu wszystko dziś gra? Nic się nie zepsuło?') – only food and isolation were asked",
+        "Call exceeded the ~5-minute / 18-turn target (approximately 25 turns including pauses and repeated prompts)",
+        "Could have asked about sleep more naturally after the emotional thread (it was combined with a comment about joy, despite the skill requiring a separate turn)"
+      ],
+      "duration_s": 182.15700000000652,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 6,
+        "brevity": 5
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check",
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question in a separate turn after the senior's initial mood answer about photos and grandchildren.",
+        "Operator did not complete the safety check sequence: food, isolation, and home safety were not asked in separate turns before the farewell.",
+        "Call exceeded the recommended 20-turn limit (approximately 25 turns), and the farewell was initiated too late.",
+        "Operator repeated the same prompt multiple times when the senior was silent, instead of waiting 2-3 seconds or varying the approach."
+      ],
+      "duration_s": 212.90599999998813,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high"
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 7,
+        "info_quality": 8,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Combined the mandatory sleep question with acknowledgment of the medication lapse in the same turn, violating the 'separate turn' rule in mood-checkin skill.",
+        "Did not explore the medication lapse further before pivoting to sleep; could have asked if he felt any symptoms or if he had taken other medications."
+      ],
+      "duration_s": 162.6720000000205,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator did not complete the safety check (food, isolation, home safety) before the emergency — only asked about isolation, not food or home safety.",
+        "Operator did not ask the mandatory sleep question in a separate turn after the senior's initial mood answer about knee pain — combined acknowledgment and sleep question in the same turn."
+      ],
+      "duration_s": 135.59299999999348,
+      "emergency_injected": true,
+      "emergency_type": "Zadyszka",
+      "emergency_severity": "critical"
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Mandatory sleep question was asked in the same turn as the acknowledgment of the family visit joy (turn 3) instead of in a separate turn. This violates the Mood Check-in skill rule about keeping the sleep question in its own turn.",
+        "Safety check questions were asked in two turns instead of three separate turns: food and isolation were split correctly, but home safety (heating/water) was asked in the same turn as the isolation follow-up (turn 11)."
+      ],
+      "duration_s": 134.75,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 6,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator did not ask about medications or known health conditions, missing a key part of the health check-in.",
+        "Operator asked about food and isolation in the same turn (turn 8: 'A tymczasem: zjadł Pan już dzisiaj coś dobrego?'), violating the rule to keep safety questions in separate turns.",
+        "Operator did not ask the mandatory sleep question in a separate turn after the senior's initial mood response; instead, it was combined with the suggestion to call the daughter.",
+        "Operator did not explore the senior's confusion about the day more deeply before moving to other topics; the senior repeated the same concern multiple times without a full acknowledgment."
+      ],
+      "duration_s": 125.8289999999979,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    }
+  ]
+}

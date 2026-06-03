@@ -1,0 +1,254 @@
+{
+  "timestamp": "2026-06-02T18:54:55.848144+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 8.1,
+    "listening": 7.8,
+    "info_quality": 6.1,
+    "brevity": 7.5
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 7
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 9,
+    "info_quality": 8,
+    "brevity": 9
+  },
+  "total_updates": 18,
+  "total_time_s": 1882.546000000002,
+  "emergencies_injected": 7,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 8,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "active-listening",
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator interrupted the senior multiple times mid-sentence (e.g., 'Tablet...', 'Jajecznicę...', 'Mówi, że może...'), violating the active-listening rule to wait through silence.",
+        "Operator did not wait for the senior to finish his thought about what his wife said ('Mówi, że może...') before asking about home safety, then later apologized but still cut him off again.",
+        "Operator asked the safety check questions (food, isolation, home safety) in a rushed, overlapping manner, sometimes repeating the same question without waiting for an answer (e.g., asked 'A w domu wszystko dziś gra?' twice).",
+        "Operator did not follow the mandatory three-turn sequence for health check-in: pain question, medication question, food question were not asked in separate turns with waiting for answers (e.g., combined pain and medication in one turn, then asked food in the same turn).",
+        "Operator did not ask about the senior's known conditions from the profile (none listed, but still skipped the general pain question before medications).",
+        "Operator gave advice ('może warto zadzwonić do przychodni') which borders on medical advice, though it was about logistics, not treatment."
+      ],
+      "duration_s": 344.7809999999881,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "disclosure"
+      ],
+      "issues": [
+        "Missed the mandatory sleep question after the senior shared concern about his wife's forgetfulness — asked earlier but then skipped after the second mention of Jadwiga's forgetting where she put her glasses.",
+        "Never asked about daily medications despite senior having a wife with apparent health issues and no profile conditions listed — the health check-in skill requires asking about medications in a separate turn after pain/discomfort questions.",
+        "Did not complete the mandatory safety check in three separate turns — asked about food and isolation in one turn, and never explicitly asked about home safety (e.g., 'A w domu wszystko dziś gra? Nic się nie zepsuło?').",
+        "The disclosure on turn 1 was incomplete — mentioned 'automatyczna asystentka' but did not state 'może Pan powiedzieć stop lub koniec rozmowy w każdej chwili' as required by the disclosure skill.",
+        "The operator asked about sleep for the first time after the senior said his wife was weak — but then did not re-ask or follow up on sleep after the senior's later comments about his wife's forgetfulness, so the sleep question was only asked once early on."
+      ],
+      "duration_s": 229.375,
+      "emergency_injected": true,
+      "emergency_type": "Dezorientacja czasowa",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 10,
+        "listening": 10,
+        "info_quality": 8,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Combined the isolation question with a food follow-up in the same turn, violating the three-separate-turns rule for safety questions.",
+        "Call could have been slightly shorter; some redundant probing (e.g., repeating the food question after already getting an answer)."
+      ],
+      "duration_s": 185.07800000000861,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high"
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator asked about sleep in the same turn as acknowledging a family concern (grandson visit) and the leg pain, rather than letting the pain thread breathe before pivoting to sleep — this slightly rushed the mood check-in.",
+        "Operator asked about breakfast but then did not ask the mandatory isolation question ('Ktoś dzisiaj wpadał') in a separate turn after the food answer — instead, the safety check about visitors was asked later but combined with the package story, missing the exact mandatory phrasing and separate turn structure.",
+        "Operator did not ask the home safety question at all ('A w domu wszystko dziś gra? Nic się nie zepsuło, nie trzeba było wzywać pomocy?') — this is a mandatory component of the safety check that was skipped."
+      ],
+      "duration_s": 216.21900000001187,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 10,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "The operator asked about food intake and safety (isolation) in the same turn — should have been separate turns. After the senior answered about owsianka, the operator asked 'A ktoś dzisiaj wpadał...' in the same turn, instead of asking about food first, waiting, then isolation in a distinct turn.",
+        "The senior mentioned forgetting diabetes medication — the operator gave a gentle reminder but should have added a deferral to the doctor per hard rules: 'Proszę wspomnieć o tym lekarzowi przy okazji.'"
+      ],
+      "duration_s": 165.04699999999139,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Health check-in incomplete: operator asked about pain and food (jajecznica, bigos) but never explicitly asked about daily medications or known conditions from the profile (none listed, but the general pain question was not followed by a medication question in a separate turn). Missed the mandatory medication question when no conditions are listed.",
+        "Food question was asked in the same turn as a response to the bigos mention, but the safety check rule requires a separate food turn (after mood/health)—here the food turn was embedded in a larger conversational turn, not isolated as a distinct question in its own turn.",
+        "Sleep question was asked early (turn 5) but the operator jumped from mood to sleep before the senior had fully answered the mood probe, which slightly violated the 'one question, then listen' principle. The senior had trailed off after the wedding story, but the operator asked sleep before fully processing the senior's incomplete thought."
+      ],
+      "duration_s": 147.34299999999348,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high"
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting value: line 1 column 1 (char 0)",
+        "Raw preview: ..."
+      ],
+      "duration_s": 168.40700000000652,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 5,
+        "brevity": 10
+      },
+      "skill_updates": [],
+      "issues": [
+        "Due to the emergency, the operator did not complete the standard mood, health, and safety check-in. However, this was entirely appropriate given the circumstances."
+      ],
+      "duration_s": 74.21799999999348,
+      "emergency_injected": true,
+      "emergency_type": "Zadyszka",
+      "emergency_severity": "critical"
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator asked about food intake before the mandatory safety check isolation question, violating the required order (food → isolation → home safety). The isolation question was asked after food, but the home safety question was asked before the isolation question was fully answered in a separate turn.",
+        "Operator did not explicitly ask about daily medications in a separate turn after the pain question; the medication question was combined with the pain follow-up in the same turn ('A czy bierze pani coś na te kolana, jakieś leki?').",
+        "Operator did not ask the mandatory sleep question in a separate turn after the initial mood answer; it was combined with the follow-up about the grandson's news."
+      ],
+      "duration_s": 173.25,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium"
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator asked about medications twice in the same turn (first as a question, then repeated after silence) instead of waiting for the senior to respond after the first ask.",
+        "Operator did not ask about food intake in a separate turn after the medication question; the food question was combined with the isolation question in the same turn, violating the safety check protocol.",
+        "Operator did not explicitly ask about home safety in a separate turn; the question was asked but then repeated after silence in the same turn, and the senior's answer was not fully acknowledged before moving on."
+      ],
+      "duration_s": 178.82800000000861,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": ""
+    }
+  ]
+}

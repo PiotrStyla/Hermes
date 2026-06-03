@@ -1,22 +1,42 @@
-# Skill: Greeting
+# Powitanie
 
-How to open the call warmly so the senior feels at ease immediately.
+Celem tej umiejętności jest nawiązanie osobistego kontaktu z seniorem już na początku rozmowy. Kluczowe jest użycie imienia seniora wcześnie, aby wzmocnić poczucie znajomości i zaufania.
 
-## Goal
+## Krok 1: Rozpoczęcie rozmowy
 
-In your very first message, achieve all of:
-- Greet them by name.
-- Identify yourself briefly (e.g., "this is your daily check-in").
-- Ask one easy, friendly opening question.
+Rozpocznij od standardowego powitania i przedstawienia się.
 
-## Examples
+**Przykład:**  
+"Dzień dobry, tu [Twoje imię] z centrum wsparcia."
 
-> "Good morning, Stefan! It's your friendly check-in call. How is your morning going so far?"
+## Krok 2: Ujawnienie celu rozmowy (disclosure)
 
-> "Hello there, Stefan — just calling to see how you're doing today. Everything alright on your end?"
+Krótko wyjaśnij, dlaczego dzwonisz.
 
-## Avoid
+**Przykład:**  
+"Dzwonię, aby sprawdzić, jak się Pan/Pani czuje i czy wszystko jest w porządku."
 
-- Long monologues before letting them speak.
-- Formal corporate phrases ("This is a customer satisfaction survey...").
-- Asking three questions at once.
+## Krok 3: Pierwsze pytanie – użycie imienia seniora
+
+Zaraz po ujawnieniu celu i pierwszym pytaniu, zwróć się do seniora po imieniu. To kluczowy moment – pokazuje, że operator wie, z kim rozmawia.
+
+**Przykład:**  
+"Panie Andrzeju, jak się Pan dziś czuje?"
+
+## Krok 4: Kontynuacja
+
+Po zadaniu pytania słuchaj odpowiedzi i dostosuj dalszą rozmowę do potrzeb seniora.
+
+## Ważne wskazówki
+
+- Używaj imienia seniora w pierwszej minucie rozmowy, najlepiej w pierwszym pytaniu po przedstawieniu się.
+- Jeśli nie znasz jeszcze imienia (np. przy pierwszym kontakcie), najpierw je uzyskaj, a następnie od razu zastosuj.
+- Unikaj ogólników typu „Panie/Pani…” bez dokończenia – zawsze dopełnij imieniem.
+
+## Przykład pełnego powitania
+
+Operator: *Dzień dobry, tu Ania z centrum wsparcia. Dzwonię, aby sprawdzić, jak się Pan czuje. Panie Andrzeju, jak się Pan dziś czuje?*
+
+Senior: *Dzień dobry, czuję się całkiem nieźle.*
+
+Operator: *Bardzo się cieszę. Czy mogę zapytać, czy miał Pan dzisiaj jakiś problem?*

@@ -2,6 +2,7 @@
 from .emergency_generator import EMERGENCY_TYPES, EmergencyScenarioGenerator, EmergencyType
 from .loop import TrainingLoop
 from .scenario_generator import ScenarioGenerator
+from .sound_generator import SOUND_EVENTS, SoundEvent, SoundEventGenerator
 
 __all__ = [
     "TrainingLoop",
@@ -9,4 +10,7 @@ __all__ = [
     "EmergencyScenarioGenerator",
     "EmergencyType",
     "EMERGENCY_TYPES",
+    "SoundEventGenerator",
+    "SoundEvent",
+    "SOUND_EVENTS",
 ]
