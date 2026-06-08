@@ -43,6 +43,23 @@ def _call_senior(senior_id: str, console: Console) -> None:
         log.exception("Scheduled call failed for %s", senior_id)
 
 
+def _run_board_meeting(console: Console) -> None:
+    """Job entrypoint: run one executive board meeting (CEO/QD/HR → directive)."""
+    from ..company import CompanyRunner
+
+    console.print("[magenta]>> Scheduled board meeting[/magenta]")
+    try:
+        result = CompanyRunner(console=console).run_board_meeting(persist=True)
+        d = result.directive
+        if d is not None:
+            console.print(
+                f"  -> directive: focus {d.focus_metric} via '{d.focus_skill}'"
+            )
+    except Exception as exc:  # noqa: BLE001
+        console.print(f"[red]  -> board meeting failed: {exc}[/red]")
+        log.exception("Scheduled board meeting failed")
+
+
 def _load_timezone(tz_name: str):
     """Return a tzinfo object, falling back to UTC on unknown zone."""
     try:
@@ -57,6 +74,7 @@ def _load_timezone(tz_name: str):
 def start_daemon(
     once: bool = False,
     dry_run: bool = False,
+    board_review_hours: int = 0,
     console: Console | None = None,
 ) -> None:
     """Start the APScheduler daemon.
@@ -64,23 +82,29 @@ def start_daemon(
     If `once=True`, run all enabled calls immediately and return — useful for
     debugging or as a cron job entry-point on a server where the OS scheduler
     (cron / Task Scheduler) fires the process at the right time.
-    """
-    from apscheduler.schedulers.blocking import BlockingScheduler
-    from apscheduler.schedulers.background import BackgroundScheduler
 
+    If `board_review_hours > 0`, also run an executive board meeting every N
+    hours (governance loop: CEO/Quality Director/HR refresh the directive).
+    """
     log_console = console or Console()
     store = ScheduleStore()
     schedules = store.list_all(only_enabled=True)
 
-    if not schedules:
+    if not schedules and board_review_hours <= 0:
         log_console.print("[yellow]No enabled call schedules found. Use `schedule set` first.[/yellow]")
         return
 
     if once:
-        log_console.print(f"[bold]Running {len(schedules)} scheduled call(s) now (--once mode)[/bold]")
-        for s in schedules:
-            _call_senior(s.senior_id, log_console)
+        if schedules:
+            log_console.print(f"[bold]Running {len(schedules)} scheduled call(s) now (--once mode)[/bold]")
+            for s in schedules:
+                _call_senior(s.senior_id, log_console)
+        if board_review_hours > 0:
+            _run_board_meeting(log_console)
         return
+
+    # Only the long-running daemon needs APScheduler.
+    from apscheduler.schedulers.blocking import BlockingScheduler
 
     scheduler = BlockingScheduler(timezone="UTC")
 
@@ -104,8 +128,25 @@ def start_daemon(
             f"at {s.call_time} {s.timezone} [{s.apscheduler_day_of_week}]"
         )
 
+    if board_review_hours > 0:
+        scheduler.add_job(
+            _run_board_meeting,
+            trigger="interval",
+            args=[log_console],
+            hours=board_review_hours,
+            id="board_meeting",
+            name="Executive board meeting",
+            misfire_grace_time=600,
+            replace_existing=True,
+        )
+        log_console.print(
+            f"  [green]✓[/green] Scheduled [bold]board meeting[/bold] "
+            f"every {board_review_hours}h"
+        )
+
+    n_jobs = len(schedules) + (1 if board_review_hours > 0 else 0)
     log_console.print(
-        f"\n[bold green]Hermes scheduler running — {len(schedules)} job(s). "
+        f"\n[bold green]Hermes scheduler running — {n_jobs} job(s). "
         "Press Ctrl-C to stop.[/bold green]\n"
     )
 

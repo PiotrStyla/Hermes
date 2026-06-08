@@ -79,6 +79,14 @@ src/
 │   ├── operator.py         # Conducts the call, reads skill markdown files
 │   ├── senior_persona.py   # LLM playing the senior (MVP testing only)
 │   └── supervisor.py       # Reviews transcript, returns structured JSON
+├── company/
+│   ├── state.py            # CompanyState + GrowthPlan persistence
+│   ├── metrics.py          # KPI aggregation from call records + training reports
+│   ├── ceo.py              # CEOAgent — sets strategic directive
+│   ├── quality_director.py # QualityDirectorAgent — systemic quality analysis
+│   ├── hr.py               # HRAgent — operator performance scorecard
+│   ├── cmo.py              # CMOAgent — client acquisition GrowthPlan
+│   └── runner.py           # CompanyRunner — orchestrates the board meeting
 ├── conversation/
 │   ├── session.py          # Operator ↔ Senior turn loop
 │   └── transcript.py       # Markdown formatting
@@ -87,11 +95,13 @@ src/
 │   ├── loader.py           # Reads operator skill markdown files
 │   └── updater.py          # Versions and overwrites skills after a patch
 ├── reports/generator.py    # Transcript + feedback → family report
+├── scheduling/daemon.py    # APScheduler: call intervals + board meetings
 ├── cli.py                  # argparse entry point
 └── __main__.py             # `python -m src ...`
 
 data/
 ├── seniors/<id>/           # Per-senior data directory
+├── company/state.json      # Persistent company state (directive, KPIs, growth plan)
 └── skills/operator/        # Markdown skill files (continuously self-updated)
 ```
 
@@ -118,6 +128,9 @@ data/
 | `python -m src twilio-call <senior-id> [--dry-run]` | Place an outbound wellness call via Twilio |
 | `python -m src twilio-serve [--port 8000]` | Run the FastAPI webhook server for Twilio call flow |
 | `python -m src twilio-calls [--status ...]` | List staged / live / completed telephony calls |
+| `python -m src company status` | Show current company state: directive, KPIs, growth plan |
+| `python -m src company review` | Run a board meeting immediately (CEO, QD, HR, CMO) |
+| `python -m src scheduler start [--board-review-hours N]` | Start the call + board-meeting scheduler |
 
 ## Voice mode (Phase 2)
 
@@ -247,6 +260,98 @@ python -m src review-queue approve <id> --by piotr --comment "Looks good"
 - `forget` performs full right-to-erasure for one senior.
 - The `ComplianceReviewerAgent` is an LLM **advisor** over artifacts (prompts, reports, code changes). It never enforces anything by itself — the deterministic safeguards above do.
 
+## Autonomous Executive Layer (Phase 4)
+
+The system now has a self-governing executive board that runs periodic company-wide reviews and autonomously steers the Operator's behaviour.
+
+### How it works
+
+```
+┌─────────────────────────────────────────────────────┐
+│              BOARD MEETING (CompanyRunner)           │
+│  Reads KPIs from call records + training reports,   │
+│  runs all four executives in sequence, persists      │
+│  results to data/company/state.json.                 │
+└───┬──────────┬────────────────┬──────────────────────┘
+    │          │                │                   │
+    ▼          ▼                ▼                   ▼
+  CEO    Quality Director      HR                 CMO
+Sets a   Audits systemic   Reviews operator   Generates a client
+strategic  quality issues    performance,       acquisition plan
+directive  across all calls  issues verdict     (GrowthPlan)
+    │
+    │ directive injected into
+    ▼
+OPERATOR system prompt  +  training loop
+```
+
+### Executives
+
+| Agent | Role | Output |
+|-------|------|--------|
+| **CEO** | Sets the single strategic directive that governs the next call cycle | `directive` string persisted in company state |
+| **Quality Director** | Identifies recurring quality problems across recent transcripts | Short analysis text for the CEO |
+| **HR** | Scores each operator on a performance scorecard | Verdict + recommendation per operator |
+| **CMO** | Recommends a client acquisition / growth strategy based on company scale and quality | `GrowthPlan` (channel, message, target segment, 3 action items) |
+
+### Persistent company state
+
+All results are stored in `data/company/state.json`:
+
+```json
+{
+  "mission": "...",
+  "directive": "Focus on emotional warmth in the first two minutes",
+  "kpi_history": [...],
+  "decisions": [...],
+  "growth_plan": {
+    "channel": "word-of-mouth via family",
+    "message": "Trusted daily check-ins — your family is always informed",
+    "target_segment": "adult children of elderly parents aged 70+",
+    "action_items": ["...", "...", "..."],
+    "generated_at": "2025-06-06T12:00:00"
+  }
+}
+```
+
+### Directive → Operator feedback loop
+
+The CEO directive is automatically injected into:
+- The **Operator system prompt** (live calls)
+- The **training loop banner** (self-improvement sessions)
+
+This closes the loop: board review → directive → Operator behaviour → call quality → next board review.
+
+### CLI commands
+
+```powershell
+# Run from: c:\Users\Hipek\CascadeProjects\windsurf-project-2
+
+# Show current company state (mission, directive, latest KPIs, growth plan)
+python -m src company status
+
+# Run a board meeting right now
+python -m src company review
+
+# Start the scheduler with automatic board meetings every N hours
+python -m src scheduler start --board-review-hours 24
+```
+
+### Scheduler
+
+The existing APScheduler daemon now supports two recurring jobs:
+
+| Job | Flag | Default |
+|-----|------|---------|
+| Scheduled wellness calls | `--call-interval-minutes` | 60 min |
+| Board meeting | `--board-review-hours` | disabled |
+
+```powershell
+python -m src scheduler start --call-interval-minutes 60 --board-review-hours 24
+```
+
+---
+
 ## Roadmap
 
 - ✅ **Phase 1:** Text-mode MVP — LLM persona, self-improving skills loop
@@ -256,8 +361,9 @@ python -m src review-queue approve <id> --by piotr --comment "Looks good"
 - ✅ **Phase 2.6:** Disclosure skill, granular scopes (health / training), mid-call withdrawal, human-review queue
 - ✅ **Phase 3.0:** Twilio outbound — TwiML `<Play>`/`<Record>` per-turn loop, dry-run mode, AMD, webhook signature verification
 - ✅ **Anthropic prompt cache (1h TTL)** — Operator/Supervisor system prompts split into stable + dynamic blocks; cache markers emitted only for `anthropic/*` models, no-op everywhere else
+- ✅ **Phase 4.0:** Autonomous executive layer — CEO, Quality Director, HR, CMO board meetings; directive injection into Operator; persistent company state; scheduler integration
 - **Phase 3.1 (next):** Twilio Media Streams (WebSocket, real-time, ~200ms latency)
-- **Phase 4:** Scheduling, family dashboard, event bus, inbound calls
+- **Phase 4.1:** Family dashboard, event bus, inbound calls
 
 ## Configuration
 

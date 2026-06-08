@@ -182,8 +182,10 @@ Output ONLY the new markdown content. No commentary, no fences."""
         # --- Phase 1: the call ---
         title = "Phase 1: Call" + (" (voice)" if voice_mode else "")
         console.print(Panel(f"[bold]Calling {profile.name} ({profile.id})[/bold]", title=title))
+        from ..company.state import CompanyState
         operator = OperatorAgent()
         operator.health_consent = health_consent  # type: ignore[attr-defined]
+        operator.directive_note = CompanyState.load().directive.to_operator_note()
         senior_agent = None if voice_mode else SeniorPersonaAgent()
         session = CallSession(
             operator=operator,

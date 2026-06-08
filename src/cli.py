@@ -401,7 +401,11 @@ def cmd_schedule_disable(args: argparse.Namespace) -> int:
 
 def cmd_scheduler_start(args: argparse.Namespace) -> int:
     from .scheduling.daemon import start_daemon
-    start_daemon(once=args.once, console=console)
+    start_daemon(
+        once=args.once,
+        board_review_hours=args.board_review_hours,
+        console=console,
+    )
     return 0
 
 
@@ -641,6 +645,22 @@ def cmd_train(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_company(args: argparse.Namespace) -> int:
+    """Executive layer: company KPI status and the board-meeting governance loop."""
+    from .company import CompanyRunner
+
+    runner = CompanyRunner(console=console)
+    action = getattr(args, "company_cmd", None)
+    if action == "status":
+        runner.status()
+        return 0
+    if action == "review":
+        runner.run_board_meeting(persist=not args.no_save)
+        return 0
+    console.print("[red]Unknown company command.[/red]")
+    return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="hermes-elderly-care",
@@ -822,6 +842,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Run all enabled calls immediately instead of starting a long-running daemon.",
     )
+    sch_start.add_argument(
+        "--board-review-hours",
+        type=int,
+        default=0,
+        help="Also run an executive board meeting every N hours (0 = disabled).",
+    )
     sch_start.set_defaults(func=cmd_scheduler_start)
 
     # ---- Telephony (Phase 3) ----
@@ -880,6 +906,30 @@ def build_parser() -> argparse.ArgumentParser:
     p_dash.add_argument("--host", default="127.0.0.1")
     p_dash.add_argument("--port", type=int, default=8080)
     p_dash.set_defaults(func=cmd_dashboard)
+
+    # ---- Company (executive layer / autonomous org) ----
+    p_company = sub.add_parser(
+        "company",
+        help="Executive layer: company KPI status and the board-meeting governance loop.",
+    )
+    company_sub = p_company.add_subparsers(dest="company_cmd", required=True)
+
+    pco_status = company_sub.add_parser(
+        "status",
+        help="Show company-wide KPIs and the current strategic directive (no LLM).",
+    )
+    pco_status.set_defaults(func=cmd_company)
+
+    pco_review = company_sub.add_parser(
+        "review",
+        help="Run the executive board meeting: Quality Director + HR + CEO directive.",
+    )
+    pco_review.add_argument(
+        "--no-save",
+        action="store_true",
+        help="Run the board meeting without persisting the snapshot/directive.",
+    )
+    pco_review.set_defaults(func=cmd_company)
 
     return parser
 

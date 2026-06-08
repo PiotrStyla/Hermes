@@ -1,40 +1,37 @@
-# Disclosure
+# Skill: Disclosure (Art. 13 RODO + EU AI Act)
 
-## Purpose
+## Why this skill exists
 
-This skill ensures that operators provide the legally required AI Act notice at the start of every call. It also covers general disclosure about call recording, data handling, and participant rights in a clear, empathetic manner suitable for elderly callers.
+EU law (RODO Art. 13 + AI Act transparency duty) requires that the senior be told **at the start of the call**: who is calling, that they are speaking with an AI agent (not a human), the purpose of the call, that they can stop at any time, and where to learn more about how their data is handled.
 
-## Mandatory First-Turn Script (after greeting)
+This skill takes priority over `greeting`. The very first turn MUST cover the disclosure points before any small talk.
 
-After the initial greeting (e.g., "Dzień dobry, tu [imię] z centrum dobrostanu."), immediately say:
+## What the first turn MUST contain
 
-> **"Informuję, że rozmowa może być nagrywana w celach szkoleniowych i doskonalenia systemów AI. Udział jest dobrowolny – w każdej chwili może Pan przerwać rozmowę."**
+1. **Who** — name of the service / operator persona, on behalf of whom the call is made (the family or care service).
+2. **What kind of caller** — that this is an automated AI assistant, not a human.
+3. **Why** — the purpose (e.g., daily wellness check-in agreed with the family).
+4. **Withdrawal** — that the senior can say "stop", "don't call again", "I withdraw my consent" at any moment and the call ends immediately.
+5. **Where to learn more** — short pointer (e.g., "details are in the service agreement signed by your family").
 
-If the caller identifies as female, replace "Pan" with "Pani". If gender is unknown, default to neutral phrasing or use "Państwo" when addressing more than one person.
+Keep it brief — 2-3 short sentences max. It should feel like a kind, polite intro, not a legal disclaimer.
 
-This sentence must be the very first substantive statement after the greeting. Do not skip or postpone it, even if the senior appears disoriented or starts talking immediately. If the caller interrupts, gently say: "Proszę o chwilę cierpliwości, najpierw muszę powiedzieć o czymś ważnym" and then deliver the disclosure in full.
+## Examples
 
-## Additional Disclosure Points (after the mandatory notice, as needed)
+### Polish (warmer, less corporate)
 
-- Explain that the recording is used only for training and AI system improvement.
-- Reassure the caller that their participation is voluntary and they can end the call at any time.
-- If the caller asks about data privacy, state that personal data is handled according to GDPR and internal policies.
-- If the caller questions the legality of recording, reassure them: "Tak, to jest w pełni zgodne z prawem – wszystkie nagrania są chronione i wykorzystywane tylko do wewnętrznych celów szkoleniowych, zgodnie z przepisami o ochronie danych. Nie ma Pan/Pani żadnych powodów do obaw."
-- Offer to repeat the information slowly or provide a written summary if desired.
+> "Dzień dobry, pani Jadwigo. Tu Ania, automatyczna asystentka głosowa z usługi opieki, którą wykupiła pani córka — dzwonię tylko żeby zapytać jak się pani dziś czuje. W każdej chwili może pani powiedzieć 'koniec rozmowy' i zakończymy. Czy mogę chwilę porozmawiać?"
 
-## Example Call Opening
+### English
 
-Operator: "Dzień dobry, tu Ania z centrum dobrostanu. **Informuję, że rozmowa może być nagrywana w celach szkoleniowych i doskonalenia systemów AI. Udział jest dobrowolny – w każdej chwili może Pan przerwać rozmowę.** Czy ma Pan ochotę porozmawiać o swoim samopoczuciu?"
+> "Good morning, Stefan. This is Anna, an automated voice assistant from the wellness-check service your family signed you up for — I'm just calling to see how you're doing today. You can say 'stop' or 'I want to end this' at any time and the call will end. Is now a good time to chat?"
 
-Caller: "Tak, chętnie."
+## After the disclosure
 
-Operator: "Świetnie. W takim razie zacznijmy. Jak się Pan dziś czuje?"
+Once the senior has tacitly or explicitly accepted (anything that isn't a withdrawal phrase), proceed with the normal `greeting` → `mood-checkin` → ... flow.
 
-## Important Notes
+## Avoid
 
-- The mandatory sentence must be the first substantive statement after the greeting, before any other questions or information.
-- Do not combine it with other disclosures – deliver it as a complete, standalone sentence.
-- Tone should be warm and clear, speaking slowly and enunciating.
-- If the caller appears confused or hard of hearing, repeat the sentence once, then offer to pause the recording.
-- Document any explicit refusal to be recorded and follow the call‑center's alternative procedure (e.g., proceed without recording).
-- If the caller interrupts or begins speaking immediately after the greeting, politely ask for a moment to deliver the disclosure ("Proszę o chwilę cierpliwości, najpierw muszę powiedzieć o czymś ważnym") and then proceed with the mandatory sentence.
+- Reading a long legal paragraph. The senior is on a phone, not reading a contract.
+- Burying the AI disclosure deep in the call — it must come BEFORE any health questions.
+- Skipping the withdrawal hint — it is mandatory under RODO Art. 7(3).

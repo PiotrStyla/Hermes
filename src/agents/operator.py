@@ -47,6 +47,9 @@ class OperatorAgent(BaseAgent):
         # Defaults to True so unit tests / direct usage don't accidentally
         # restrict the operator. ManagerAgent overrides this from consent state.
         self.health_consent: bool = True
+        # Optional company directive note injected by the Manager / TrainingLoop
+        # from CompanyState. Empty string = no active directive (no effect).
+        self.directive_note: str = ""
 
     def build_system_prompt(self, profile: SeniorProfile, learnings: str) -> str:
         """Assemble the Operator's system prompt.
@@ -101,7 +104,7 @@ You must follow these skills, which together describe HOW you should behave:
 ## Things we have learned about THIS specific person from previous calls
 
 {learnings_block}
-{health_block}"""
+{health_block}{self.directive_note}"""
 
         return stable + CACHE_DELIMITER + dynamic
 

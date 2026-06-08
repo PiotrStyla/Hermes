@@ -183,3 +183,46 @@ def test_list_all_only_enabled(seniors_dir: Path) -> None:
 def test_list_all_empty(seniors_dir: Path) -> None:
     store = ScheduleStore(base_dir=seniors_dir)
     assert store.list_all() == []
+
+
+# ---- Daemon board-meeting wiring (once-mode, no APScheduler / no network) ----
+
+def test_once_runs_board_meeting(monkeypatch: pytest.MonkeyPatch) -> None:
+    """--once with board_review_hours>0 must trigger one board meeting even
+    when there are no senior schedules, without importing APScheduler."""
+    from src.scheduling import daemon
+
+    monkeypatch.setattr(daemon.ScheduleStore, "list_all", lambda self, only_enabled=False: [])
+    called = {"n": 0}
+    monkeypatch.setattr(daemon, "_run_board_meeting", lambda console: called.__setitem__("n", called["n"] + 1))
+
+    daemon.start_daemon(once=True, board_review_hours=6)
+    assert called["n"] == 1
+
+
+def test_once_without_board_review_does_not_run_meeting(monkeypatch: pytest.MonkeyPatch) -> None:
+    from src.scheduling import daemon
+
+    monkeypatch.setattr(daemon.ScheduleStore, "list_all", lambda self, only_enabled=False: [])
+    called = {"n": 0}
+    monkeypatch.setattr(daemon, "_run_board_meeting", lambda console: called.__setitem__("n", called["n"] + 1))
+
+    # No schedules and no board review → early return, meeting not run.
+    daemon.start_daemon(once=True, board_review_hours=0)
+    assert called["n"] == 0
+
+
+def test_run_board_meeting_swallows_errors(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A failing board meeting must never crash the daemon thread."""
+    from src.scheduling import daemon
+    from rich.console import Console
+
+    class _Boom:
+        def __init__(self, *a, **k): ...
+        def run_board_meeting(self, persist=True):
+            raise RuntimeError("boom")
+
+    import src.company as company_pkg
+    monkeypatch.setattr(company_pkg, "CompanyRunner", _Boom)
+    # Should not raise.
+    daemon._run_board_meeting(Console())

@@ -1,0 +1,278 @@
+"""Tests for the company executive layer — pure-logic parts (no LLM/network).
+
+Covers CompanyState persistence, MetricsAggregator roll-up, and the
+deterministic OperatorScorecard. LLM-driven agents (CEO/QD/HR prose) require a
+live client and are left for integration testing.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+
+from src.company.metrics import CompanyMetrics, MetricsAggregator
+from src.company.hr import OperatorScorecard
+from src.company.cmo import CMOAgent, SCALE_QUALITY_THRESHOLD
+from src.company.state import (
+    CompanyState,
+    Directive,
+    GrowthPlan,
+    KpiSnapshot,
+)
+from src.seniors.store import SeniorStore
+
+
+# ---- CompanyState persistence ----
+
+class TestCompanyState:
+    def test_load_missing_returns_default(self, tmp_path: Path) -> None:
+        state = CompanyState.load(tmp_path / "nope.json")
+        assert state.mission
+        assert state.directive.is_empty()
+        assert state.kpi_history == []
+
+    def test_save_then_load_roundtrip(self, tmp_path: Path) -> None:
+        path = tmp_path / "state.json"
+        state = CompanyState()
+        state.set_directive(Directive(focus_metric="brevity", focus_skill="farewell", rationale="too long"))
+        state.record_snapshot(KpiSnapshot(avg_scores={"brevity": 6.1}, n_calls=3, n_seniors=2))
+        state.save(path)
+
+        loaded = CompanyState.load(path)
+        assert loaded.directive.focus_metric == "brevity"
+        assert loaded.directive.focus_skill == "farewell"
+        assert loaded.latest_snapshot().n_calls == 3
+        # set_directive also logs a decision.
+        assert any(d.actor == "ceo" for d in loaded.decisions)
+
+    def test_corrupt_file_falls_back_to_default(self, tmp_path: Path) -> None:
+        path = tmp_path / "state.json"
+        path.write_text("{not valid json", encoding="utf-8")
+        state = CompanyState.load(path)
+        assert state.directive.is_empty()
+
+    def test_previous_snapshot(self, tmp_path: Path) -> None:
+        state = CompanyState()
+        assert state.previous_snapshot() is None
+        state.record_snapshot(KpiSnapshot(n_calls=1))
+        assert state.previous_snapshot() is None
+        state.record_snapshot(KpiSnapshot(n_calls=2))
+        assert state.previous_snapshot().n_calls == 1
+        assert state.latest_snapshot().n_calls == 2
+
+
+# ---- MetricsAggregator ----
+
+def _make_senior(base: Path, sid: str, score_sets: list[dict]) -> None:
+    d = base / sid
+    d.mkdir(parents=True)
+    (d / "profile.json").write_text(json.dumps({"id": sid, "name": sid, "age": 70}), encoding="utf-8")
+    records = [{"date": f"2026-01-0{i+1}T10:00:00", "scores": s} for i, s in enumerate(score_sets)]
+    (d / "call_records.json").write_text(json.dumps(records), encoding="utf-8")
+
+
+def _make_training_report(tdir: Path, name: str, avg: dict, rounds: int, issues: list[str]) -> None:
+    tdir.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "rounds": rounds,
+        "average_scores": avg,
+        "rounds_detail": [{"round": 1, "issues": issues}],
+    }
+    (tdir / name).write_text(json.dumps(payload), encoding="utf-8")
+
+
+class TestMetricsAggregator:
+    def test_empty_company(self, tmp_path: Path) -> None:
+        store = SeniorStore(base_dir=tmp_path / "seniors")
+        agg = MetricsAggregator(store=store, training_dir=tmp_path / "training")
+        m = agg.aggregate()
+        assert m.n_seniors == 0
+        assert m.n_calls == 0
+        assert m.avg_scores == {}
+        assert m.weakest_axis() is None
+
+    def test_rolls_up_seniors_and_training(self, tmp_path: Path) -> None:
+        seniors = tmp_path / "seniors"
+        training = tmp_path / "training"
+        _make_senior(seniors, "a-001", [
+            {"warmth": 8, "listening": 8, "info_quality": 6, "brevity": 6},
+        ])
+        _make_senior(seniors, "b-001", [
+            {"warmth": 9, "listening": 7, "info_quality": 7, "brevity": 5},
+        ])
+        _make_training_report(training, "report_1.json",
+                              {"warmth": 8, "listening": 7, "info_quality": 6, "brevity": 6},
+                              rounds=10, issues=["call too long"])
+
+        agg = MetricsAggregator(store=SeniorStore(base_dir=seniors), training_dir=training)
+        m = agg.aggregate()
+        assert m.n_seniors == 2
+        assert m.n_calls == 2
+        assert m.n_training_reports == 1
+        assert m.n_training_rounds == 10
+        # brevity is the weakest axis given the inputs.
+        assert m.weakest_axis() == "brevity"
+        assert "a-001" in m.per_senior_latest
+        assert "call too long" in m.recent_issues
+
+    def test_to_snapshot(self, tmp_path: Path) -> None:
+        seniors = tmp_path / "seniors"
+        _make_senior(seniors, "a-001", [{"warmth": 8, "brevity": 6}])
+        agg = MetricsAggregator(store=SeniorStore(base_dir=seniors), training_dir=tmp_path / "t")
+        snap = agg.aggregate().to_snapshot()
+        assert isinstance(snap, KpiSnapshot)
+        assert snap.n_seniors == 1
+
+
+# ---- OperatorScorecard (deterministic recommendation) ----
+
+class TestOperatorScorecard:
+    def test_keep_when_all_solid(self) -> None:
+        m = CompanyMetrics(avg_scores={"warmth": 8, "listening": 8, "info_quality": 7.5, "brevity": 7.2})
+        sc = OperatorScorecard.from_metrics(m)
+        assert sc.recommendation == "keep"
+
+    def test_coach_when_an_axis_below_seven(self) -> None:
+        m = CompanyMetrics(avg_scores={"warmth": 8, "listening": 8, "info_quality": 7, "brevity": 6.2})
+        sc = OperatorScorecard.from_metrics(m)
+        assert sc.recommendation == "coach"
+        assert sc.weakest_axis == "brevity"
+
+    def test_retrain_when_axis_very_low(self) -> None:
+        m = CompanyMetrics(avg_scores={"warmth": 5, "listening": 4.8, "info_quality": 6, "brevity": 6})
+        sc = OperatorScorecard.from_metrics(m)
+        assert sc.recommendation == "retrain"
+
+    def test_coach_on_decline_even_if_scores_ok(self) -> None:
+        m = CompanyMetrics(
+            avg_scores={"warmth": 8, "listening": 8, "info_quality": 7.5, "brevity": 7.5},
+            training_trend=[
+                {"warmth": 9, "brevity": 9},
+                {"warmth": 8, "brevity": 7.5},  # brevity dropped 1.5
+            ],
+        )
+        sc = OperatorScorecard.from_metrics(m)
+        assert sc.trend_delta["brevity"] == -1.5
+        assert sc.recommendation == "coach"
+
+    def test_empty_metrics_keep(self) -> None:
+        sc = OperatorScorecard.from_metrics(CompanyMetrics())
+        assert sc.recommendation == "keep"
+        assert sc.avg_scores == {}
+
+
+# ---- Directive → Operator loop closure ----
+
+class TestDirectiveOperatorNote:
+    def test_empty_directive_produces_no_note(self) -> None:
+        assert Directive().to_operator_note() == ""
+
+    def test_note_mentions_metric_and_skill(self) -> None:
+        note = Directive(
+            focus_metric="brevity",
+            focus_skill="farewell",
+            rationale="Calls run too long.",
+        ).to_operator_note()
+        assert "brevity" in note
+        assert "farewell" in note
+        assert "Calls run too long." in note
+        assert note.startswith("\n## Company priority")
+
+    def test_operator_prompt_includes_directive(self, sample_senior_profile) -> None:
+        from src.agents.operator import OperatorAgent
+
+        op = OperatorAgent()
+        op.directive_note = Directive(
+            focus_metric="info_quality", focus_skill="health-checkin",
+            rationale="Weakest axis.",
+        ).to_operator_note()
+        prompt = op.build_system_prompt(sample_senior_profile, learnings="")
+        assert "Company priority this period" in prompt
+        assert "info_quality" in prompt
+
+    def test_operator_prompt_clean_without_directive(self, sample_senior_profile) -> None:
+        from src.agents.operator import OperatorAgent
+
+        op = OperatorAgent()  # directive_note defaults to ""
+        prompt = op.build_system_prompt(sample_senior_profile, learnings="")
+        assert "Company priority this period" not in prompt
+
+
+# ---- GrowthPlan persistence ----
+
+class TestGrowthPlanState:
+    def test_empty_plan(self) -> None:
+        assert GrowthPlan().is_empty()
+        assert not GrowthPlan(channels=["x"]).is_empty()
+
+    def test_growth_plan_roundtrip(self, tmp_path: Path) -> None:
+        path = tmp_path / "state.json"
+        state = CompanyState()
+        state.set_growth_plan(GrowthPlan(
+            posture="scale",
+            channels=["GP clinics", "senior clubs"],
+            target_segments=["adult children"],
+            messaging="Peace of mind.",
+            next_steps=["Call 3 clinics"],
+        ))
+        state.save(path)
+
+        loaded = CompanyState.load(path)
+        assert loaded.growth_plan.posture == "scale"
+        assert "GP clinics" in loaded.growth_plan.channels
+        assert any(d.actor == "cmo" for d in loaded.decisions)
+
+
+# ---- CMOAgent deterministic fallback (no network) ----
+
+class TestCMOFallback:
+    def test_stabilize_when_quality_low(self) -> None:
+        cmo = CMOAgent()
+        m = CompanyMetrics(
+            n_seniors=2, n_calls=5,
+            avg_scores={"warmth": 6, "listening": 6, "info_quality": 5, "brevity": 6},
+        )
+        # data={} simulates an LLM failure → pure fallback path.
+        plan = cmo._to_plan({}, m)
+        assert plan.posture == "stabilize"
+        assert plan.channels  # never empty
+        assert plan.next_steps
+        assert plan.messaging
+
+    def test_scale_when_quality_high(self) -> None:
+        cmo = CMOAgent()
+        m = CompanyMetrics(
+            n_seniors=10, n_calls=100,
+            avg_scores={"warmth": 9, "listening": 8.5, "info_quality": 8, "brevity": 8},
+        )
+        plan = cmo._to_plan({}, m)
+        assert plan.posture == "scale"
+        assert len(plan.channels) >= 3
+
+    def test_threshold_boundary(self) -> None:
+        cmo = CMOAgent()
+        scores = {a: SCALE_QUALITY_THRESHOLD for a in ("warmth", "listening", "info_quality", "brevity")}
+        plan = cmo._to_plan({}, CompanyMetrics(avg_scores=scores))
+        assert plan.posture == "scale"
+
+    def test_respects_valid_llm_output(self) -> None:
+        cmo = CMOAgent()
+        m = CompanyMetrics(avg_scores={"warmth": 9, "listening": 9, "info_quality": 9, "brevity": 9})
+        data = {
+            "posture": "scale",
+            "channels": ["Partnership with NFZ"],
+            "target_segments": ["seg"],
+            "messaging": "msg",
+            "next_steps": ["step"],
+        }
+        plan = cmo._to_plan(data, m)
+        assert plan.channels == ["Partnership with NFZ"]
+        assert plan.messaging == "msg"
+
+    def test_invalid_posture_falls_back(self) -> None:
+        cmo = CMOAgent()
+        m = CompanyMetrics(avg_scores={"warmth": 6, "listening": 6, "info_quality": 6, "brevity": 6})
+        plan = cmo._to_plan({"posture": "nonsense"}, m)
+        assert plan.posture == "stabilize"
