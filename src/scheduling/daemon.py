@@ -26,20 +26,22 @@ log = logging.getLogger(__name__)
 
 def _call_senior(senior_id: str, console: Console) -> None:
     """Job entrypoint: run in the scheduler thread pool."""
-    from ..telephony.runner import start_outbound_call
+    from ..agents.manager import ManagerAgent
 
-    console.print(f"[cyan]⏰ Scheduled call: {senior_id}[/cyan]")
+    console.print(f"[cyan]>> Scheduled call: {senior_id}[/cyan]")
     try:
-        result = start_outbound_call(senior_id, console=console)
-        if result.get("dry_run"):
-            console.print(f"[yellow]  ↳ dry-run (Twilio not configured)[/yellow]")
-        else:
-            console.print(f"  ↳ sid={result['twilio_call_sid']}")
+        result = ManagerAgent().run_call_cycle(
+            senior_id,
+            console=console,
+            voice_mode=False,
+        )
+        report_path = result.get("report_path", "n/a")
+        console.print(f"  -> report: {report_path}")
     except PermissionError as exc:
-        console.print(f"[red]  ↳ blocked (consent/phone): {exc}[/red]")
+        console.print(f"[red]  -> blocked (consent): {exc}[/red]")
         log.warning("Scheduled call blocked for %s: %s", senior_id, exc)
     except Exception as exc:  # noqa: BLE001
-        console.print(f"[red]  ↳ failed: {exc}[/red]")
+        console.print(f"[red]  -> failed: {exc}[/red]")
         log.exception("Scheduled call failed for %s", senior_id)
 
 
@@ -124,29 +126,33 @@ def start_daemon(
             replace_existing=True,
         )
         log_console.print(
-            f"  [green]✓[/green] Scheduled [bold]{s.senior_id}[/bold] "
+            f"  [green]+[/green] Scheduled [bold]{s.senior_id}[/bold] "
             f"at {s.call_time} {s.timezone} [{s.apscheduler_day_of_week}]"
         )
 
     if board_review_hours > 0:
+        from datetime import datetime, timedelta, timezone as dt_timezone
+
+        first_run = datetime.now(dt_timezone.utc) + timedelta(minutes=1)
         scheduler.add_job(
             _run_board_meeting,
             trigger="interval",
             args=[log_console],
             hours=board_review_hours,
+            next_run_time=first_run,
             id="board_meeting",
             name="Executive board meeting",
             misfire_grace_time=600,
             replace_existing=True,
         )
         log_console.print(
-            f"  [green]✓[/green] Scheduled [bold]board meeting[/bold] "
-            f"every {board_review_hours}h"
+            f"  [green]+[/green] Scheduled [bold]board meeting[/bold] "
+            f"every {board_review_hours}h (first run in ~1 min)"
         )
 
     n_jobs = len(schedules) + (1 if board_review_hours > 0 else 0)
     log_console.print(
-        f"\n[bold green]Hermes scheduler running — {n_jobs} job(s). "
+        f"\n[bold green]Hermes scheduler running - {n_jobs} job(s). "
         "Press Ctrl-C to stop.[/bold green]\n"
     )
 

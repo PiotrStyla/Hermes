@@ -1,0 +1,201 @@
+{
+  "mission": "Provide warm, attentive daily wellness check-in calls to elderly people, keep their families informed, and continuously improve the quality of care.",
+  "founded": "2026-06-08T18:44:35.610625+00:00",
+  "directive": {
+    "focus_metric": "warmth",
+    "focus_skill": "active-listening",
+    "rationale": "The recent decline in warmth scores indicates a pressing need for operators to engage more effectively with seniors' emotional states. By prioritizing active listening, operators can better validate feelings and foster a more caring atmosphere, which is essential for improving overall call quality.",
+    "set_at": "2026-06-08T19:43:44.291029+00:00",
+    "set_by": "ceo"
+  },
+  "growth_plan": {
+    "posture": "scale",
+    "channels": [
+      "GP clinics",
+      "senior clubs",
+      "caregiver forums",
+      "parishes",
+      "MOPS/NFZ partnerships"
+    ],
+    "target_segments": [
+      "families of elderly individuals",
+      "caregivers",
+      "healthcare professionals"
+    ],
+    "messaging": "Hermes provides daily check-ins for your loved ones, ensuring their well-being while keeping you informed and connected.",
+    "next_steps": [
+      "Develop partnerships with local GP clinics to promote our service",
+      "Create informational brochures for senior clubs",
+      "Engage with caregiver forums to share testimonials and success stories",
+      "Reach out to parishes for community outreach programs"
+    ],
+    "set_at": "2026-06-08T19:43:47.184834+00:00",
+    "set_by": "cmo"
+  },
+  "kpi_history": [
+    {
+      "date": "2026-06-08T18:44:39.782227+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-08T18:54:09.640704+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-08T18:54:43.854572+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-08T19:01:32.338166+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-08T19:43:47.186357+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    }
+  ],
+  "decisions": [
+    {
+      "date": "2026-06-08T18:44:39.782227+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.6); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-08T18:44:39.782227+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "(Quality Director analysis unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}})"
+    },
+    {
+      "date": "2026-06-08T18:44:39.782227+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "(HR verdict unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}}; system recommendation: coach)"
+    },
+    {
+      "date": "2026-06-08T18:54:09.640704+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.6); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-08T18:54:09.640704+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "(Quality Director analysis unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}})"
+    },
+    {
+      "date": "2026-06-08T18:54:09.640704+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "(HR verdict unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}}; system recommendation: coach)"
+    },
+    {
+      "date": "2026-06-08T18:54:43.854572+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.6); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-08T18:54:43.854572+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "(Quality Director analysis unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}})"
+    },
+    {
+      "date": "2026-06-08T18:54:43.854572+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "(HR verdict unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}}; system recommendation: coach)"
+    },
+    {
+      "date": "2026-06-08T19:01:32.338166+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.6); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-08T19:01:32.338166+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-08T19:01:32.338166+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "(Quality Director analysis unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}})"
+    },
+    {
+      "date": "2026-06-08T19:01:32.338166+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "(HR verdict unavailable: Error code: 402 - {'error': {'message': 'Insufficient credits. Add more using https://openrouter.ai/settings/credits', 'code': 402}}; system recommendation: coach)"
+    },
+    {
+      "date": "2026-06-08T19:43:47.186357+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on warmth / skill 'active-listening'",
+      "rationale": "The recent decline in warmth scores indicates a pressing need for operators to engage more effectively with seniors' emotional states. By prioritizing active listening, operators can better validate feelings and foster a more caring atmosphere, which is essential for improving overall call quality."
+    },
+    {
+      "date": "2026-06-08T19:43:47.186357+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Hermes provides daily check-ins for your loved ones, ensuring their well-being while keeping you informed and connected."
+    },
+    {
+      "date": "2026-06-08T19:43:47.186357+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "The recurring themes identified in recent calls include ineffective emotional engagement, excessive call length, and inadequate health information gathering. \n\n1. Ineffective emotional engagement, evidenced by operators failing to follow up on seniors' feelings or conduct mood check-ins, primarily hurts the warmth quality axis. \n2. Excessive call length, noted in multiple instances where calls exceeded ideal durations, negatively impacts brevity and can lead to fatigue for seniors. \n3. Inadequat"
+    },
+    {
+      "date": "2026-06-08T19:43:47.186357+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "The operator's strongest area is warmth, scoring 8.3, which reflects a solid ability to connect with callers. However, the weakest area is information quality at 6.6, indicating a need for improvement in delivering accurate and helpful information. The recent trend shows a decline across all axes, particularly in info quality and brevity, which are concerning. I endorse the recommendation to coach the operator, focusing on enhancing their information delivery skills to ensure a better overall ex"
+    }
+  ]
+}
