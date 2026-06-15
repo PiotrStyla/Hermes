@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import logging
+import re
 import signal
 import sys
 import time
@@ -22,6 +23,7 @@ from .store import ScheduleStore
 
 
 log = logging.getLogger(__name__)
+_TIME_RE = re.compile(r"^([01]\d|2[0-3]):([0-5]\d)$")
 
 
 def _call_senior(senior_id: str, console: Console) -> None:
@@ -73,10 +75,19 @@ def _load_timezone(tz_name: str):
         return timezone.utc
 
 
+def _parse_time_hhmm(value: str) -> tuple[int, int]:
+    match = _TIME_RE.match(value.strip())
+    if match is None:
+        raise ValueError(f"board_review_time must be HH:MM (24h), got {value!r}.")
+    return int(match.group(1)), int(match.group(2))
+
+
 def start_daemon(
     once: bool = False,
     dry_run: bool = False,
     board_review_hours: int = 0,
+    board_review_time: str | None = None,
+    board_review_timezone: str = "Europe/Warsaw",
     console: Console | None = None,
 ) -> None:
     """Start the APScheduler daemon.
@@ -85,14 +96,23 @@ def start_daemon(
     debugging or as a cron job entry-point on a server where the OS scheduler
     (cron / Task Scheduler) fires the process at the right time.
 
-    If `board_review_hours > 0`, also run an executive board meeting every N
-    hours (governance loop: CEO/Quality Director/HR refresh the directive).
+    If `board_review_hours > 0`, run an executive board meeting every N hours.
+    If `board_review_time` is set (HH:MM), run it daily at a fixed local time.
     """
+    if board_review_hours > 0 and board_review_time:
+        raise ValueError("Use either board_review_hours OR board_review_time, not both.")
+
+    board_fixed_time: tuple[int, int] | None = None
+    if board_review_time:
+        board_fixed_time = _parse_time_hhmm(board_review_time)
+
+    board_enabled = board_review_hours > 0 or board_fixed_time is not None
+
     log_console = console or Console()
     store = ScheduleStore()
     schedules = store.list_all(only_enabled=True)
 
-    if not schedules and board_review_hours <= 0:
+    if not schedules and not board_enabled:
         log_console.print("[yellow]No enabled call schedules found. Use `schedule set` first.[/yellow]")
         return
 
@@ -101,7 +121,7 @@ def start_daemon(
             log_console.print(f"[bold]Running {len(schedules)} scheduled call(s) now (--once mode)[/bold]")
             for s in schedules:
                 _call_senior(s.senior_id, log_console)
-        if board_review_hours > 0:
+        if board_enabled:
             _run_board_meeting(log_console)
         return
 
@@ -150,7 +170,27 @@ def start_daemon(
             f"every {board_review_hours}h (first run in ~1 min)"
         )
 
-    n_jobs = len(schedules) + (1 if board_review_hours > 0 else 0)
+    if board_fixed_time is not None:
+        board_hour, board_minute = board_fixed_time
+        board_tz = _load_timezone(board_review_timezone)
+        scheduler.add_job(
+            _run_board_meeting,
+            trigger="cron",
+            args=[log_console],
+            hour=board_hour,
+            minute=board_minute,
+            timezone=board_tz,
+            id="board_meeting",
+            name="Executive board meeting",
+            misfire_grace_time=600,
+            replace_existing=True,
+        )
+        log_console.print(
+            f"  [green]+[/green] Scheduled [bold]board meeting[/bold] "
+            f"daily at {board_review_time} {board_review_timezone}"
+        )
+
+    n_jobs = len(schedules) + (1 if board_enabled else 0)
     log_console.print(
         f"\n[bold green]Hermes scheduler running - {n_jobs} job(s). "
         "Press Ctrl-C to stop.[/bold green]\n"

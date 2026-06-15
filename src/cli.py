@@ -404,6 +404,8 @@ def cmd_scheduler_start(args: argparse.Namespace) -> int:
     start_daemon(
         once=args.once,
         board_review_hours=args.board_review_hours,
+        board_review_time=args.board_review_time,
+        board_review_timezone=args.board_review_timezone,
         console=console,
     )
     return 0
@@ -847,6 +849,15 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=0,
         help="Also run an executive board meeting every N hours (0 = disabled).",
+    )
+    sch_start.add_argument(
+        "--board-review-time",
+        help="Run executive board meeting daily at fixed HH:MM (24h), e.g. 10:00.",
+    )
+    sch_start.add_argument(
+        "--board-review-timezone",
+        default="Europe/Warsaw",
+        help="Timezone for --board-review-time, e.g. Europe/Warsaw.",
     )
     sch_start.set_defaults(func=cmd_scheduler_start)
 

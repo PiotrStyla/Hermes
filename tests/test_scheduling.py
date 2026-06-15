@@ -200,6 +200,35 @@ def test_once_runs_board_meeting(monkeypatch: pytest.MonkeyPatch) -> None:
     assert called["n"] == 1
 
 
+def test_once_runs_board_meeting_for_fixed_time(monkeypatch: pytest.MonkeyPatch) -> None:
+    from src.scheduling import daemon
+
+    monkeypatch.setattr(daemon.ScheduleStore, "list_all", lambda self, only_enabled=False: [])
+    called = {"n": 0}
+    monkeypatch.setattr(daemon, "_run_board_meeting", lambda console: called.__setitem__("n", called["n"] + 1))
+
+    daemon.start_daemon(once=True, board_review_time="10:00", board_review_timezone="Europe/Warsaw")
+    assert called["n"] == 1
+
+
+def test_mutually_exclusive_board_schedule_modes() -> None:
+    from src.scheduling import daemon
+
+    with pytest.raises(ValueError, match="either board_review_hours OR board_review_time"):
+        daemon.start_daemon(
+            once=True,
+            board_review_hours=6,
+            board_review_time="10:00",
+        )
+
+
+def test_invalid_board_review_time_raises() -> None:
+    from src.scheduling import daemon
+
+    with pytest.raises(ValueError, match="HH:MM"):
+        daemon.start_daemon(once=True, board_review_time="1000")
+
+
 def test_once_without_board_review_does_not_run_meeting(monkeypatch: pytest.MonkeyPatch) -> None:
     from src.scheduling import daemon
 
