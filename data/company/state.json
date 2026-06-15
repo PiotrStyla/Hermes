@@ -32,6 +32,79 @@
     "set_at": "2026-06-08T19:43:47.184834+00:00",
     "set_by": "cmo"
   },
+  "staffing_plan": {
+    "stage": "standard",
+    "monthly_budget_pln": 220000,
+    "positions": [
+      {
+        "title": "CEO",
+        "headcount": 1,
+        "monthly_cost_pln": 28000
+      },
+      {
+        "title": "Compliance & DPO Officer",
+        "headcount": 1,
+        "monthly_cost_pln": 13000
+      },
+      {
+        "title": "Quality Director",
+        "headcount": 1,
+        "monthly_cost_pln": 22000
+      },
+      {
+        "title": "HR Officer",
+        "headcount": 1,
+        "monthly_cost_pln": 16000
+      },
+      {
+        "title": "CMO",
+        "headcount": 1,
+        "monthly_cost_pln": 20000
+      },
+      {
+        "title": "Manager",
+        "headcount": 1,
+        "monthly_cost_pln": 18000
+      },
+      {
+        "title": "Supervisor",
+        "headcount": 1,
+        "monthly_cost_pln": 16000
+      },
+      {
+        "title": "Operator",
+        "headcount": 2,
+        "monthly_cost_pln": 12000
+      },
+      {
+        "title": "Training Engineer",
+        "headcount": 1,
+        "monthly_cost_pln": 17000
+      },
+      {
+        "title": "MLOps/SRE Engineer",
+        "headcount": 1,
+        "monthly_cost_pln": 15000
+      },
+      {
+        "title": "Customer Success Specialist",
+        "headcount": 1,
+        "monthly_cost_pln": 10000
+      },
+      {
+        "title": "Cybersecurity Officer",
+        "headcount": 1,
+        "monthly_cost_pln": 9000
+      },
+      {
+        "title": "Księgowy",
+        "headcount": 1,
+        "monthly_cost_pln": 7000
+      }
+    ],
+    "set_at": "2026-06-15T05:40:48.996475+00:00",
+    "set_by": "board"
+  },
   "kpi_history": [
     {
       "date": "2026-06-08T18:44:39.782227+00:00",
@@ -196,6 +269,24 @@
       "actor": "hr",
       "summary": "Operator review — recommendation: coach",
       "rationale": "The operator's strongest area is warmth, scoring 8.3, which reflects a solid ability to connect with callers. However, the weakest area is information quality at 6.6, indicating a need for improvement in delivering accurate and helpful information. The recent trend shows a decline across all axes, particularly in info quality and brevity, which are concerning. I endorse the recommendation to coach the operator, focusing on enhancing their information delivery skills to ensure a better overall ex"
+    },
+    {
+      "date": "2026-06-15T05:28:37.692273+00:00",
+      "actor": "board",
+      "summary": "Staffing plan updated (balanced): 10 position(s), payroll 177000 PLN / budget 180000 PLN",
+      "rationale": "Remaining budget: 3000 PLN"
+    },
+    {
+      "date": "2026-06-15T05:35:35.647130+00:00",
+      "actor": "board",
+      "summary": "Staffing plan updated (balanced): 13 position(s), payroll 215000 PLN / budget 220000 PLN",
+      "rationale": "Remaining budget: 5000 PLN"
+    },
+    {
+      "date": "2026-06-15T05:40:48.996475+00:00",
+      "actor": "board",
+      "summary": "Staffing plan updated (standard, balanced): 13 position(s), payroll 215000 PLN / budget 220000 PLN",
+      "rationale": "Remaining budget: 5000 PLN"
     }
   ]
 }

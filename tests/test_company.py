@@ -20,6 +20,8 @@ from src.company.state import (
     Directive,
     GrowthPlan,
     KpiSnapshot,
+    Position,
+    StaffingPlan,
 )
 from src.seniors.store import SeniorStore
 
@@ -223,6 +225,70 @@ class TestGrowthPlanState:
         assert loaded.growth_plan.posture == "scale"
         assert "GP clinics" in loaded.growth_plan.channels
         assert any(d.actor == "cmo" for d in loaded.decisions)
+
+
+class TestStaffingPlanState:
+    def test_default_staffing_has_new_roles_and_balanced_budget(self) -> None:
+        state = CompanyState()
+        plan = state.staffing_plan
+
+        titles = {p.title for p in plan.positions}
+        assert "Compliance & DPO Officer" in titles
+        assert "MLOps/SRE Engineer" in titles
+        assert "Customer Success Specialist" in titles
+        assert "Cybersecurity Officer" in titles
+        assert "Księgowy" in titles
+        assert plan.monthly_budget_pln == 220_000
+        assert plan.total_monthly_payroll_pln == 215_000
+        assert plan.remaining_budget_pln == 5_000
+        assert plan.is_balanced
+
+    def test_staffing_roundtrip(self, tmp_path: Path) -> None:
+        path = tmp_path / "state.json"
+        state = CompanyState()
+        state.set_staffing_plan(StaffingPlan(
+            monthly_budget_pln=50_000,
+            positions=[
+                Position(title="Cybersecurity Officer", headcount=1, monthly_cost_pln=9_000),
+                Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
+            ],
+            set_by="board",
+        ))
+        state.save(path)
+
+        loaded = CompanyState.load(path)
+        assert loaded.staffing_plan.monthly_budget_pln == 50_000
+        assert loaded.staffing_plan.total_monthly_payroll_pln == 16_000
+        assert loaded.staffing_plan.remaining_budget_pln == 34_000
+        assert any(d.actor == "board" and "Staffing plan updated" in d.summary for d in loaded.decisions)
+
+    @pytest.mark.parametrize(
+        ("stage", "budget", "payroll"),
+        [
+            ("light", 180_000, 167_000),
+            ("standard", 220_000, 215_000),
+            ("scale", 320_000, 306_000),
+        ],
+    )
+    def test_stage_presets_are_balanced(self, stage: str, budget: int, payroll: int) -> None:
+        plan = StaffingPlan.preset(stage)
+        assert plan.stage == stage
+        assert plan.monthly_budget_pln == budget
+        assert plan.total_monthly_payroll_pln == payroll
+        assert plan.is_balanced
+
+    def test_upsert_switches_stage_to_custom(self) -> None:
+        plan = StaffingPlan.preset("standard")
+        assert plan.stage == "standard"
+        plan.upsert_position("Operator", 3, 12_000)
+        assert plan.stage == "custom"
+
+    def test_apply_staffing_stage_updates_state(self) -> None:
+        state = CompanyState()
+        state.apply_staffing_stage("light", set_by="board")
+        assert state.staffing_plan.stage == "light"
+        assert state.staffing_plan.monthly_budget_pln == 180_000
+        assert any("light" in d.summary for d in state.decisions)
 
 
 # ---- CMOAgent deterministic fallback (no network) ----

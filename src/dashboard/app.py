@@ -68,11 +68,15 @@ def create_app() -> FastAPI:
     async def home(request: Request) -> Response:
         summaries = _senior_summaries()
         pending = len(ReviewQueue().list(status="pending"))
-        return templates.TemplateResponse("home.html", {
-            "request": request,
-            "seniors": summaries,
-            "pending_review": pending,
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="home.html",
+            context={
+                "request": request,
+                "seniors": summaries,
+                "pending_review": pending,
+            },
+        )
 
     @app.get("/seniors/{senior_id}", response_class=HTMLResponse)
     async def senior_detail(request: Request, senior_id: str) -> Response:
@@ -99,26 +103,34 @@ def create_app() -> FastAPI:
             ax: [r["scores"].get(ax) for r in records]
             for ax in axes
         }
-        return templates.TemplateResponse("senior.html", {
-            "request": request,
-            "profile": profile,
-            "records": records,
-            "consent": consent,
-            "schedule": sched,
-            "reports": reports,
-            "chart_labels": json.dumps(chart_labels),
-            "chart_datasets": json.dumps(chart_datasets),
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="senior.html",
+            context={
+                "request": request,
+                "profile": profile,
+                "records": records,
+                "consent": consent,
+                "schedule": sched,
+                "reports": reports,
+                "chart_labels": json.dumps(chart_labels),
+                "chart_datasets": json.dumps(chart_datasets),
+            },
+        )
 
     @app.get("/review", response_class=HTMLResponse)
     async def review(request: Request, status: str = "pending") -> Response:
         rq = ReviewQueue()
         entries = rq.list(status=status if status != "all" else None)
-        return templates.TemplateResponse("review.html", {
-            "request": request,
-            "entries": entries,
-            "current_status": status,
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="review.html",
+            context={
+                "request": request,
+                "entries": entries,
+                "current_status": status,
+            },
+        )
 
     @app.post("/review/{entry_id}/decide", response_class=HTMLResponse)
     async def decide(
@@ -141,9 +153,13 @@ def create_app() -> FastAPI:
     @app.get("/schedule", response_class=HTMLResponse)
     async def schedule(request: Request) -> Response:
         schedules = ScheduleStore().list_all()
-        return templates.TemplateResponse("schedule.html", {
-            "request": request,
-            "schedules": schedules,
-        })
+        return templates.TemplateResponse(
+            request=request,
+            name="schedule.html",
+            context={
+                "request": request,
+                "schedules": schedules,
+            },
+        )
 
     return app

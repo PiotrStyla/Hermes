@@ -28,6 +28,8 @@ DEFAULT_MISSION = (
 
 # The four quality axes the whole company optimises for.
 KPI_AXES = ("warmth", "listening", "info_quality", "brevity")
+STAFFING_STAGES = ("light", "standard", "scale")
+DEFAULT_STAFFING_STAGE = "standard"
 
 
 def _now() -> str:
@@ -101,6 +103,146 @@ class GrowthPlan:
 
 
 @dataclass
+class Position:
+    """One position in the company staffing plan."""
+
+    title: str
+    headcount: int = 1
+    monthly_cost_pln: int = 0
+
+    @property
+    def monthly_total_pln(self) -> int:
+        return self.headcount * self.monthly_cost_pln
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Position":
+        return cls(
+            title=str(data.get("title", "")),
+            headcount=max(0, int(data.get("headcount", 0))),
+            monthly_cost_pln=max(0, int(data.get("monthly_cost_pln", 0))),
+        )
+
+
+@dataclass
+class StaffingPlan:
+    """Headcount and payroll plan for the current operating period."""
+
+    stage: str = DEFAULT_STAFFING_STAGE
+    monthly_budget_pln: int = 0
+    positions: list[Position] = field(default_factory=list)
+    set_at: str = field(default_factory=_now)
+    set_by: str = "board"
+
+    @property
+    def total_monthly_payroll_pln(self) -> int:
+        return sum(p.monthly_total_pln for p in self.positions)
+
+    @property
+    def remaining_budget_pln(self) -> int:
+        return self.monthly_budget_pln - self.total_monthly_payroll_pln
+
+    @property
+    def is_balanced(self) -> bool:
+        return self.remaining_budget_pln >= 0
+
+    def upsert_position(self, title: str, headcount: int, monthly_cost_pln: int) -> None:
+        self.stage = "custom"
+        normalized = title.strip().casefold()
+        for pos in self.positions:
+            if pos.title.casefold() == normalized:
+                pos.headcount = max(0, headcount)
+                pos.monthly_cost_pln = max(0, monthly_cost_pln)
+                return
+        self.positions.append(
+            Position(
+                title=title.strip(),
+                headcount=max(0, headcount),
+                monthly_cost_pln=max(0, monthly_cost_pln),
+            )
+        )
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "StaffingPlan":
+        stage = str(data.get("stage", DEFAULT_STAFFING_STAGE)).strip().lower()
+        if stage not in (*STAFFING_STAGES, "custom"):
+            stage = DEFAULT_STAFFING_STAGE
+        return cls(
+            stage=stage,
+            monthly_budget_pln=max(0, int(data.get("monthly_budget_pln", 0))),
+            positions=[Position.from_dict(p) for p in data.get("positions", [])],
+            set_at=data.get("set_at", _now()),
+            set_by=data.get("set_by", "board"),
+        )
+
+    @classmethod
+    def preset(cls, stage: str = DEFAULT_STAFFING_STAGE, set_by: str = "board") -> "StaffingPlan":
+        stage_normalized = stage.strip().lower()
+        if stage_normalized not in STAFFING_STAGES:
+            stage_normalized = DEFAULT_STAFFING_STAGE
+
+        if stage_normalized == "light":
+            budget = 180_000
+            positions = [
+                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
+                Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
+                Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
+                Position(title="Manager", headcount=1, monthly_cost_pln=18_000),
+                Position(title="Supervisor", headcount=1, monthly_cost_pln=16_000),
+                Position(title="Operator", headcount=1, monthly_cost_pln=12_000),
+                Position(title="Training Engineer", headcount=1, monthly_cost_pln=17_000),
+                Position(title="MLOps/SRE Engineer", headcount=1, monthly_cost_pln=15_000),
+                Position(title="Customer Success Specialist", headcount=1, monthly_cost_pln=10_000),
+                Position(title="Cybersecurity Officer", headcount=1, monthly_cost_pln=9_000),
+                Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
+            ]
+        elif stage_normalized == "scale":
+            budget = 320_000
+            positions = [
+                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
+                Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
+                Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
+                Position(title="HR Officer", headcount=1, monthly_cost_pln=16_000),
+                Position(title="CMO", headcount=1, monthly_cost_pln=20_000),
+                Position(title="Manager", headcount=1, monthly_cost_pln=18_000),
+                Position(title="Supervisor", headcount=2, monthly_cost_pln=16_000),
+                Position(title="Operator", headcount=4, monthly_cost_pln=12_000),
+                Position(title="Training Engineer", headcount=2, monthly_cost_pln=17_000),
+                Position(title="MLOps/SRE Engineer", headcount=2, monthly_cost_pln=15_000),
+                Position(title="Customer Success Specialist", headcount=2, monthly_cost_pln=10_000),
+                Position(title="Cybersecurity Officer", headcount=2, monthly_cost_pln=9_000),
+                Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
+            ]
+        else:
+            budget = 220_000
+            positions = [
+                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
+                Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
+                Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
+                Position(title="HR Officer", headcount=1, monthly_cost_pln=16_000),
+                Position(title="CMO", headcount=1, monthly_cost_pln=20_000),
+                Position(title="Manager", headcount=1, monthly_cost_pln=18_000),
+                Position(title="Supervisor", headcount=1, monthly_cost_pln=16_000),
+                Position(title="Operator", headcount=2, monthly_cost_pln=12_000),
+                Position(title="Training Engineer", headcount=1, monthly_cost_pln=17_000),
+                Position(title="MLOps/SRE Engineer", headcount=1, monthly_cost_pln=15_000),
+                Position(title="Customer Success Specialist", headcount=1, monthly_cost_pln=10_000),
+                Position(title="Cybersecurity Officer", headcount=1, monthly_cost_pln=9_000),
+                Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
+            ]
+
+        return cls(
+            stage=stage_normalized,
+            monthly_budget_pln=budget,
+            positions=positions,
+            set_by=set_by,
+        )
+
+
+def _default_staffing_plan() -> StaffingPlan:
+    return StaffingPlan.preset(DEFAULT_STAFFING_STAGE, set_by="board")
+
+
+@dataclass
 class KpiSnapshot:
     """A point-in-time picture of company-wide quality + activity."""
 
@@ -148,6 +290,7 @@ class CompanyState:
     founded: str = field(default_factory=_now)
     directive: Directive = field(default_factory=Directive)
     growth_plan: GrowthPlan = field(default_factory=GrowthPlan)
+    staffing_plan: StaffingPlan = field(default_factory=_default_staffing_plan)
     kpi_history: list[KpiSnapshot] = field(default_factory=list)
     decisions: list[Decision] = field(default_factory=list)
 
@@ -166,6 +309,11 @@ class CompanyState:
             founded=data.get("founded", _now()),
             directive=Directive.from_dict(data.get("directive", {})),
             growth_plan=GrowthPlan.from_dict(data.get("growth_plan", {})),
+            staffing_plan=(
+                StaffingPlan.from_dict(data.get("staffing_plan", {}))
+                if "staffing_plan" in data
+                else _default_staffing_plan()
+            ),
             kpi_history=[KpiSnapshot.from_dict(d) for d in data.get("kpi_history", [])],
             decisions=[Decision.from_dict(d) for d in data.get("decisions", [])],
         )
@@ -177,6 +325,7 @@ class CompanyState:
             "founded": self.founded,
             "directive": asdict(self.directive),
             "growth_plan": asdict(self.growth_plan),
+            "staffing_plan": asdict(self.staffing_plan),
             "kpi_history": [asdict(s) for s in self.kpi_history],
             "decisions": [asdict(d) for d in self.decisions],
         }
@@ -202,6 +351,23 @@ class CompanyState:
                     f" / skill '{directive.focus_skill or 'n/a'}'",
             rationale=directive.rationale,
         )
+
+    def set_staffing_plan(self, plan: StaffingPlan) -> None:
+        self.staffing_plan = plan
+        status = "balanced" if plan.is_balanced else "over budget"
+        self.log_decision(
+            actor=plan.set_by,
+            summary=(
+                f"Staffing plan updated ({plan.stage}, {status}): {len(plan.positions)} position(s), "
+                f"payroll {plan.total_monthly_payroll_pln} PLN / budget {plan.monthly_budget_pln} PLN"
+            ),
+            rationale=f"Remaining budget: {plan.remaining_budget_pln} PLN",
+        )
+
+    def apply_staffing_stage(self, stage: str, set_by: str = "board") -> StaffingPlan:
+        plan = StaffingPlan.preset(stage=stage, set_by=set_by)
+        self.set_staffing_plan(plan)
+        return plan
 
     def record_snapshot(self, snapshot: KpiSnapshot) -> None:
         self.kpi_history.append(snapshot)

@@ -26,7 +26,7 @@ from .cmo import CMOAgent
 from .hr import HRAgent, OperatorScorecard
 from .metrics import CompanyMetrics, MetricsAggregator
 from .quality_director import QualityDirectorAgent
-from .state import CompanyState, Directive, GrowthPlan
+from .state import CompanyState, Directive, GrowthPlan, StaffingPlan
 
 
 @dataclass
@@ -173,6 +173,7 @@ class CompanyRunner:
         table.add_row("calls completed", str(metrics.n_calls))
         table.add_row("training rounds", str(metrics.n_training_rounds))
         self.console.print(table)
+        self._print_staffing_plan(state.staffing_plan)
 
         d = state.directive
         if not d.is_empty():
@@ -188,6 +189,29 @@ class CompanyRunner:
 
         if not state.growth_plan.is_empty():
             self._print_growth_plan(state.growth_plan)
+
+    def _print_staffing_plan(self, plan: StaffingPlan) -> None:
+        table = Table(title="Staffing plan")
+        table.add_column("Position")
+        table.add_column("Headcount", justify="right")
+        table.add_column("Cost / FTE (PLN)", justify="right")
+        table.add_column("Monthly total (PLN)", justify="right")
+        for pos in plan.positions:
+            table.add_row(
+                pos.title,
+                str(pos.headcount),
+                str(pos.monthly_cost_pln),
+                str(pos.monthly_total_pln),
+            )
+        self.console.print(table)
+
+        status_color = "green" if plan.is_balanced else "red"
+        self.console.print(
+            f"[bold]Stage:[/bold] {plan.stage} | "
+            f"[bold]Payroll:[/bold] {plan.total_monthly_payroll_pln} PLN | "
+            f"[bold]Budget:[/bold] {plan.monthly_budget_pln} PLN | "
+            f"[bold {status_color}]Remaining:[/bold {status_color}] {plan.remaining_budget_pln} PLN"
+        )
 
     def _print_growth_plan(self, plan: GrowthPlan) -> None:
         channels = "\n".join(f"  - {c}" for c in plan.channels) or "  (none)"
