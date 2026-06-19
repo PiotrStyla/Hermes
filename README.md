@@ -11,6 +11,7 @@ Prosty opis: to system AI, który codziennie dzwoni do seniora, prowadzi krótk�
 - [PL: Najważniejsze komendy](#pl-najwazniejsze-komendy)
 - [PL: Jak działa system](#pl-jak-dziala-system)
 - [PL: Struktura firmy i etapy zatrudnienia](#pl-struktura-firmy-i-etapy-zatrudnienia)
+- [PL: Co zmienia board meeting](#pl-co-zmienia-board-meeting)
 - [PL: Zgodność i bezpieczeństwo](#pl-zgodnosc-i-bezpieczenstwo)
 - [PL: Najczęstsze problemy](#pl-najczestsze-problemy)
 - [EN: Quick overview](#en-quick-overview)
@@ -18,6 +19,7 @@ Prosty opis: to system AI, który codziennie dzwoni do seniora, prowadzi krótk�
 - [EN: Main commands](#en-main-commands)
 - [EN: How the system works](#en-how-the-system-works)
 - [EN: Company structure and staffing stages](#en-company-structure-and-staffing-stages)
+- [EN: What board meeting changes](#en-what-board-meeting-changes)
 - [EN: Compliance and security](#en-compliance-and-security)
 - [EN: Troubleshooting](#en-troubleshooting)
 
@@ -124,6 +126,19 @@ Dodatkowe artefakty biznesowe:
 - Macierz odpowiedzialności: `data/company/staffing_raci.md`
 - Raport zarządczy: `data/company/reports/board_2026-06-15_10-00.md`
 
+## PL: Co zmienia board meeting
+
+Najwazniejsze zmiany w warstwie `Company` (obowiazuje dla kolejnych zebrań):
+
+- CEO ma teraz osobna sekcje `Agenda 3b` (Innovation Agenda) z 3 torami: `core`, `adjacent`, `moonshot`.
+- CEO dostaje kontekst ostatnich dyrektyw, co zmniejsza powtarzanie tych samych decyzji.
+- Po `company review` raport markdown zapisuje sie automatycznie do `data/company/reports/board_YYYY-MM-DD_HH-MM.md`.
+- Rekomendowany split modeli strategicznych w `.env`:
+  - `CEO_MODEL=anthropic/claude-3-5-haiku`
+  - `CMO_MODEL=anthropic/claude-3-5-haiku`
+  - role operacyjne (np. `SUPERVISOR_MODEL`) pozostaja na szybkim `deepseek/deepseek-v4-flash`.
+- Scheduler board meeting jest ustawiony na stala godzine: `10:00 Europe/Warsaw`.
+
 ## PL: Zgodnosc i bezpieczenstwo
 
 System ma wbudowane mechanizmy:
@@ -225,6 +240,19 @@ Data locations:
 - Staffing logic: `src/company/state.py`
 - RACI matrix: `data/company/staffing_raci.md`
 - Board one-pager: `data/company/reports/board_2026-06-15_10-00.md`
+
+## EN: What board meeting changes
+
+Key updates in the `Company` layer (applies to upcoming meetings):
+
+- CEO now has a dedicated `Agenda 3b` (Innovation Agenda) with 3 tracks: `core`, `adjacent`, `moonshot`.
+- CEO now receives recent-directive context, reducing repetitive decisions.
+- After `company review`, a markdown board report is auto-saved to `data/company/reports/board_YYYY-MM-DD_HH-MM.md`.
+- Recommended strategic model split in `.env`:
+  - `CEO_MODEL=anthropic/claude-3-5-haiku`
+  - `CMO_MODEL=anthropic/claude-3-5-haiku`
+  - operational roles (e.g. `SUPERVISOR_MODEL`) stay on fast `deepseek/deepseek-v4-flash`.
+- Board scheduler is configured for fixed time: `10:00 Europe/Warsaw`.
 
 ## EN: Compliance and security
 
