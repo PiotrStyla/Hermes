@@ -16,6 +16,8 @@ instead of drifting unsupervised (which previously let brevity decay).
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
 
 from rich.console import Console
 from rich.panel import Panel
@@ -26,7 +28,7 @@ from .cmo import CMOAgent
 from .hr import HRAgent, OperatorScorecard
 from .metrics import CompanyMetrics, MetricsAggregator
 from .quality_director import QualityDirectorAgent
-from .state import CompanyState, Directive, GrowthPlan, StaffingPlan
+from .state import COMPANY_DIR, CompanyState, Directive, GrowthPlan, StaffingPlan
 
 
 @dataclass
@@ -52,9 +54,11 @@ class CompanyRunner:
         hr: HRAgent | None = None,
         cmo: CMOAgent | None = None,
         aggregator: MetricsAggregator | None = None,
+        reports_dir: Path | None = None,
     ):
         self.console = console or Console()
         self.aggregator = aggregator or MetricsAggregator()
+        self.reports_dir = reports_dir or (COMPANY_DIR / "reports")
         # Agents are created lazily so `status` (no LLM) works without API keys.
         self._ceo = ceo
         self._quality_director = quality_director
@@ -149,7 +153,19 @@ class CompanyRunner:
                 rationale=hr_verdict[:500],
             )
             path = state.save()
+            report_path = self._save_board_report(
+                BoardMeetingResult(
+                    metrics=metrics,
+                    quality_analysis=quality_analysis,
+                    hr_verdict=hr_verdict,
+                    scorecard=scorecard,
+                    directive=directive,
+                    growth_plan=growth_plan,
+                ),
+                state,
+            )
             self.console.print(f"\n[green]Board meeting saved to:[/green] {path}")
+            self.console.print(f"[green]Board report saved to:[/green] {report_path}")
 
         return BoardMeetingResult(
             metrics=metrics,
@@ -159,6 +175,68 @@ class CompanyRunner:
             directive=directive,
             growth_plan=growth_plan,
         )
+
+    def _save_board_report(self, result: BoardMeetingResult, state: CompanyState) -> Path:
+        self.reports_dir.mkdir(parents=True, exist_ok=True)
+
+        report_dt = datetime.now().astimezone()
+        if result.directive and result.directive.set_at:
+            try:
+                report_dt = datetime.fromisoformat(result.directive.set_at)
+            except ValueError:
+                report_dt = datetime.now().astimezone()
+
+        report_path = self.reports_dir / f"board_{report_dt.strftime('%Y-%m-%d_%H-%M')}.md"
+        scores = result.metrics.avg_scores
+        score_lines = [
+            f"- {axis}: {scores.get(axis, '—')}"
+            for axis in ("warmth", "listening", "info_quality", "brevity")
+        ]
+
+        channels = result.growth_plan.channels if result.growth_plan else []
+        steps = result.growth_plan.next_steps if result.growth_plan else []
+
+        channel_lines = [f"  - {c}" for c in channels] or ["  - (none)"]
+        step_lines = [f"  {i + 1}. {s}" for i, s in enumerate(steps)] or ["  - (none)"]
+
+        content = [
+            "# Executive Board Report",
+            "",
+            f"- Date: {report_dt.isoformat()}",
+            f"- Seniors: {result.metrics.n_seniors}",
+            f"- Calls completed: {result.metrics.n_calls}",
+            f"- Training rounds: {result.metrics.n_training_rounds}",
+            "",
+            "## KPI Snapshot",
+            *score_lines,
+            "",
+            "## CEO Directive",
+            f"- Focus metric: {result.directive.focus_metric if result.directive else 'n/a'}",
+            f"- Focus skill: {result.directive.focus_skill if result.directive else 'n/a'}",
+            f"- Rationale: {result.directive.rationale if result.directive else 'n/a'}",
+            "",
+            "## Quality Director",
+            result.quality_analysis or "(no analysis)",
+            "",
+            "## HR Verdict",
+            result.hr_verdict or "(no verdict)",
+            "",
+            "## Growth Plan",
+            f"- Posture: {result.growth_plan.posture if result.growth_plan else 'n/a'}",
+            "- Channels:",
+            *channel_lines,
+            "- Next steps:",
+            *step_lines,
+            "",
+            "## Staffing",
+            f"- Stage: {state.staffing_plan.stage}",
+            f"- Payroll: {state.staffing_plan.total_monthly_payroll_pln} PLN",
+            f"- Budget: {state.staffing_plan.monthly_budget_pln} PLN",
+            f"- Remaining: {state.staffing_plan.remaining_budget_pln} PLN",
+            "",
+        ]
+        report_path.write_text("\n".join(content), encoding="utf-8")
+        return report_path
 
     # ---- Rendering ----
 

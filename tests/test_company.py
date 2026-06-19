@@ -15,6 +15,7 @@ import pytest
 from src.company.metrics import CompanyMetrics, MetricsAggregator
 from src.company.hr import OperatorScorecard
 from src.company.cmo import CMOAgent, SCALE_QUALITY_THRESHOLD
+from src.company.runner import BoardMeetingResult, CompanyRunner
 from src.company.state import (
     CompanyState,
     Directive,
@@ -342,3 +343,47 @@ class TestCMOFallback:
         m = CompanyMetrics(avg_scores={"warmth": 6, "listening": 6, "info_quality": 6, "brevity": 6})
         plan = cmo._to_plan({"posture": "nonsense"}, m)
         assert plan.posture == "stabilize"
+
+
+class TestBoardReportGeneration:
+    def test_save_board_report_writes_markdown(self, tmp_path: Path) -> None:
+        runner = CompanyRunner(reports_dir=tmp_path / "reports")
+        result = BoardMeetingResult(
+            metrics=CompanyMetrics(
+                n_seniors=2,
+                n_calls=7,
+                n_training_rounds=260,
+                avg_scores={
+                    "warmth": 8.3,
+                    "listening": 7.7,
+                    "info_quality": 6.6,
+                    "brevity": 7.2,
+                },
+            ),
+            quality_analysis="Systemic issue: info_quality.",
+            hr_verdict="Recommendation: coach.",
+            directive=Directive(
+                focus_metric="info_quality",
+                focus_skill="health-checkin",
+                rationale="Weakest axis.",
+                set_at="2026-06-19T10:00:00+02:00",
+            ),
+            growth_plan=GrowthPlan(
+                posture="scale",
+                channels=["GP clinics"],
+                next_steps=["Contact 3 clinics"],
+            ),
+        )
+
+        report_path = runner._save_board_report(result, CompanyState())
+        assert report_path.exists()
+        assert report_path.name == "board_2026-06-19_10-00.md"
+
+        content = report_path.read_text(encoding="utf-8")
+        assert "# Executive Board Report" in content
+        assert "## KPI Snapshot" in content
+        assert "- info_quality: 6.6" in content
+        assert "## CEO Directive" in content
+        assert "- Focus metric: info_quality" in content
+        assert "## Growth Plan" in content
+        assert "GP clinics" in content
