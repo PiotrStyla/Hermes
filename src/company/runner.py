@@ -41,6 +41,7 @@ class BoardMeetingResult:
     scorecard: OperatorScorecard | None = None
     directive: Directive | None = None
     growth_plan: GrowthPlan | None = None
+    innovation_agenda: str = ""
 
 
 class CompanyRunner:
@@ -125,12 +126,26 @@ class CompanyRunner:
 
         # 4. CEO directive
         self.console.print(Panel("CEO — strategic directive", title="Agenda 3"))
-        directive = self.ceo.decide(metrics, quality_analysis)
+        recent_ceo_directives = [d.summary for d in state.decisions if d.actor == "ceo"][-3:]
+        directive = self.ceo.decide(
+            metrics,
+            quality_analysis,
+            recent_ceo_directives=recent_ceo_directives,
+        )
         self.console.print(
             f"[bold green]Focus metric:[/bold green] {directive.focus_metric}\n"
             f"[bold green]Focus skill:[/bold green] {directive.focus_skill}\n"
             f"[bold green]Rationale:[/bold green] {directive.rationale}"
         )
+
+        # 4b. CEO innovation agenda
+        self.console.print(Panel("CEO — innovation agenda", title="Agenda 3b"))
+        recent_decisions = [
+            f"{d.actor}: {d.summary}"
+            for d in state.decisions[-8:]
+        ]
+        innovation_agenda = self.ceo.propose_innovation_agenda(metrics, recent_decisions=recent_decisions)
+        self.console.print(innovation_agenda)
 
         # 5. CMO growth plan — where new clients come from
         self.console.print(Panel("CMO — client acquisition plan", title="Agenda 4"))
@@ -152,6 +167,11 @@ class CompanyRunner:
                 summary=f"Operator review — recommendation: {scorecard.recommendation}",
                 rationale=hr_verdict[:500],
             )
+            state.log_decision(
+                actor="ceo",
+                summary="Innovation agenda: core + adjacent + moonshot",
+                rationale=innovation_agenda[:500],
+            )
             path = state.save()
             report_path = self._save_board_report(
                 BoardMeetingResult(
@@ -161,6 +181,7 @@ class CompanyRunner:
                     scorecard=scorecard,
                     directive=directive,
                     growth_plan=growth_plan,
+                    innovation_agenda=innovation_agenda,
                 ),
                 state,
             )
@@ -174,6 +195,7 @@ class CompanyRunner:
             scorecard=scorecard,
             directive=directive,
             growth_plan=growth_plan,
+            innovation_agenda=innovation_agenda,
         )
 
     def _save_board_report(self, result: BoardMeetingResult, state: CompanyState) -> Path:
@@ -227,6 +249,9 @@ class CompanyRunner:
             *channel_lines,
             "- Next steps:",
             *step_lines,
+            "",
+            "## Innovation Agenda",
+            result.innovation_agenda or "(no innovation agenda)",
             "",
             "## Staffing",
             f"- Stage: {state.staffing_plan.stage}",

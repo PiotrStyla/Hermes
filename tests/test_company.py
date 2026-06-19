@@ -13,6 +13,7 @@ from pathlib import Path
 import pytest
 
 from src.company.metrics import CompanyMetrics, MetricsAggregator
+from src.company.ceo import CEOAgent
 from src.company.hr import OperatorScorecard
 from src.company.cmo import CMOAgent, SCALE_QUALITY_THRESHOLD
 from src.company.runner import BoardMeetingResult, CompanyRunner
@@ -373,6 +374,7 @@ class TestBoardReportGeneration:
                 channels=["GP clinics"],
                 next_steps=["Contact 3 clinics"],
             ),
+            innovation_agenda="1. [core] Recovery Sprint | Owner: Quality Director | KPI: +0.4 | Deadline: D+14",
         )
 
         report_path = runner._save_board_report(result, CompanyState())
@@ -387,3 +389,25 @@ class TestBoardReportGeneration:
         assert "- Focus metric: info_quality" in content
         assert "## Growth Plan" in content
         assert "GP clinics" in content
+        assert "## Innovation Agenda" in content
+        assert "Recovery Sprint" in content
+
+
+class TestCEOInnovation:
+    def test_build_prompt_includes_recent_directives(self) -> None:
+        ceo = CEOAgent()
+        prompt = ceo._build_prompt(
+            CompanyMetrics(avg_scores={"warmth": 8.0}),
+            quality_analysis="qa",
+            recent_ceo_directives=["New directive: focus on brevity / skill 'farewell'"],
+        )
+        assert "Recent CEO directives" in prompt
+        assert "focus on brevity" in prompt
+
+    def test_innovation_fallback_produces_three_tracks(self) -> None:
+        ceo = CEOAgent()
+        metrics = CompanyMetrics(avg_scores={"warmth": 8.0, "info_quality": 6.1})
+        agenda = ceo._to_innovation_agenda({}, metrics)
+        assert "[core]" in agenda
+        assert "[adjacent]" in agenda
+        assert "[moonshot]" in agenda

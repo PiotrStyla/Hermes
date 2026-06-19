@@ -28,6 +28,19 @@ AXIS_TO_SKILLS = {
     "brevity": ["farewell", "greeting"],
 }
 
+INNOVATION_TYPES = ("core", "adjacent", "moonshot")
+INNOVATION_OWNERS = {
+    "Quality Director",
+    "CMO",
+    "HR Officer",
+    "Manager",
+    "Supervisor",
+    "Training Engineer",
+    "MLOps/SRE Engineer",
+    "Customer Success Specialist",
+    "Compliance & DPO Officer",
+}
+
 
 class CEOAgent(BaseAgent):
     """Sets the company's single strategic focus for the next period."""
@@ -37,7 +50,7 @@ class CEOAgent(BaseAgent):
 
     def __init__(self, model: str | None = None):
         model = model or os.getenv("CEO_MODEL") or os.getenv("SUPERVISOR_MODEL")
-        super().__init__(model=model, temperature=0.3, max_tokens=900)
+        super().__init__(model=model, temperature=0.6, max_tokens=1100)
 
     @property
     def system_prompt(self) -> str:
@@ -61,13 +74,41 @@ Respond with ONLY a JSON object, no prose, no fences:
 
 Pick the focus_metric that is genuinely weakest or declining. Pick a focus_skill that plausibly moves that metric. Be decisive — one focus only."""
 
+    @property
+    def innovation_system_prompt(self) -> str:
+        return """You are the CEO setting innovation bets for the next operating cycle.
+
+You must propose exactly 3 initiatives:
+- one CORE (improves current execution),
+- one ADJACENT (expands value around current product),
+- one MOONSHOT (high-upside experiment).
+
+Each initiative must have a clear owner, measurable KPI, and a practical deadline.
+
+Respond with ONLY a JSON object:
+{
+  "initiatives": [
+    {
+      "type": "core|adjacent|moonshot",
+      "title": "short initiative name",
+      "owner": "one board role",
+      "kpi": "how success is measured",
+      "deadline": "D+N or YYYY-MM-DD",
+      "why_now": "one sentence"
+    }
+  ]
+}
+
+No prose outside JSON."""
+
     def decide(
         self,
         metrics: CompanyMetrics,
         quality_analysis: str = "",
+        recent_ceo_directives: list[str] | None = None,
     ) -> Directive:
         """Produce a strategic Directive from the company metrics."""
-        prompt = self._build_prompt(metrics, quality_analysis)
+        prompt = self._build_prompt(metrics, quality_analysis, recent_ceo_directives)
         messages = [
             {"role": "system", "content": self.system_prompt},
             {"role": "user", "content": prompt},
@@ -79,9 +120,31 @@ Pick the focus_metric that is genuinely weakest or declining. Pick a focus_skill
             data = {}
         return self._to_directive(data, metrics)
 
+    def propose_innovation_agenda(
+        self,
+        metrics: CompanyMetrics,
+        recent_decisions: list[str] | None = None,
+    ) -> str:
+        prompt = self._build_innovation_prompt(metrics, recent_decisions)
+        messages = [
+            {"role": "system", "content": self.innovation_system_prompt},
+            {"role": "user", "content": prompt},
+        ]
+        try:
+            raw = self.chat(messages, temperature=0.7, max_tokens=900)
+            data = self._parse_json(raw)
+        except Exception:  # noqa: BLE001 — never let innovation planning crash governance
+            data = {}
+        return self._to_innovation_agenda(data, metrics)
+
     # ---- Internal ----
 
-    def _build_prompt(self, metrics: CompanyMetrics, quality_analysis: str) -> str:
+    def _build_prompt(
+        self,
+        metrics: CompanyMetrics,
+        quality_analysis: str,
+        recent_ceo_directives: list[str] | None = None,
+    ) -> str:
         scores = ", ".join(f"{k}: {v}" for k, v in metrics.avg_scores.items()) or "no data yet"
         trend_lines = []
         for i, t in enumerate(metrics.training_trend):
@@ -89,6 +152,10 @@ Pick the focus_metric that is genuinely weakest or declining. Pick a focus_skill
             trend_lines.append(f"  {label}: " + ", ".join(f"{k}: {v}" for k, v in t.items()))
         trend = "\n".join(trend_lines) or "  (no training history)"
         issues = "\n".join(f"- {i}" for i in metrics.recent_issues[:10]) or "- (none recorded)"
+        recent_directives = (
+            "\n".join(f"- {d}" for d in (recent_ceo_directives or []))
+            or "- (no previous directives)"
+        )
 
         return f"""## Company KPIs
 
@@ -104,7 +171,30 @@ Seniors on file: {metrics.n_seniors} | Calls completed: {metrics.n_calls} | Trai
 ## Quality Director's analysis
 {quality_analysis or "(no analysis provided)"}
 
+## Recent CEO directives (avoid blind repetition)
+{recent_directives}
+
 Set the strategic directive now (JSON only)."""
+
+    def _build_innovation_prompt(
+        self,
+        metrics: CompanyMetrics,
+        recent_decisions: list[str] | None = None,
+    ) -> str:
+        scores = ", ".join(f"{k}: {v}" for k, v in metrics.avg_scores.items()) or "no data yet"
+        recent = "\n".join(f"- {d}" for d in (recent_decisions or [])[-8:]) or "- (none)"
+        weakest = metrics.weakest_axis() or "unknown"
+        return f"""## Current company state
+Average scores: {scores}
+Weakest axis: {weakest}
+Seniors: {metrics.n_seniors}
+Calls completed: {metrics.n_calls}
+Training rounds: {metrics.n_training_rounds}
+
+## Recent board decisions
+{recent}
+
+Propose 3 initiatives (core, adjacent, moonshot) now."""
 
     def _to_directive(self, data: dict[str, Any], metrics: CompanyMetrics) -> Directive:
         focus_metric = str(data.get("focus_metric", "")).strip()
@@ -130,6 +220,87 @@ Set the strategic directive now (JSON only)."""
             rationale=rationale,
             set_by="ceo",
         )
+
+    def _to_innovation_agenda(self, data: dict[str, Any], metrics: CompanyMetrics) -> str:
+        initiatives = self._normalize_initiatives(data)
+        if len(initiatives) != 3:
+            initiatives = self._fallback_initiatives(metrics)
+
+        lines: list[str] = []
+        for i, item in enumerate(initiatives, start=1):
+            lines.append(
+                f"{i}. [{item['type']}] {item['title']} | "
+                f"Owner: {item['owner']} | KPI: {item['kpi']} | Deadline: {item['deadline']}"
+            )
+            lines.append(f"   Why now: {item['why_now']}")
+        return "\n".join(lines)
+
+    def _normalize_initiatives(self, data: dict[str, Any]) -> list[dict[str, str]]:
+        out: list[dict[str, str]] = []
+        for raw in data.get("initiatives", []) or []:
+            kind = str(raw.get("type", "")).strip().lower()
+            title = str(raw.get("title", "")).strip()
+            owner = str(raw.get("owner", "")).strip()
+            kpi = str(raw.get("kpi", "")).strip()
+            why_now = str(raw.get("why_now", "")).strip()
+
+            deadline_raw = raw.get("deadline")
+            if deadline_raw is None and raw.get("deadline_days") is not None:
+                try:
+                    deadline_raw = f"D+{int(raw.get('deadline_days'))}"
+                except (TypeError, ValueError):
+                    deadline_raw = ""
+            deadline = str(deadline_raw or "").strip()
+
+            if kind not in INNOVATION_TYPES or not title or not kpi:
+                continue
+            if owner not in INNOVATION_OWNERS:
+                owner = "Manager"
+            if not deadline:
+                deadline = "D+14"
+            if not why_now:
+                why_now = "Supports current strategy while improving execution speed."
+
+            out.append(
+                {
+                    "type": kind,
+                    "title": title,
+                    "owner": owner,
+                    "kpi": kpi,
+                    "deadline": deadline,
+                    "why_now": why_now,
+                }
+            )
+        return out[:3]
+
+    def _fallback_initiatives(self, metrics: CompanyMetrics) -> list[dict[str, str]]:
+        weakest = metrics.weakest_axis() or "quality"
+        return [
+            {
+                "type": "core",
+                "title": f"{weakest} Recovery Sprint",
+                "owner": "Quality Director",
+                "kpi": f"Raise {weakest} by +0.4 within 14 days",
+                "deadline": "D+14",
+                "why_now": f"{weakest} is the current bottleneck for overall service quality.",
+            },
+            {
+                "type": "adjacent",
+                "title": "Family Feedback Loop v1",
+                "owner": "Customer Success Specialist",
+                "kpi": "Collect 20 family ratings and close top 3 pain points",
+                "deadline": "D+21",
+                "why_now": "Turns external feedback into faster product-learning cycles.",
+            },
+            {
+                "type": "moonshot",
+                "title": "Proactive Risk Signals Pilot",
+                "owner": "MLOps/SRE Engineer",
+                "kpi": "Detect 2 leading risk patterns before manual escalation",
+                "deadline": "D+30",
+                "why_now": "Creates a high-upside path toward proactive care operations.",
+            },
+        ]
 
     @staticmethod
     def _parse_json(text: str) -> dict[str, Any]:
