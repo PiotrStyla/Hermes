@@ -81,6 +81,8 @@ python -m src call <senior-id> --voice
 python -m src view-history <senior-id>
 python -m src company status
 python -m src company review
+python -m src company review --owner-input "Chcę, żeby zarząd skupił się na ..."
+python -m src company review --interactive
 python -m src scheduler start --board-review-hours 24
 python -m src dashboard --host 127.0.0.1 --port 8080
 ```
@@ -131,10 +133,17 @@ Dodatkowe artefakty biznesowe:
 Najwazniejsze zmiany w warstwie `Company` (obowiazuje dla kolejnych zebrań):
 
 - CEO ma teraz osobna sekcje `Agenda 3b` (Innovation Agenda) z 3 torami: `core`, `adjacent`, `moonshot`.
-- CEO dostaje kontekst ostatnich dyrektyw, co zmniejsza powtarzanie tych samych decyzji.
+- CEO dostaje kontekst ostatnich dyrektyw i jest poinstruowany, zeby nie powtarzać ciągle tego samego focus metric.
+- Zarząd (CEO, Quality Director, HR, CMO) czyta input właściciela:
+  - zapisz go w `data/company/owner_input.md`, albo
+  - podaj w CLI: `python -m src company review --owner-input "..."`, albo
+  - użyj interaktywnego promptu: `python -m src company review --interactive`.
+- Zarząd zapisuje w raporcie sekcję **Questions for the Owner** — pytania strategiczne do właściciela.
+- CEO, CMO, Quality Director i HR dostali mocniejsze instrukcje „creative & progressive”: mają proponować nowe inicjatywy, nie kopiować poprzedniej agendy, a Quality Director/HR mają sugerować konkretny fix systemowy.
+- Operator dostał reguły anty-pętlowe: nie wolno dwa razy zadawać tego samego pytania, każda tura musi posunąć rozmowę do przodu, a po zebraniu mood+health+afety należy przejść do pożegnania.
 - Po `company review` raport markdown zapisuje sie automatycznie do `data/company/reports/board_YYYY-MM-DD_HH-MM.md`.
 - Rekomendowany split modeli strategicznych w `.env`:
-  - `CEO_MODEL=anthropic/claude-3-5-haiku`
+  - `CEO_MODEL=anthropic/claude-3-5-haiku` (lub mocniejszy, jeśli budżet pozwala)
   - `CMO_MODEL=anthropic/claude-3-5-haiku`
   - role operacyjne (np. `SUPERVISOR_MODEL`) pozostaja na szybkim `deepseek/deepseek-v4-flash`.
 - Scheduler board meeting jest ustawiony na stala godzine: `10:00 Europe/Warsaw`.
@@ -212,6 +221,8 @@ python -m src call <senior-id> --voice
 python -m src view-history <senior-id>
 python -m src company status
 python -m src company review
+python -m src company review --owner-input "I want the board to focus on ..."
+python -m src company review --interactive
 python -m src scheduler start --board-review-hours 24
 python -m src dashboard --host 127.0.0.1 --port 8080
 ```
@@ -246,10 +257,17 @@ Data locations:
 Key updates in the `Company` layer (applies to upcoming meetings):
 
 - CEO now has a dedicated `Agenda 3b` (Innovation Agenda) with 3 tracks: `core`, `adjacent`, `moonshot`.
-- CEO now receives recent-directive context, reducing repetitive decisions.
+- CEO now receives recent-directive context and is explicitly told to rotate the focus metric when it has been repeating.
+- The board (CEO, Quality Director, HR, CMO) reads owner input:
+  - write it to `data/company/owner_input.md`, or
+  - pass it in CLI: `python -m src company review --owner-input "..."`, or
+  - use an interactive prompt: `python -m src company review --interactive`.
+- The board now includes a **Questions for the Owner** section in the report.
+- CEO, CMO, Quality Director, and HR prompts were strengthened with a "creative & progressive" mandate: propose fresh initiatives, avoid verbatim repeats, and Quality Director/HR must suggest a concrete systemic fix.
+- The Operator prompt received anti-loop rules: never ask the same question twice, every turn must advance the conversation, and the call should move to farewell once mood+health+safety are covered.
 - After `company review`, a markdown board report is auto-saved to `data/company/reports/board_YYYY-MM-DD_HH-MM.md`.
 - Recommended strategic model split in `.env`:
-  - `CEO_MODEL=anthropic/claude-3-5-haiku`
+  - `CEO_MODEL=anthropic/claude-3-5-haiku` (or a stronger model if budget allows)
   - `CMO_MODEL=anthropic/claude-3-5-haiku`
   - operational roles (e.g. `SUPERVISOR_MODEL`) stay on fast `deepseek/deepseek-v4-flash`.
 - Board scheduler is configured for fixed time: `10:00 Europe/Warsaw`.

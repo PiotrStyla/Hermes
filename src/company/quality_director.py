@@ -31,16 +31,17 @@ class QualityDirectorAgent(BaseAgent):
 
 Unlike the per-call Supervisor, you look ACROSS many calls to find SYSTEMIC patterns — problems that recur and therefore deserve company-wide attention.
 
-You will be given the company's average scores, the recent score trend, and a pool of individual quality issues collected across many calls.
+You will be given the company's average scores, the recent score trend, a pool of individual quality issues collected across many calls, and any owner input.
 
 Write a SHORT analysis (plain prose, max ~150 words) that:
 1. Names the 1-3 recurring themes you see in the issues (not one-offs).
 2. States which quality axis each theme most hurts.
 3. Notes any decline in the trend.
+4. Suggests 1 concrete, systemic fix (not just coaching) the company should try.
 
-Be concrete and reference the actual issues. No preamble, no bullet headers like "Analysis:" — just the findings. This goes straight to the CEO."""
+Be concrete and reference the actual issues. Consider the owner's input as a priority signal. No preamble, no bullet headers like "Analysis:" — just the findings. This goes straight to the CEO."""
 
-    def analyze(self, metrics: CompanyMetrics) -> str:
+    def analyze(self, metrics: CompanyMetrics, owner_input: str = "") -> str:
         """Return a short systemic-quality analysis as prose."""
         if not metrics.recent_issues and not metrics.avg_scores:
             return "No quality data yet — not enough calls or training rounds to find patterns."
@@ -52,6 +53,11 @@ Be concrete and reference the actual issues. No preamble, no bullet headers like
             trend_lines.append(f"  {label}: " + ", ".join(f"{k}: {v}" for k, v in t.items()))
         trend = "\n".join(trend_lines) or "  (no training history)"
         issues = "\n".join(f"- {i}" for i in metrics.recent_issues) or "- (none recorded)"
+        owner_block = (
+            f"## Owner input for this board meeting\n\n{owner_input}\n"
+            if owner_input.strip()
+            else "## Owner input\n\n(none provided)."
+        )
 
         prompt = f"""## Company average scores
 {scores}
@@ -61,6 +67,8 @@ Be concrete and reference the actual issues. No preamble, no bullet headers like
 
 ## Pool of recent quality issues (across many calls)
 {issues}
+
+{owner_block}
 
 Write your systemic analysis now."""
 

@@ -21,6 +21,7 @@ from pathlib import Path
 
 from rich.console import Console
 from rich.panel import Panel
+from rich.prompt import Prompt
 from rich.table import Table
 
 from .ceo import CEOAgent
@@ -42,6 +43,7 @@ class BoardMeetingResult:
     directive: Directive | None = None
     growth_plan: GrowthPlan | None = None
     innovation_agenda: str = ""
+    owner_input: str = ""
 
 
 class CompanyRunner:
@@ -101,7 +103,12 @@ class CompanyRunner:
 
     # ---- Full governance loop ----
 
-    def run_board_meeting(self, persist: bool = True) -> BoardMeetingResult:
+    def run_board_meeting(
+        self,
+        persist: bool = True,
+        owner_input: str = "",
+        interactive: bool = False,
+    ) -> BoardMeetingResult:
         """Run the full executive loop and (optionally) persist the outcome."""
         state = CompanyState.load()
 
@@ -109,15 +116,19 @@ class CompanyRunner:
         metrics = self.aggregator.aggregate()
         self._print_status(state, metrics)
 
+        owner_input = self._gather_owner_input(owner_input, interactive)
+        if owner_input:
+            self.console.print(Panel(owner_input, title="Owner input"))
+
         # 2. Quality Director
         self.console.print(Panel("Quality Director — systemic analysis", title="Agenda 1"))
-        quality_analysis = self.quality_director.analyze(metrics)
+        quality_analysis = self.quality_director.analyze(metrics, owner_input=owner_input)
         self.console.print(quality_analysis)
 
         # 3. HR
         self.console.print(Panel("HR — operator performance review", title="Agenda 2"))
         scorecard = OperatorScorecard.from_metrics(metrics)
-        hr_verdict = self.hr.review_operator(scorecard)
+        hr_verdict = self.hr.review_operator(scorecard, owner_input=owner_input)
         self.console.print(
             f"[dim]Recommendation: {scorecard.recommendation} | "
             f"weakest: {scorecard.weakest_axis or 'n/a'}[/dim]"
@@ -126,17 +137,27 @@ class CompanyRunner:
 
         # 4. CEO directive
         self.console.print(Panel("CEO — strategic directive", title="Agenda 3"))
-        recent_ceo_directives = [d.summary for d in state.decisions if d.actor == "ceo"][-3:]
+        recent_ceo_directives = [
+            f"{d.summary}: {d.rationale[:120]}"
+            for d in state.decisions
+            if d.actor == "ceo" and d.summary.startswith("New directive:")
+        ][-3:]
         directive = self.ceo.decide(
             metrics,
             quality_analysis,
             recent_ceo_directives=recent_ceo_directives,
+            owner_input=owner_input,
         )
         self.console.print(
             f"[bold green]Focus metric:[/bold green] {directive.focus_metric}\n"
             f"[bold green]Focus skill:[/bold green] {directive.focus_skill}\n"
             f"[bold green]Rationale:[/bold green] {directive.rationale}"
         )
+        if directive.owner_questions:
+            self.console.print(Panel(
+                "\n".join(f"- {q}" for q in directive.owner_questions),
+                title="[bold yellow]CEO questions for the owner[/bold yellow]",
+            ))
 
         # 4b. CEO innovation agenda
         self.console.print(Panel("CEO — innovation agenda", title="Agenda 3b"))
@@ -144,12 +165,16 @@ class CompanyRunner:
             f"{d.actor}: {d.summary}"
             for d in state.decisions[-8:]
         ]
-        innovation_agenda = self.ceo.propose_innovation_agenda(metrics, recent_decisions=recent_decisions)
+        innovation_agenda = self.ceo.propose_innovation_agenda(
+            metrics,
+            recent_decisions=recent_decisions,
+            owner_input=owner_input,
+        )
         self.console.print(innovation_agenda)
 
         # 5. CMO growth plan — where new clients come from
         self.console.print(Panel("CMO — client acquisition plan", title="Agenda 4"))
-        growth_plan = self.cmo.plan(metrics)
+        growth_plan = self.cmo.plan(metrics, owner_input=owner_input)
         self._print_growth_plan(growth_plan)
 
         # 6. Persist
@@ -157,6 +182,12 @@ class CompanyRunner:
             state.record_snapshot(metrics.to_snapshot())
             state.set_directive(directive)
             state.set_growth_plan(growth_plan)
+            if owner_input.strip():
+                state.log_decision(
+                    actor="owner",
+                    summary="Owner input for this board meeting",
+                    rationale=owner_input[:500],
+                )
             state.log_decision(
                 actor="quality_director",
                 summary="Systemic quality analysis",
@@ -182,6 +213,7 @@ class CompanyRunner:
                     directive=directive,
                     growth_plan=growth_plan,
                     innovation_agenda=innovation_agenda,
+                    owner_input=owner_input,
                 ),
                 state,
             )
@@ -196,7 +228,30 @@ class CompanyRunner:
             directive=directive,
             growth_plan=growth_plan,
             innovation_agenda=innovation_agenda,
+            owner_input=owner_input,
         )
+
+    def _gather_owner_input(self, provided: str, interactive: bool) -> str:
+        """Resolve owner input from CLI arg, file, or interactive prompt."""
+        if provided.strip():
+            return provided.strip()
+
+        owner_input_file = COMPANY_DIR / "owner_input.md"
+        if owner_input_file.exists():
+            try:
+                text = owner_input_file.read_text(encoding="utf-8").strip()
+                if text:
+                    return text
+            except OSError:
+                pass
+
+        if interactive:
+            return Prompt.ask(
+                "\n[bold]Owner input for the board[/bold] (what should the board focus on?)",
+                default="",
+            ).strip()
+
+        return ""
 
     def _save_board_report(self, result: BoardMeetingResult, state: CompanyState) -> Path:
         self.reports_dir.mkdir(parents=True, exist_ok=True)
@@ -221,6 +276,14 @@ class CompanyRunner:
         channel_lines = [f"  - {c}" for c in channels] or ["  - (none)"]
         step_lines = [f"  {i + 1}. {s}" for i, s in enumerate(steps)] or ["  - (none)"]
 
+        owner_questions = (
+            result.directive.owner_questions
+            if result.directive and result.directive.owner_questions
+            else []
+        )
+        question_lines = [f"  - {q}" for q in owner_questions] or ["  - (none)"]
+        owner_input_lines = [f"  - {line}" for line in (result.owner_input or "").splitlines() if line.strip()] or ["  - (none)"]
+
         content = [
             "# Executive Board Report",
             "",
@@ -232,10 +295,16 @@ class CompanyRunner:
             "## KPI Snapshot",
             *score_lines,
             "",
+            "## Owner Input",
+            *owner_input_lines,
+            "",
             "## CEO Directive",
             f"- Focus metric: {result.directive.focus_metric if result.directive else 'n/a'}",
             f"- Focus skill: {result.directive.focus_skill if result.directive else 'n/a'}",
             f"- Rationale: {result.directive.rationale if result.directive else 'n/a'}",
+            "",
+            "## Questions for the Owner",
+            *question_lines,
             "",
             "## Quality Director",
             result.quality_analysis or "(no analysis)",

@@ -62,17 +62,18 @@ Your operators are graded each call on four axes (0-10):
 - info_quality — did they gather mood/health/safety info without sounding like a checklist?
 - brevity — did the call stay ~under 5 minutes (~18 turns) and end gracefully?
 
-Given the company's current KPIs, recent quality issues, and the Quality Director's analysis, set ONE strategic directive for the next period: the single weakest axis to fix and the single operator skill to prioritise improving.
+Given the company's current KPIs, recent quality issues, the Quality Director's analysis, and explicit input from the owner, set ONE strategic directive for the next period. Be decisive — one focus only — but also creative and progressive: do not mechanically pick the same axis every time. Consider the owner's input a priority signal; if the owner points to a specific problem or opportunity, address it even if the raw KPIs would otherwise point elsewhere.
 
 Respond with ONLY a JSON object, no prose, no fences:
 
 {
   "focus_metric": "<one of: warmth | listening | info_quality | brevity>",
   "focus_skill": "<one of: greeting | mood-checkin | health-checkin | safety-check | active-listening | farewell>",
-  "rationale": "2-3 sentences: why this is the priority now, referencing the data."
+  "rationale": "2-3 sentences: why this is the priority now, referencing the data and owner input.",
+  "owner_questions": ["1-2 specific strategic questions you genuinely need the owner to answer before the next board meeting"]
 }
 
-Pick the focus_metric that is genuinely weakest or declining. Pick a focus_skill that plausibly moves that metric. Be decisive — one focus only."""
+Always include owner_questions. If the owner gave input, ask clarifying or strategic follow-up questions about it. If the owner gave no input, use this field to ask the most important thing you need to know. Avoid repeating recent directives verbatim; if the last two directives used the same focus_metric, choose a different one this period."""
 
     @property
     def innovation_system_prompt(self) -> str:
@@ -84,6 +85,8 @@ You must propose exactly 3 initiatives:
 - one MOONSHOT (high-upside experiment).
 
 Each initiative must have a clear owner, measurable KPI, and a practical deadline.
+
+Be creative and progressive: do not copy-paste the previous agenda. At least one initiative should feel like a genuine new bet or a bigger step forward. Consider the owner's input as a priority signal; if the owner flags a problem or opportunity, shape the initiatives around it.
 
 Respond with ONLY a JSON object:
 {
@@ -106,15 +109,16 @@ No prose outside JSON."""
         metrics: CompanyMetrics,
         quality_analysis: str = "",
         recent_ceo_directives: list[str] | None = None,
+        owner_input: str = "",
     ) -> Directive:
         """Produce a strategic Directive from the company metrics."""
-        prompt = self._build_prompt(metrics, quality_analysis, recent_ceo_directives)
+        prompt = self._build_prompt(metrics, quality_analysis, recent_ceo_directives, owner_input)
         messages = [
             {"role": "system", "content": self.system_prompt},
             {"role": "user", "content": prompt},
         ]
         try:
-            raw = self.chat(messages, temperature=0.3)
+            raw = self.chat(messages, temperature=0.7)
             data = self._parse_json(raw)
         except Exception:  # noqa: BLE001 — never let strategy crash the company
             data = {}
@@ -124,14 +128,15 @@ No prose outside JSON."""
         self,
         metrics: CompanyMetrics,
         recent_decisions: list[str] | None = None,
+        owner_input: str = "",
     ) -> str:
-        prompt = self._build_innovation_prompt(metrics, recent_decisions)
+        prompt = self._build_innovation_prompt(metrics, recent_decisions, owner_input)
         messages = [
             {"role": "system", "content": self.innovation_system_prompt},
             {"role": "user", "content": prompt},
         ]
         try:
-            raw = self.chat(messages, temperature=0.7, max_tokens=900)
+            raw = self.chat(messages, temperature=0.8, max_tokens=900)
             data = self._parse_json(raw)
         except Exception:  # noqa: BLE001 — never let innovation planning crash governance
             data = {}
@@ -144,6 +149,7 @@ No prose outside JSON."""
         metrics: CompanyMetrics,
         quality_analysis: str,
         recent_ceo_directives: list[str] | None = None,
+        owner_input: str = "",
     ) -> str:
         scores = ", ".join(f"{k}: {v}" for k, v in metrics.avg_scores.items()) or "no data yet"
         trend_lines = []
@@ -155,6 +161,16 @@ No prose outside JSON."""
         recent_directives = (
             "\n".join(f"- {d}" for d in (recent_ceo_directives or []))
             or "- (no previous directives)"
+        )
+        recent_focus_metrics = [
+            d.split("/")[0].replace("New directive: focus on", "").strip()
+            for d in (recent_ceo_directives or [])
+        ]
+        focus_history = ", ".join(recent_focus_metrics) or "(none yet)"
+        owner_block = (
+            f"## Owner input for this board meeting\n\n{owner_input}\n"
+            if owner_input.strip()
+            else "## Owner input\n\n(none provided — use owner_questions to ask what you need)."
         )
 
         return f"""## Company KPIs
@@ -174,16 +190,29 @@ Seniors on file: {metrics.n_seniors} | Calls completed: {metrics.n_calls} | Trai
 ## Recent CEO directives (avoid blind repetition)
 {recent_directives}
 
+## Recent directive focus metrics
+{focus_history}
+
+If the same focus_metric appears in the last two directives, you MUST choose a different one this period. The owner wants creativity and progress.
+
+{owner_block}
+
 Set the strategic directive now (JSON only)."""
 
     def _build_innovation_prompt(
         self,
         metrics: CompanyMetrics,
         recent_decisions: list[str] | None = None,
+        owner_input: str = "",
     ) -> str:
         scores = ", ".join(f"{k}: {v}" for k, v in metrics.avg_scores.items()) or "no data yet"
         recent = "\n".join(f"- {d}" for d in (recent_decisions or [])[-8:]) or "- (none)"
         weakest = metrics.weakest_axis() or "unknown"
+        owner_block = (
+            f"## Owner input for this board meeting\n\n{owner_input}\n"
+            if owner_input.strip()
+            else "## Owner input\n\n(none provided — propose bold, useful initiatives anyway)."
+        )
         return f"""## Current company state
 Average scores: {scores}
 Weakest axis: {weakest}
@@ -191,15 +220,21 @@ Seniors: {metrics.n_seniors}
 Calls completed: {metrics.n_calls}
 Training rounds: {metrics.n_training_rounds}
 
-## Recent board decisions
+## Recent board decisions (do NOT repeat these verbatim)
 {recent}
 
-Propose 3 initiatives (core, adjacent, moonshot) now."""
+{owner_block}
+
+Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
 
     def _to_directive(self, data: dict[str, Any], metrics: CompanyMetrics) -> Directive:
         focus_metric = str(data.get("focus_metric", "")).strip()
         focus_skill = str(data.get("focus_skill", "")).strip()
         rationale = str(data.get("rationale", "")).strip()
+        owner_questions = data.get("owner_questions") or []
+        if isinstance(owner_questions, str):
+            owner_questions = [owner_questions]
+        owner_questions = [str(q).strip() for q in owner_questions if str(q).strip()]
 
         # Ground / fallback: if the model returned an invalid axis, use the
         # weakest measured axis so the company always has a valid directive.
@@ -214,10 +249,15 @@ Propose 3 initiatives (core, adjacent, moonshot) now."""
                 + (f" (avg {score})" if score is not None else "")
                 + f"; prioritising the '{focus_skill}' skill to lift it."
             )
+        if not owner_questions:
+            owner_questions = [
+                "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
+            ]
         return Directive(
             focus_metric=focus_metric,
             focus_skill=focus_skill,
             rationale=rationale,
+            owner_questions=owner_questions,
             set_by="ceo",
         )
 

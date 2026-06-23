@@ -2,34 +2,37 @@
   "mission": "Provide warm, attentive daily wellness check-in calls to elderly people, keep their families informed, and continuously improve the quality of care.",
   "founded": "2026-06-08T18:44:35.610625+00:00",
   "directive": {
-    "focus_metric": "warmth",
-    "focus_skill": "active-listening",
-    "rationale": "The recent decline in warmth scores indicates a pressing need for operators to engage more effectively with seniors' emotional states. By prioritizing active listening, operators can better validate feelings and foster a more caring atmosphere, which is essential for improving overall call quality.",
-    "set_at": "2026-06-08T19:43:44.291029+00:00",
+    "focus_metric": "info_quality",
+    "focus_skill": "health-checkin",
+    "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it.",
+    "owner_questions": [
+      "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
+    ],
+    "set_at": "2026-06-23T06:04:17.136516+00:00",
     "set_by": "ceo"
   },
   "growth_plan": {
     "posture": "scale",
     "channels": [
-      "GP clinics",
-      "senior clubs",
-      "caregiver forums",
-      "parishes",
-      "MOPS/NFZ partnerships"
+      "Przychodnie POZ i lekarze rodzinni (ulotki, polecenia)",
+      "Domy i kluby seniora oraz Uniwersytety Trzeciego Wieku",
+      "Parafie i organizacje kościelne",
+      "Grupy i fora dla opiekunów rodzinnych (Facebook, lokalne)",
+      "Partnerstwa z MOPS/OPS i programami NFZ dla seniorów",
+      "Program poleceń dla rodzin obecnych klientów"
     ],
     "target_segments": [
-      "families of elderly individuals",
-      "caregivers",
-      "healthcare professionals"
+      "Dorosłe dzieci seniorów mieszkające daleko od rodziców",
+      "Samotni seniorzy 75+ mieszkający samodzielnie"
     ],
-    "messaging": "Hermes provides daily check-ins for your loved ones, ensuring their well-being while keeping you informed and connected.",
+    "messaging": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok.",
     "next_steps": [
-      "Develop partnerships with local GP clinics to promote our service",
-      "Create informational brochures for senior clubs",
-      "Engage with caregiver forums to share testimonials and success stories",
-      "Reach out to parishes for community outreach programs"
+      "Nawiąż kontakt z 3 domami/klubami seniora w okolicy.",
+      "Przygotuj ulotkę i skrypt dla lekarzy rodzinnych.",
+      "Uruchom program poleceń z benefitem dla polecającej rodziny.",
+      "Przetestuj jeden płatny kanał (lokalny Facebook dla opiekunów)."
     ],
-    "set_at": "2026-06-08T19:43:47.184834+00:00",
+    "set_at": "2026-06-23T06:04:18.244744+00:00",
     "set_by": "cmo"
   },
   "staffing_plan": {
@@ -165,6 +168,186 @@
       "n_calls": 7,
       "n_seniors": 2,
       "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-15T08:00:04.571517+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-19T05:00:38.340692+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-19T05:03:35.963902+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.7,
+        "info_quality": 6.6,
+        "brevity": 7.2
+      },
+      "n_calls": 7,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "avg_scores": {
+        "warmth": 8.4,
+        "listening": 7.8,
+        "info_quality": 6.7,
+        "brevity": 7.3
+      },
+      "n_calls": 9,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "avg_scores": {
+        "warmth": 8.4,
+        "listening": 7.8,
+        "info_quality": 6.7,
+        "brevity": 7.3
+      },
+      "n_calls": 11,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "avg_scores": {
+        "warmth": 8.4,
+        "listening": 7.8,
+        "info_quality": 6.7,
+        "brevity": 7.3
+      },
+      "n_calls": 11,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.8,
+        "info_quality": 6.8,
+        "brevity": 7.4
+      },
+      "n_calls": 15,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T05:41:18.141104+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T05:54:03.695175+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
     }
   ],
   "decisions": [
@@ -287,6 +470,468 @@
       "actor": "board",
       "summary": "Staffing plan updated (standard, balanced): 13 position(s), payroll 215000 PLN / budget 220000 PLN",
       "rationale": "Remaining budget: 5000 PLN"
+    },
+    {
+      "date": "2026-06-15T08:00:04.571517+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.6); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-15T08:00:04.571517+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-15T08:00:04.571517+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "(Quality Director analysis unavailable: Error code: 404 - {'error': {'message': 'No endpoints found for google/gemini-2.0-flash-001.', 'code': 404}, 'user_id': 'user_3B819hwMe8GYSxHjbTzuL5jyi52'})"
+    },
+    {
+      "date": "2026-06-15T08:00:04.571517+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "(HR verdict unavailable: Error code: 404 - {'error': {'message': 'No endpoints found for google/gemini-2.0-flash-001.', 'code': 404}, 'user_id': 'user_3B819hwMe8GYSxHjbTzuL5jyi52'}; system recommendation: coach)"
+    },
+    {
+      "date": "2026-06-19T05:00:38.340692+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "Info quality is the lowest-scoring metric overall (6.6) and has dropped sharply in training (7.8→7.1), driven by systemic failures to ask about medications and health. Prioritizing the health-checkin skill will directly address these omissions, the most common and impactful deficit."
+    },
+    {
+      "date": "2026-06-19T05:00:38.340692+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Warm daily check-in calls for your loved one, with real-time reports for you—peace of mind through genuine human connection."
+    },
+    {
+      "date": "2026-06-19T05:00:38.340692+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes emerge. First, operators consistently fail to perform essential health and safety check-ins, such as asking about medications, mood, or safety at home. This weakest link is info_quality (average 6.6), and the latest trend has dropped sharply from 7.8 to 7.1. Second, the overwhelming majority of calls exceed ideal length, leading to rushed endings and senior fatigue; this directly hurts brevity, which has declined from 6.9 to 6.1. Finally, the emotional follow-up misses—like "
+    },
+    {
+      "date": "2026-06-19T05:00:38.340692+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Warmth (8.3) is the operator’s strongest area; info_quality (6.6) is the weakest and needs focused improvement. The trend is troubling—every axis declined, with info_quality and brevity dropping most sharply. This suggests the operator may be rushing or losing engagement. I endorse the **coach** recommendation but urge you to prioritize info_quality drills and monitor brevity closely. A single coaching session with clear targets should help reverse the slide."
+    },
+    {
+      "date": "2026-06-19T05:03:35.963902+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "Info_quality is the lowest-scoring metric (6.6) and has dropped significantly (-0.7) in training. Operators routinely miss medication and health check-ins, which directly undermines info_quality. Prioritizing the health-checkin skill will ensure consistent collection of critical data while also structuring calls to reduce excess length."
+    },
+    {
+      "date": "2026-06-19T05:03:35.963902+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Warm daily check-in calls for your loved one, with real-time reports for you – trusted, brief, and caring."
+    },
+    {
+      "date": "2026-06-19T05:03:35.963902+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out. First, calls consistently exceed ideal length, leading to rushed endings, fatigue, and a decline in brevity (from 6.9 to 6.1). Second, operators routinely miss critical health and safety check-ins—medications, mood, home safety, emotional follow-up—which drags down info_quality (7.8→7.1) and listening (8.1→7.9). The warmth score also slipped slightly (8.3→8.1), likely from these missed emotional connections. The trend is clearly downward across all axes, with info"
+    },
+    {
+      "date": "2026-06-19T05:03:35.963902+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "The operator's strongest area is warmth (8.3), but its weakest is info_quality (6.6), which needs immediate attention. The trend is concerning: every axis declined, with info_quality dropping -0.7 and brevity -0.8. While the system recommends coaching, I support this but urge you to also address the declining brevity and listening scores during sessions. A focused coaching plan on info_quality, paired with refreshers on conciseness, should help reverse the trend."
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on brevity / skill 'farewell'",
+      "rationale": "Brevity has dropped sharply from 6.9 to 6.1, and multiple quality issues cite calls exceeding ideal length with rushed or fatiguing endings. Improving the farewell skill—ensuring a concise, graceful close—directly addresses this decline while preserving other metrics."
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "A warm daily check-in call for your loved one, with real-time reports to you—proven to reduce loneliness and improve wellbeing."
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes emerge. First, calls consistently exceed ideal length, with multiple issues noting extended turn counts, rushed endings, and senior fatigue—this directly hurts brevity, which has dropped from 6.9 to 6.1. Second, operators routinely fail to gather critical health and safety information: missed medication checks, no safety confirmation, incomplete health check-ins. This degrades info_quality, which declined from 7.8 to 7.1. Third, operators neglect emotional follow-up and mo"
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "This operator's strongest area is warmth (8.3), which keeps interactions pleasant. Her weakest is info_quality (6.6), and the trend is worrying—every score dropped, with brevity down 0.8 and info_quality down 0.7. The decline suggests the coaching needs to focus on accuracy and conciseness promptly. I endorse the recommendation to coach, but with a sense of urgency given the backslide."
+    },
+    {
+      "date": "2026-06-19T05:13:20.633213+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] Health-checkin Skill Boost | Owner: Manager | KPI: info_quality score increases by 1.0 points | Deadline: D+30\n   Why now: Current info_quality is the weakest axis and recent directives prioritize the health-checkin skill.\n2. [adjacent] Multi-Channel Follow-Up System | Owner: Manager | KPI: 4 next steps completed per call | Deadline: D+45\n   Why now: With 5 channels ready, systematic follow-ups can increase engagement and value per call.\n3. [moonshot] AI Coach for Real-Time Feedback | "
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on brevity / skill 'farewell'",
+      "rationale": "Brevity has dropped most sharply from 6.9 to 6.1, with multiple quality issues citing call length problems. The farewell skill is critical for gracefully concluding calls, preventing senior fatigue, and ensuring calls remain concise and respectful of the senior's time and energy."
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 4 channel(s), 4 next step(s)",
+      "rationale": "Hermes provides daily human connection and peace of mind for families caring for elderly loved ones, with AI-powered warmth and reliability."
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes emerge. First, calls consistently exceed ideal length, leading to rushed conclusions and senior fatigue—this directly hurts **brevity**, which has dropped from 6.9 to 6.1. Second, operators are failing to perform required health and medication check-ins, along with safety and mood assessments—this undermines **info_quality**, which fell from 7.8 to 7.1. Third, emotional follow-up is weak: when seniors express sadness or concerns, operators miss opportunities to validate or"
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth at 8.3, but their weakest—info_quality at 6.6—is sliding further, alongside a noticeable drop in brevity (-0.8). The downward trend across all axes is concerning. I endorse the **coach** recommendation, but urge focusing specifically on info_quality (accuracy, detail, relevance) and brevity to reverse the decline before it affects overall caller trust."
+    },
+    {
+      "date": "2026-06-19T05:17:01.359688+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] Info Quality Upgrade | Owner: Manager | KPI: Increase info_quality score from 6.6 to 8.0 | Deadline: 2024-03-31\n   Why now: Direct response to systemic quality analysis and weakest performance axis\n2. [adjacent] Channel Expansion Toolkit | Owner: Manager | KPI: Launch 3 new scalable communication channels | Deadline: D+90\n   Why now: Leverage existing growth plan momentum and market opportunities\n3. [moonshot] AI Skill Coach Platform | Owner: Manager | KPI: Develop prototype with 50% i"
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.7); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out: calls consistently exceeding ideal length, and operators failing to complete structured health and safety check-ins (medications, safety at home, mood). The length issue directly hurts brevity (dropping from 6.9 to 6.1), while the missed check-ins damage info_quality (falling from 7.8 to 7.1). A third pattern is operators not following up on seniors' emotional states or concerns, which erodes listening (8.1 to 7.9) and warmth (8.3 to 8.1). All three axes show a cl"
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Warmth and listening remain solid strengths, but info_quality is the weakest area—made more urgent by a downward trend across all four axes, especially brevity (-0.8) and info_quality (-0.7). The worsening pattern suggests coaching alone may not be enough. I recommend retraining the operator on accurate, concise information delivery, followed by close monitoring of the other skills to reverse the slide."
+    },
+    {
+      "date": "2026-06-20T09:34:12.528578+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.7); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out. First, operators consistently fail to complete required health, safety, and emotional check-ins — missing medications, mood, and home safety questions. This directly drags down info_quality (6.7, down from 7.8). Second, calls routinely exceed ideal length, leading to rushed, graceless endings and senior fatigue. This crushes brevity (6.1, down from 6.9). The trend shows both axes declining sharply, with warmth and listening also slipping slightly as operators rush"
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.4), but info_quality (6.7) is the weakest and needs attention. The trend is concerning—every metric declined, with brevity dropping 0.8 and info_quality 0.7. This suggests a broader performance dip, not just a single skill gap. I endorse the coach recommendation, but focus the coaching on info_quality first, while monitoring whether the overall decline stabilizes. If it continues, consider retraining."
+    },
+    {
+      "date": "2026-06-22T04:36:22.174118+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.7); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three clear themes emerge from the issues. First, calls consistently exceed ideal length, with multiple reports of 20-turn calls, rushed conclusions, and senior fatigue—this directly hurts brevity, which has declined from 6.9 to 6.1. Second, operators frequently miss critical health and safety information: medications, mood check-ins, safety confirmations, and health status are repeatedly skipped—this damages info_quality, which dropped from 7.8 to 7.1. Third, operators fail to follow up on seni"
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.4), weakest is info_quality (6.7). All scores declined from the previous training, with the steepest drops in brevity (-0.8) and info_quality (-0.7) — a concerning trend that suggests the coaching from last round didn’t stick. I endorse the “coach” recommendation but urge you to focus this session on info_quality and brevity together, since the two often interact. A targeted refresher with clear examples should halt the slide."
+    },
+    {
+      "date": "2026-06-22T08:00:14.227657+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two system-wide themes emerge. First, **call length is ballooning** — at least eight separate issues flag calls exceeding the ideal length, leading to rushed endings, fatigue, and lower **brevity** (dropped from 6.9 to 6.1). Second, **critical health and safety checks are being systematically skipped** — multiple issues note missing medication questions, safety confirmations, and mood check-ins, which directly undermines **info_quality** (plummeting from 7.8 to 7.1). A third, milder pattern: ope"
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth, consistently excellent. Their weakest is info quality, which needs coaching. The trend is concerning: all scores declined, with info quality and brevity dropping most sharply. I endorse the coach recommendation, but suggest urgency—this downward trend, if unchecked, could erode caller trust. Focus coaching on accuracy and conciseness."
+    },
+    {
+      "date": "2026-06-23T04:34:17.522412+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T05:41:18.141870+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T05:41:18.141870+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T05:41:18.141870+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes emerge. First, operators consistently fail to conduct thorough health and safety check-ins, missing explicit questions about medications, mood, and home safety. This directly hurts **info_quality** (6.8). Second, calls routinely exceed ideal length, leading to rushed conclusions and senior fatigue, which undermines **brevity** (7.7). Both axes show a clear decline in the trend: info_quality dropped from 7.8 to 7.1, and brevity fell from 6.9 to 6.1. These are not isolated err"
+    },
+    {
+      "date": "2026-06-23T05:41:18.141870+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth, consistently excellent. Weakest is info_quality, which needs coaching. The trend is concerning: all four axes declined, with info_quality and brevity dropping most sharply. I endorse the coach recommendation, but suggest a focused session on information accuracy and conciseness to reverse the downward trend before it affects overall service quality."
+    },
+    {
+      "date": "2026-06-23T05:41:18.141870+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T05:54:03.695175+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T05:54:03.695175+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T05:54:03.696694+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T05:54:03.696694+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes dominate: calls consistently exceed ideal length, and operators routinely skip structured health, safety, and medication check-ins. The first theme directly hurts brevity (dropping from 6.9 to 6.1) and indirectly damages warmth by forcing rushed endings. The second theme undermines info_quality (falling from 7.8 to 7.1) and listening, as emotional follow-ups are also missed. The owner flags that conversations \"spin in circles\" and wants a creative, systemic fix. Instead of m"
+    },
+    {
+      "date": "2026-06-23T05:54:03.696694+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.5), weakest is info_quality (6.8). The downward trend across all axes—especially a sharp -0.8 in brevity—is concerning and suggests a systemic drift, not just a coaching need. Owner flags that calls “go in circles” and demands a strategic fix. I endorse the coach recommendation but add a retrain trigger: info_quality must be addressed with a new conversation-flow module that teaches structured, progressive questioning (e.g., “ask one strategic follow-up per"
+    },
+    {
+      "date": "2026-06-23T05:54:03.696694+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes: (1) operators not following up on emotional cues and skipping required health/safety checks, (2) calls consistently running too long with rushed endings, (3) repetitive conversational loops. These hurt info_quality most severely (score dropped 0.7 points) and brevity (dropped 0.8 points). The trend shows declines across all axes. The core issue is a rigid script structure that forces operators to check boxes but lacks adaptive branching for emotional follow-ups, causing t"
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.5), but the sharpest decline is in brevity (-0.8) and info_quality (-0.7), dragging down the entire trend. I endorse the coach recommendation, but given the owner’s priority signal about repetitive, circular conversations, we need a systemic fix. **Action:** Implement a \"strategic question\" training module that forces the operator to ask one forward-looking, owner-level question per call (e.g., \"What outcome do you want today?\"). This breaks the loop, lifts"
+    },
+    {
+      "date": "2026-06-23T05:56:28.213812+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Across the call pool, two recurring themes stand out. First, operators consistently fail to conduct thorough health and safety check-ins, missing medications, mood, and home safety questions. This directly hurts **info_quality**, which has dropped sharply from 7.8 to 7.1. Second, calls routinely exceed ideal length, leading to rushed endings and fatigue — this damages **brevity**, which fell from 6.9 to 6.1. The owner’s input flags that operators are “talking in circles,” which aligns with these"
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.5); weakest is info_quality (6.8). All scores are declining, info_quality and brevity sharply. System recommends coach. Given owner’s input about circular conversations needing a systemic fix, I adjust the recommendation to **retrain** with a new module: replace static FAQ scripts with progressive decision trees that force creative, strategic questioning. This targets info_quality and breaks repetition."
+    },
+    {
+      "date": "2026-06-23T05:58:10.605455+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two clear themes emerge: First, operators are failing to complete the required health safety checks—missing medications, mood, safety-at-home, and follow-up on expressed emotions. This directly hurts **info_quality**, which dropped 0.7 points. Second, calls are consistently too long (multiple “exceeded ideal length” issues), harming **brevity**, which declined 0.8 points. The owner flags that conversations “kręcą się w kółko” (go in circles) and wants a creative, systemic fix—not repeated coachi"
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.5), but the sharp drop in brevity (-0.8) and info_quality (-0.7) signals a worrying trend of rambling, repetitive calls. The owner explicitly flags this circular talk as a systemic issue. I endorse the “coach” recommendation, but we need a structural fix, not just a one-off session. **Action:** Implement a mandatory “call structure” training module that teaches the agent to use a clear three-step flow (listen → confirm → summarize) and enforce a maximum res"
+    },
+    {
+      "date": "2026-06-23T06:01:38.877554+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes dominate: calls consistently exceed ideal length, and operators systematically skip required health, safety, and medication checks. The length issue directly hurts brevity (dropping from 6.9 to 6.1) and also degrades warmth and listening as rushed endings and rapid-fire questioning leave seniors unheard. The missed checks crater info_quality (7.8 to 7.1) and undermine listening by ignoring emotional follow-ups. The owner flags repetitive, circular conversations—this is the s"
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.5), but info_quality (6.8) is weakest. All scores are declining, with brevity dropping most sharply. The system recommends coaching, but given the owner's concern about circular conversations, I endorse retraining with a new module focused on dynamic questioning and breaking repetitive loops. This should improve info_quality and brevity while maintaining warmth. Action: design a \"strategic conversation flow\" training."
+    },
+    {
+      "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
     }
   ]
 }

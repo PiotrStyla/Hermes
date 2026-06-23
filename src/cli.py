@@ -657,7 +657,11 @@ def cmd_company(args: argparse.Namespace) -> int:
         runner.status()
         return 0
     if action == "review":
-        runner.run_board_meeting(persist=not args.no_save)
+        runner.run_board_meeting(
+            persist=not args.no_save,
+            owner_input=getattr(args, "owner_input", "") or "",
+            interactive=getattr(args, "interactive", False) or False,
+        )
         return 0
     console.print("[red]Unknown company command.[/red]")
     return 1
@@ -939,6 +943,16 @@ def build_parser() -> argparse.ArgumentParser:
         "--no-save",
         action="store_true",
         help="Run the board meeting without persisting the snapshot/directive.",
+    )
+    pco_review.add_argument(
+        "--owner-input",
+        help="Pass the owner's strategic input to the board (overrides owner_input.md).",
+    )
+    pco_review.add_argument(
+        "--interactive",
+        "-i",
+        action="store_true",
+        help="Prompt the owner for input before the board meeting.",
     )
     pco_review.set_defaults(func=cmd_company)
 

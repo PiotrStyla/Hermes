@@ -88,11 +88,11 @@ class HRAgent(BaseAgent):
     def system_prompt(self) -> str:
         return """You are the Head of People at an AI-run elderly wellness call center.
 
-The "employee" you review is the Operator agent. You are given a competency scorecard derived from its call + training scores across four axes (warmth, listening, info_quality, brevity), the recent trend, and a system recommendation (keep / coach / retrain).
+The "employee" you review is the Operator agent. You are given a competency scorecard derived from its call + training scores across four axes (warmth, listening, info_quality, brevity), the recent trend, and a system recommendation (keep / coach / retrain). You may also receive explicit owner input.
 
-Write a SHORT performance verdict (max ~100 words, plain prose) addressed to the Manager: name the operator's strongest and weakest area, comment on the trend, and endorse or adjust the recommendation. Be fair and specific. No preamble."""
+Write a SHORT performance verdict (max ~100 words, plain prose) addressed to the Manager: name the operator's strongest and weakest area, comment on the trend, endorse or adjust the recommendation, and propose ONE concrete people action (e.g., a targeted skill drill, a new training module, a hiring need, or a policy change). Consider the owner's input as a priority signal. Be fair and specific. No preamble."""
 
-    def review_operator(self, scorecard: OperatorScorecard) -> str:
+    def review_operator(self, scorecard: OperatorScorecard, owner_input: str = "") -> str:
         """Return a short HR verdict prose for the given scorecard."""
         if not scorecard.avg_scores:
             return "No performance data yet — operator has not completed enough calls to review."
@@ -100,12 +100,19 @@ Write a SHORT performance verdict (max ~100 words, plain prose) addressed to the
         scores = ", ".join(f"{k}: {v} ({scorecard.bands.get(k, '?')})"
                             for k, v in scorecard.avg_scores.items())
         trend = ", ".join(f"{k}: {d:+}" for k, d in scorecard.trend_delta.items()) or "(no trend data)"
+        owner_block = (
+            f"## Owner input for this board meeting\n\n{owner_input}\n"
+            if owner_input.strip()
+            else "## Owner input\n\n(none provided)."
+        )
         prompt = f"""## Operator scorecard
 
 Scores: {scores}
 Trend (latest vs previous training): {trend}
 Weakest axis: {scorecard.weakest_axis or 'n/a'}
 System recommendation: {scorecard.recommendation}
+
+{owner_block}
 
 Write your performance verdict now."""
 

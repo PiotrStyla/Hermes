@@ -62,7 +62,7 @@ Tie growth to quality:
 - If average quality is below 7.5, recommend a "stabilize" posture: fix the product first, acquire cautiously.
 - If quality is solid (>= 7.5), recommend a "scale" posture: lean into acquisition.
 
-Think about a realistic market (Poland: GP clinics, senior clubs, parishes, caregiver forums, MOPS/NFZ partnerships, referrals).
+Think about a realistic market (Poland: GP clinics, senior clubs, parishes, caregiver forums, MOPS/NFZ partnerships, referrals). But also be creative: at least one channel or segment should be a fresh, non-obvious bet.
 
 Respond with ONLY a JSON object, no prose, no fences:
 
@@ -74,17 +74,17 @@ Respond with ONLY a JSON object, no prose, no fences:
   "next_steps": ["concrete action to take next", "..."]
 }
 
-Be concrete and realistic. 3-5 channels, 2-3 segments, 3-4 next steps."""
+Consider the owner's input as a priority signal. Be concrete and realistic, but also progressive. 3-5 channels, 2-3 segments, 3-4 next steps."""
 
-    def plan(self, metrics: CompanyMetrics) -> GrowthPlan:
+    def plan(self, metrics: CompanyMetrics, owner_input: str = "") -> GrowthPlan:
         """Produce a GrowthPlan from the company metrics."""
-        prompt = self._build_prompt(metrics)
+        prompt = self._build_prompt(metrics, owner_input)
         messages = [
             {"role": "system", "content": self.system_prompt},
             {"role": "user", "content": prompt},
         ]
         try:
-            raw = self.chat(messages, temperature=0.5)
+            raw = self.chat(messages, temperature=0.6)
             data = self._parse_json(raw)
         except Exception:  # noqa: BLE001 — never let growth strategy crash the company
             data = {}
@@ -92,8 +92,13 @@ Be concrete and realistic. 3-5 channels, 2-3 segments, 3-4 next steps."""
 
     # ---- Internal ----
 
-    def _build_prompt(self, metrics: CompanyMetrics) -> str:
+    def _build_prompt(self, metrics: CompanyMetrics, owner_input: str = "") -> str:
         scores = ", ".join(f"{k}: {v}" for k, v in metrics.avg_scores.items()) or "no data yet"
+        owner_block = (
+            f"## Owner input for this board meeting\n\n{owner_input}\n"
+            if owner_input.strip()
+            else "## Owner input\n\n(none provided)."
+        )
         return f"""## Company size
 Seniors served: {metrics.n_seniors}
 Calls completed: {metrics.n_calls}
@@ -101,6 +106,8 @@ Calls completed: {metrics.n_calls}
 ## Care quality (0-10)
 {scores}
 Average quality: {self._avg_quality(metrics) if metrics.avg_scores else 'n/a'}
+
+{owner_block}
 
 Produce the client-acquisition plan now (JSON only)."""
 
