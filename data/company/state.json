@@ -5,10 +5,11 @@
     "focus_metric": "info_quality",
     "focus_skill": "health-checkin",
     "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it.",
+    "falsification_condition": "Jeśli 'info_quality' nie wzrośnie do 7.1 pkt w ciągu 14 dni, dyrektywa musi być zrewidowana.",
     "owner_questions": [
       "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
     ],
-    "set_at": "2026-06-23T06:04:17.136516+00:00",
+    "set_at": "2026-06-24T07:56:04.017324+00:00",
     "set_by": "ceo"
   },
   "growth_plan": {
@@ -32,7 +33,7 @@
       "Uruchom program poleceń z benefitem dla polecającej rodziny.",
       "Przetestuj jeden płatny kanał (lokalny Facebook dla opiekunów)."
     ],
-    "set_at": "2026-06-23T06:04:18.244744+00:00",
+    "set_at": "2026-06-24T07:56:04.591342+00:00",
     "set_by": "cmo"
   },
   "staffing_plan": {
@@ -346,6 +347,30 @@
         "brevity": 7.7
       },
       "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 26,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 28,
       "n_seniors": 2,
       "n_training_rounds": 260
     }
@@ -929,6 +954,78 @@
     },
     {
       "date": "2026-06-23T06:04:18.250438+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes dominate the recent issues. First, calls consistently run too long, causing rushed endings and user fatigue — this is crushing our brevity score, which dropped from 6.9 to 6.1. Second, operators routinely skip required health, medication, and safety checks, directly dragging down info_quality (7.8 → 7.1). Third, emotional follow-ups are missed and questions are fired too quickly, hurting both listening and warmth, which have also slipped. The owner rightly flags that conve"
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.5), weakest is info_quality (6.8). The downward trend across all axes, especially a steep -0.8 in brevity, is concerning. I endorse the \"coach\" recommendation but with a sharper focus. Per owner's input, the agent's circular conversations need a systemic fix. **Action:** Implement a \"strategic questioning\" training module that teaches the operator to ask one forward-looking, open-ended question per call (e.g., \"What would make your day better?\"), breaking r"
+    },
+    {
+      "date": "2026-06-23T08:00:21.266977+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two clear themes emerge. First, calls consistently run too long, with 10+ issues citing excessive length leading to rushed endings and senior fatigue — this directly hurts brevity, which has dropped from 6.9 to 6.1. Second, operators repeatedly fail to complete required health, medication, and safety checks, and miss emotional follow-ups; this drags down info_quality (7.8 to 7.1) and listening (8.1 to 7.9). The owner flags that conversations \"kręcą się w kółko\" — circling without progress. The s"
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "The Operator's strongest area is warmth (8.5); the weakest is info_quality (6.8), now trending sharply down with brevity (-0.8). The owner flags conversational stagnation—calls circling without progress. I endorse coaching but add a structural fix: implement a guided decision-tree module that prompts the agent for next-step actions (e.g., escalation, resource offer) to break loops and improve info_quality. This addresses both the owner's systemic concern and the decay trend."
+    },
+    {
+      "date": "2026-06-24T07:56:04.594848+00:00",
       "actor": "ceo",
       "summary": "Innovation agenda: core + adjacent + moonshot",
       "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"

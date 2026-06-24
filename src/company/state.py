@@ -43,6 +43,7 @@ class Directive:
     focus_metric: str = ""          # one of KPI_AXES, the weakest axis
     focus_skill: str = ""           # operator skill file to prioritise (e.g. 'farewell')
     rationale: str = ""             # why this focus, in plain language
+    falsification_condition: str = ""  # warunek obalenia: when does this directive fail?
     owner_questions: list[str] = field(default_factory=list)  # questions CEO asks the owner
     set_at: str = field(default_factory=_now)
     set_by: str = "ceo"
@@ -70,6 +71,7 @@ class Directive:
             focus_metric=data.get("focus_metric", ""),
             focus_skill=data.get("focus_skill", ""),
             rationale=data.get("rationale", ""),
+            falsification_condition=data.get("falsification_condition", ""),
             owner_questions=list(data.get("owner_questions", []) or []),
             set_at=data.get("set_at", _now()),
             set_by=data.get("set_by", "ceo"),

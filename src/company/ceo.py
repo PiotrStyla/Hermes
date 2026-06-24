@@ -70,10 +70,11 @@ Respond with ONLY a JSON object, no prose, no fences:
   "focus_metric": "<one of: warmth | listening | info_quality | brevity>",
   "focus_skill": "<one of: greeting | mood-checkin | health-checkin | safety-check | active-listening | farewell>",
   "rationale": "2-3 sentences: why this is the priority now, referencing the data and owner input.",
+  "falsification_condition": "One measurable sentence: if X does not rise by Y within Z days, this directive has failed and must be revised.",
   "owner_questions": ["1-2 specific strategic questions you genuinely need the owner to answer before the next board meeting"]
 }
 
-Always include owner_questions. If the owner gave input, ask clarifying or strategic follow-up questions about it. If the owner gave no input, use this field to ask the most important thing you need to know. Avoid repeating recent directives verbatim; if the last two directives used the same focus_metric, choose a different one this period."""
+Always include both falsification_condition and owner_questions. If the owner gave input, ask clarifying or strategic follow-up questions about it. If the owner gave no input, use this field to ask the most important thing you need to know. Avoid repeating recent directives verbatim; if the last two directives used the same focus_metric, choose a different one this period."""
 
     @property
     def innovation_system_prompt(self) -> str:
@@ -231,6 +232,7 @@ Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
         focus_metric = str(data.get("focus_metric", "")).strip()
         focus_skill = str(data.get("focus_skill", "")).strip()
         rationale = str(data.get("rationale", "")).strip()
+        falsification_condition = str(data.get("falsification_condition", "")).strip()
         owner_questions = data.get("owner_questions") or []
         if isinstance(owner_questions, str):
             owner_questions = [owner_questions]
@@ -253,10 +255,18 @@ Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
             owner_questions = [
                 "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
             ]
+        if not falsification_condition:
+            score = metrics.avg_scores.get(focus_metric, 0)
+            threshold = round(float(score) + 0.3, 1)
+            falsification_condition = (
+                f"Jeśli '{focus_metric}' nie wzrośnie do {threshold} pkt w ciągu 14 dni, "
+                "dyrektywa musi być zrewidowana."
+            )
         return Directive(
             focus_metric=focus_metric,
             focus_skill=focus_skill,
             rationale=rationale,
+            falsification_condition=falsification_condition,
             owner_questions=owner_questions,
             set_by="ceo",
         )

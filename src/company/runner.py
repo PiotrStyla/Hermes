@@ -112,7 +112,11 @@ class CompanyRunner:
         """Run the full executive loop and (optionally) persist the outcome."""
         state = CompanyState.load()
 
-        self.console.print(Panel("[bold]Hermes — Board Meeting[/bold]", title="Company"))
+        self.console.print(Panel(
+            "[bold cyan]Hermes — Board Meeting[/bold cyan]",
+            title="Company",
+            border_style="bright_white",
+        ))
         metrics = self.aggregator.aggregate()
         self._print_status(state, metrics)
 
@@ -121,12 +125,20 @@ class CompanyRunner:
             self.console.print(Panel(owner_input, title="Owner input"))
 
         # 2. Quality Director
-        self.console.print(Panel("Quality Director — systemic analysis", title="Agenda 1"))
+        self.console.print(Panel(
+            "[blue]Quality Director — systemic analysis[/blue]",
+            title="Agenda 1",
+            border_style="blue",
+        ))
         quality_analysis = self.quality_director.analyze(metrics, owner_input=owner_input)
         self.console.print(quality_analysis)
 
         # 3. HR
-        self.console.print(Panel("HR — operator performance review", title="Agenda 2"))
+        self.console.print(Panel(
+            "[cyan]HR — operator performance review[/cyan]",
+            title="Agenda 2",
+            border_style="cyan",
+        ))
         scorecard = OperatorScorecard.from_metrics(metrics)
         hr_verdict = self.hr.review_operator(scorecard, owner_input=owner_input)
         self.console.print(
@@ -136,7 +148,11 @@ class CompanyRunner:
         self.console.print(hr_verdict)
 
         # 4. CEO directive
-        self.console.print(Panel("CEO — strategic directive", title="Agenda 3"))
+        self.console.print(Panel(
+            "[green]CEO — strategic directive[/green]",
+            title="Agenda 3",
+            border_style="green",
+        ))
         recent_ceo_directives = [
             f"{d.summary}: {d.rationale[:120]}"
             for d in state.decisions
@@ -153,14 +169,23 @@ class CompanyRunner:
             f"[bold green]Focus skill:[/bold green] {directive.focus_skill}\n"
             f"[bold green]Rationale:[/bold green] {directive.rationale}"
         )
+        if directive.falsification_condition:
+            self.console.print(
+                f"[bold red]Warunek obalenia:[/bold red] {directive.falsification_condition}"
+            )
         if directive.owner_questions:
             self.console.print(Panel(
                 "\n".join(f"- {q}" for q in directive.owner_questions),
                 title="[bold yellow]CEO questions for the owner[/bold yellow]",
+                border_style="yellow",
             ))
 
         # 4b. CEO innovation agenda
-        self.console.print(Panel("CEO — innovation agenda", title="Agenda 3b"))
+        self.console.print(Panel(
+            "[magenta]CEO — innovation agenda[/magenta]",
+            title="Agenda 3b",
+            border_style="magenta",
+        ))
         recent_decisions = [
             f"{d.actor}: {d.summary}"
             for d in state.decisions[-8:]
@@ -173,7 +198,11 @@ class CompanyRunner:
         self.console.print(innovation_agenda)
 
         # 5. CMO growth plan — where new clients come from
-        self.console.print(Panel("CMO — client acquisition plan", title="Agenda 4"))
+        self.console.print(Panel(
+            "[yellow]CMO — client acquisition plan[/yellow]",
+            title="Agenda 4",
+            border_style="yellow",
+        ))
         growth_plan = self.cmo.plan(metrics, owner_input=owner_input)
         self._print_growth_plan(growth_plan)
 
@@ -284,6 +313,20 @@ class CompanyRunner:
         question_lines = [f"  - {q}" for q in owner_questions] or ["  - (none)"]
         owner_input_lines = [f"  - {line}" for line in (result.owner_input or "").splitlines() if line.strip()] or ["  - (none)"]
 
+        directive = result.directive
+        fc = directive.falsification_condition if directive else ""
+        weakest = result.metrics.weakest_axis() or "n/a"
+        weakest_score = result.metrics.avg_scores.get(weakest, "—")
+        best = max(result.metrics.avg_scores, key=lambda k: result.metrics.avg_scores[k]) if result.metrics.avg_scores else "n/a"
+        best_score = result.metrics.avg_scores.get(best, "—")
+        streszczenie = (
+            f"Raport z posiedzenia zarządu Hermes ({report_dt.strftime('%Y-%m-%d')}). "
+            f"Najsłabszy KPI: **{weakest}** ({weakest_score}), najsilniejszy: **{best}** ({best_score}). "
+            f"Dyrektywa CEO: focus na **{directive.focus_metric if directive else 'n/a'}** "
+            f"(skill: {directive.focus_skill if directive else 'n/a'}). "
+            f"Warunek obalenia: {fc or 'n/a'}."
+        )
+
         content = [
             "# Executive Board Report",
             "",
@@ -292,6 +335,9 @@ class CompanyRunner:
             f"- Calls completed: {result.metrics.n_calls}",
             f"- Training rounds: {result.metrics.n_training_rounds}",
             "",
+            "## Streszczenie",
+            streszczenie,
+            "",
             "## KPI Snapshot",
             *score_lines,
             "",
@@ -299,9 +345,10 @@ class CompanyRunner:
             *owner_input_lines,
             "",
             "## CEO Directive",
-            f"- Focus metric: {result.directive.focus_metric if result.directive else 'n/a'}",
-            f"- Focus skill: {result.directive.focus_skill if result.directive else 'n/a'}",
-            f"- Rationale: {result.directive.rationale if result.directive else 'n/a'}",
+            f"- Focus metric: {directive.focus_metric if directive else 'n/a'}",
+            f"- Focus skill: {directive.focus_skill if directive else 'n/a'}",
+            f"- Rationale: {directive.rationale if directive else 'n/a'}",
+            f"- **Warunek obalenia:** {fc or 'n/a'}",
             "",
             "## Questions for the Owner",
             *question_lines,
@@ -328,11 +375,24 @@ class CompanyRunner:
             f"- Budget: {state.staffing_plan.monthly_budget_pln} PLN",
             f"- Remaining: {state.staffing_plan.remaining_budget_pln} PLN",
             "",
+            "---",
+            "",
+            "## Podpis",
+            f"Dokument wygenerowany automatycznie przez Hermes AI Board · {report_dt.strftime('%Y-%m-%d %H:%M')} UTC",
+            "",
         ]
         report_path.write_text("\n".join(content), encoding="utf-8")
         return report_path
 
     # ---- Rendering ----
+
+    @staticmethod
+    def _score_color(score: float) -> str:
+        if score >= 8.0:
+            return "green"
+        if score >= 7.0:
+            return "yellow"
+        return "red"
 
     def _print_status(self, state: CompanyState, metrics: CompanyMetrics) -> None:
         table = Table(title="Company KPIs")
@@ -340,7 +400,15 @@ class CompanyRunner:
         table.add_column("Value", justify="right")
         scores = metrics.avg_scores or {}
         for axis in ("warmth", "listening", "info_quality", "brevity"):
-            table.add_row(axis, str(scores.get(axis, "—")))
+            raw = scores.get(axis)
+            if raw is not None:
+                color = self._score_color(float(raw))
+                table.add_row(
+                    f"[{color}]{axis}[/{color}]",
+                    f"[bold {color}]{raw}[/bold {color}]",
+                )
+            else:
+                table.add_row(axis, "—")
         table.add_row("seniors", str(metrics.n_seniors))
         table.add_row("calls completed", str(metrics.n_calls))
         table.add_row("training rounds", str(metrics.n_training_rounds))
