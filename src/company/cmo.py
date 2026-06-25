@@ -153,15 +153,15 @@ Produce the client-acquisition plan now (JSON only)."""
             if posture == "stabilize":
                 next_steps = [
                     f"Najpierw podnieś jakość (śr. {avg_q}/10) zanim ruszysz z akwizycją na szerszą skalę.",
-                    "Uruchom program poleceń wśród obecnych rodzin.",
-                    "Przygotuj pilotaż z jedną przychodnią POZ.",
+                    "Wygeneruj ulepszony skrypt operatora i przetestuj go w self-play.",
+                    "Zidentyfikuj 3 najlepsze momenty z rozmów i stwórz wewnętrzne case study.",
                 ]
             else:
                 next_steps = [
-                    "Nawiąż kontakt z 3 domami/klubami seniora w okolicy.",
-                    "Przygotuj ulotkę i skrypt dla lekarzy rodzinnych.",
-                    "Uruchom program poleceń z benefitem dla polecającej rodziny.",
-                    "Przetestuj jeden płatny kanał (lokalny Facebook dla opiekunów).",
+                    "Wygeneruj nową wersję skryptu zamykającego rozmowę z naturalnym prośbą o polecenie.",
+                    "Przeprowadź self-play A/B test 3 wariantów messagingu w symulacji.",
+                    "Stwórz 5 szablonów automatycznego raportu dla rodzin, które mogą łatwo udostępniać.",
+                    "Przygotuj wewnętrzną stronę docelową (copy + FAQ) do opublikowania, gdy będzie kanał.",
                 ]
 
         return GrowthPlan(

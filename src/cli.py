@@ -6,6 +6,15 @@ import argparse
 import sys
 from pathlib import Path
 
+# Force UTF-8 stdout/stderr so Rich console output does not crash on Windows
+# with legacy code pages (cp1250) when emitting non-ASCII characters.
+if sys.stdout.isatty() is False:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except (AttributeError, OSError):
+        pass
+
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.table import Table
