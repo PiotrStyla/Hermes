@@ -7,13 +7,16 @@ import sys
 from pathlib import Path
 
 # Force UTF-8 stdout/stderr so Rich console output does not crash on Windows
-# with legacy code pages (cp1250) when emitting non-ASCII characters.
-if sys.stdout.isatty() is False:
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
-    except (AttributeError, OSError):
-        pass
+# with legacy code pages (cp1250) when emitting non-ASCII characters. This must
+# tolerate stdout/stderr being None (e.g. when launched via pythonw.exe).
+for _stream_name in ("stdout", "stderr"):
+    _stream = getattr(sys, _stream_name, None)
+    _reconfigure = getattr(_stream, "reconfigure", None)
+    if _reconfigure is not None:
+        try:
+            _reconfigure(encoding="utf-8", errors="replace")
+        except (ValueError, OSError):
+            pass
 
 from dotenv import load_dotenv
 from rich.console import Console
