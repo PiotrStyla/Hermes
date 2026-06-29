@@ -19,7 +19,7 @@ $settings = New-ScheduledTaskSettingsSet `
     -DontStopOnIdleEnd `
     -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries `
-    -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
+    -ExecutionTimeLimit (New-TimeSpan -Hours 2)
 
 Register-ScheduledTask `
     -TaskName $TaskName `

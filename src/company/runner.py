@@ -108,6 +108,7 @@ class CompanyRunner:
         persist: bool = True,
         owner_input: str = "",
         interactive: bool = False,
+        training_rounds: int = 0,
     ) -> BoardMeetingResult:
         """Run the full executive loop and (optionally) persist the outcome."""
         state = CompanyState.load()
@@ -249,6 +250,12 @@ class CompanyRunner:
             self.console.print(f"\n[green]Board meeting saved to:[/green] {path}")
             self.console.print(f"[green]Board report saved to:[/green] {report_path}")
 
+            # Close the loop: the directive we just set drives a fresh round of
+            # operator self-play training, so the next board meeting sees new
+            # data instead of re-analysing a frozen snapshot.
+            if training_rounds > 0:
+                self._run_training(training_rounds, directive)
+
         return BoardMeetingResult(
             metrics=metrics,
             quality_analysis=quality_analysis,
@@ -259,6 +266,28 @@ class CompanyRunner:
             innovation_agenda=innovation_agenda,
             owner_input=owner_input,
         )
+
+    def _run_training(self, rounds: int, directive: Directive) -> None:
+        """Run a self-play training loop driven by the freshly-set directive.
+
+        The directive is already persisted to CompanyState at this point, so
+        TrainingLoop picks it up and emphasises the focus skill in the operator
+        prompt. This produces a new training report, giving the next board
+        meeting fresh data to analyse — closing the strategy→action→data loop.
+        """
+        self.console.print(Panel(
+            f"[bold]Closing the loop:[/bold] {rounds} training round(s) on "
+            f"focus [cyan]{directive.focus_metric or 'n/a'}[/cyan] via "
+            f"'[cyan]{directive.focus_skill or 'n/a'}[/cyan]'",
+            title="Agenda 5 — Directive → Training",
+            border_style="bright_magenta",
+        ))
+        try:
+            from ..training import TrainingLoop
+
+            TrainingLoop(rounds=rounds, console=self.console).run()
+        except Exception as exc:  # noqa: BLE001 — training must never crash governance
+            self.console.print(f"[red]Training round failed: {exc}[/red]")
 
     def _gather_owner_input(self, provided: str, interactive: bool) -> str:
         """Resolve owner input from CLI arg, file, or interactive prompt."""

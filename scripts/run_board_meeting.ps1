@@ -11,5 +11,5 @@ $env:PYTHONIOENCODING = "utf-8"
 $stamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
 Add-Content -Path $Log -Value "==== Board meeting run @ $stamp ===="
 
-& $Python -m src.cli company review *>> $Log
+& $Python -m src.cli company review --train-rounds 3 *>> $Log
 Add-Content -Path $Log -Value "==== exit code: $LASTEXITCODE ===="

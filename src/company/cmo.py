@@ -141,7 +141,7 @@ Produce the client-acquisition plan now (JSON only)."""
             channels = list(_DEFAULT_CHANNELS)
             if posture == "stabilize":
                 # When stabilising, lean on low-volume, high-trust channels only.
-                channels = channels[:2] + [_DEFAULT_CHANNELS[5]]
+                channels = channels[:2] + [_DEFAULT_CHANNELS[3]]
         if not segments:
             segments = list(_DEFAULT_SEGMENTS)
         if not messaging:

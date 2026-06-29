@@ -673,6 +673,7 @@ def cmd_company(args: argparse.Namespace) -> int:
             persist=not args.no_save,
             owner_input=getattr(args, "owner_input", "") or "",
             interactive=getattr(args, "interactive", False) or False,
+            training_rounds=getattr(args, "train_rounds", 0) or 0,
         )
         return 0
     console.print("[red]Unknown company command.[/red]")
@@ -965,6 +966,13 @@ def build_parser() -> argparse.ArgumentParser:
         "-i",
         action="store_true",
         help="Prompt the owner for input before the board meeting.",
+    )
+    pco_review.add_argument(
+        "--train-rounds",
+        type=int,
+        default=0,
+        help="After setting the directive, run N self-play training rounds to "
+             "generate fresh data (closes the strategy->action->data loop). 0 = off.",
     )
     pco_review.set_defaults(func=cmd_company)
 
