@@ -129,6 +129,30 @@ class TestMetricsAggregator:
         assert isinstance(snap, KpiSnapshot)
         assert snap.n_seniors == 1
 
+    def test_rolling_window_ignores_ancient_training(self, tmp_path: Path) -> None:
+        seniors = tmp_path / "seniors"
+        training = tmp_path / "training"
+        _make_senior(seniors, "a-001", [{"warmth": 8, "listening": 8, "info_quality": 8, "brevity": 8}])
+        # Old reports with low info_quality; newer reports with high info_quality.
+        _make_training_report(training, "report_1.json", {"warmth": 5, "info_quality": 2}, rounds=10, issues=["old"])
+        _make_training_report(training, "report_2.json", {"warmth": 5, "info_quality": 2}, rounds=10, issues=["old"])
+        _make_training_report(training, "report_3.json", {"warmth": 5, "info_quality": 2}, rounds=10, issues=["old"])
+        _make_training_report(training, "report_4.json", {"warmth": 9, "info_quality": 9}, rounds=10, issues=["new"])
+        _make_training_report(training, "report_5.json", {"warmth": 9, "info_quality": 9}, rounds=10, issues=["new"])
+        _make_training_report(training, "report_6.json", {"warmth": 9, "info_quality": 9}, rounds=10, issues=["new"])
+
+        agg = MetricsAggregator(
+            store=SeniorStore(base_dir=seniors),
+            training_dir=training,
+            training_window=3,
+        )
+        m = agg.aggregate()
+        # Windowed KPI should be pulled up by the recent reports, not dragged down by the old ones.
+        assert m.avg_scores["info_quality"] >= 8.0
+        # But the full historical count is still preserved.
+        assert m.n_training_reports == 6
+        assert m.n_training_rounds == 60
+
 
 # ---- OperatorScorecard (deterministic recommendation) ----
 
@@ -411,3 +435,30 @@ class TestCEOInnovation:
         assert "[core]" in agenda
         assert "[adjacent]" in agenda
         assert "[moonshot]" in agenda
+
+    def test_directive_fallback_asks_autonomy_questions_with_owner_input(self) -> None:
+        ceo = CEOAgent()
+        metrics = CompanyMetrics(avg_scores={"warmth": 8, "listening": 8, "info_quality": 6, "brevity": 7})
+        directive = ceo._to_directive({}, metrics, owner_input="Firma ma być całkowicie autonomiczna.")
+        assert len(directive.owner_questions) >= 3
+        assert all("?" in q for q in directive.owner_questions)
+        assert any("autonomic" in q or "samodzielnie" in q or "AI" in q or "zewnętrzn" in q for q in directive.owner_questions)
+
+    def test_directive_fallback_is_generic_without_owner_input(self) -> None:
+        ceo = CEOAgent()
+        metrics = CompanyMetrics(avg_scores={"warmth": 8, "listening": 8, "info_quality": 6, "brevity": 7})
+        directive = ceo._to_directive({}, metrics)
+        assert len(directive.owner_questions) >= 1
+        assert "bez Twojego codziennego udziału" in directive.owner_questions[0]
+
+    def test_directive_fallback_avoids_third_repeat(self) -> None:
+        ceo = CEOAgent()
+        metrics = CompanyMetrics(avg_scores={"warmth": 8, "listening": 8, "info_quality": 6, "brevity": 7})
+        recent = [
+            "New directive: focus on info_quality / skill 'health-checkin'",
+            "New directive: focus on info_quality / skill 'health-checkin'",
+        ]
+        directive = ceo._to_directive({}, metrics, recent_ceo_directives=recent)
+        assert directive.focus_metric != "info_quality"
+        # The second-weakest axis should be chosen (brevity at 7).
+        assert directive.focus_metric == "brevity"

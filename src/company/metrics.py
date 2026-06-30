@@ -56,15 +56,22 @@ class CompanyMetrics:
 class MetricsAggregator:
     """Rolls per-senior + training artefacts into a `CompanyMetrics`."""
 
+    # How many recent training reports feed the rolling-window KPI. Older reports
+    # still influence skill-learning and trend analysis, but the board-level
+    # KPIs react to the current training period instead of being frozen by volume.
+    DEFAULT_TRAINING_WINDOW = 5
+
     def __init__(
         self,
         store: SeniorStore | None = None,
         training_dir: Path = TRAINING_DIR,
         max_issues: int = 20,
+        training_window: int | None = None,
     ):
         self.store = store or SeniorStore()
         self.training_dir = training_dir
         self.max_issues = max_issues
+        self.training_window = training_window or self.DEFAULT_TRAINING_WINDOW
 
     def aggregate(self) -> CompanyMetrics:
         senior_ids = self.store.list_ids()
@@ -95,7 +102,18 @@ class MetricsAggregator:
             if avg:
                 all_score_sets.append({k: float(v) for k, v in avg.items()})
 
-        avg_scores = self._mean_scores(all_score_sets)
+        # Rolling-window KPI: the latest per-senior real call plus the most recent
+        # N training reports. This prevents a huge historical pile of training rounds
+        # from drowning out the current training period.
+        score_sets_for_avg: list[dict[str, float]] = []
+        for scores in per_senior_latest.values():
+            score_sets_for_avg.append({k: float(v) for k, v in scores.items()})
+        for r in training_reports[-self.training_window :]:
+            avg = r.get("average_scores", {}) or {}
+            if avg:
+                score_sets_for_avg.append({k: float(v) for k, v in avg.items()})
+
+        avg_scores = self._mean_scores(score_sets_for_avg)
         recent_issues = self._collect_issues(senior_ids, training_reports)
 
         return CompanyMetrics(

@@ -71,10 +71,10 @@ Respond with ONLY a JSON object, no prose, no fences:
   "focus_skill": "<one of: greeting | mood-checkin | health-checkin | safety-check | active-listening | farewell>",
   "rationale": "2-3 sentences: why this is the priority now, referencing the data and owner input.",
   "falsification_condition": "One measurable sentence: if X does not rise by Y within Z days, this directive has failed and must be revised.",
-  "owner_questions": ["1-2 specific strategic questions you genuinely need the owner to answer before the next board meeting"]
+  "owner_questions": ["3-5 strategic questions. Each question must identify a specific resource you need from the owner (decision, budget, data, priority, approval, contact) AND explain why the company cannot proceed autonomously without it. If the owner already answered the issue in their input, do not ask it again. Focus on what is truly blocking self-sufficient operation."]
 }
 
-Always include both falsification_condition and owner_questions. If the owner gave input, ask clarifying or strategic follow-up questions about it. If the owner gave no input, use this field to ask the most important thing you need to know. Avoid repeating recent directives verbatim; if the last two directives used the same focus_metric, choose a different one this period."""
+Always include both falsification_condition and owner_questions. If the owner gave input, ask sharp, strategic follow-up questions about it — do not just repeat the input back. If the owner gave no input, use this field to ask the most important thing blocking autonomous action. Avoid repeating recent directives verbatim; if the last two directives used the same focus_metric, choose a different one this period."""
 
     @property
     def innovation_system_prompt(self) -> str:
@@ -123,7 +123,7 @@ No prose outside JSON."""
             data = self._parse_json(raw)
         except Exception:  # noqa: BLE001 — never let strategy crash the company
             data = {}
-        return self._to_directive(data, metrics)
+        return self._to_directive(data, metrics, owner_input, recent_ceo_directives)
 
     def propose_innovation_agenda(
         self,
@@ -228,7 +228,13 @@ Training rounds: {metrics.n_training_rounds}
 
 Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
 
-    def _to_directive(self, data: dict[str, Any], metrics: CompanyMetrics) -> Directive:
+    def _to_directive(
+        self,
+        data: dict[str, Any],
+        metrics: CompanyMetrics,
+        owner_input: str = "",
+        recent_ceo_directives: list[str] | None = None,
+    ) -> Directive:
         focus_metric = str(data.get("focus_metric", "")).strip()
         focus_skill = str(data.get("focus_skill", "")).strip()
         rationale = str(data.get("rationale", "")).strip()
@@ -240,8 +246,21 @@ Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
 
         # Ground / fallback: if the model returned an invalid axis, use the
         # weakest measured axis so the company always has a valid directive.
+        # Avoid mechanically repeating the same focus_metric as the last two
+        # directives — even in the fallback path.
+        recent_focus_metrics = [
+            d.split("/")[0].replace("New directive: focus on", "").strip()
+            for d in (recent_ceo_directives or [])
+        ]
         if focus_metric not in KPI_AXES:
             focus_metric = metrics.weakest_axis() or "warmth"
+        if len(recent_focus_metrics) >= 2 and all(f == focus_metric for f in recent_focus_metrics[-2:]):
+            available_axes = [a for a in KPI_AXES if a != focus_metric]
+            ranked = sorted(
+                available_axes,
+                key=lambda a: metrics.avg_scores.get(a, float("inf")),
+            )
+            focus_metric = ranked[0] if ranked else focus_metric
         if not focus_skill:
             focus_skill = AXIS_TO_SKILLS.get(focus_metric, ["active-listening"])[0]
         if not rationale:
@@ -252,9 +271,16 @@ Propose 3 fresh initiatives (core, adjacent, moonshot) now."""
                 + f"; prioritising the '{focus_skill}' skill to lift it."
             )
         if not owner_questions:
-            owner_questions = [
-                "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
-            ]
+            if owner_input.strip():
+                owner_questions = [
+                    "Który z proponowanych kanałów autonomicznej akwizycji (udostępniane raporty dla rodzin, self-play A/B messagingu, wewnętrzne case study z rozmów) powinniśmy wdrożyć jako pierwszy i dlaczego?",
+                    "Czy zgadzasz się, aby firma samodzielnie testowała warianty skryptów i komunikatów w symulacji, a następnie wdrażała wygraną wersję bez prośby o zgodę na każdą drobną zmianę?",
+                    "Jakie są Twoje twarde limity (budżetowe, etyczne lub prawne) dla działań akwizycyjnych i komunikacyjnych prowadzonych wyłącznie przez AI bez kontaktu zewnętrznego?",
+                ]
+            else:
+                owner_questions = [
+                    "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni, żeby firma mogła działać bez Twojego codziennego udziału?"
+                ]
         if not falsification_condition:
             score = metrics.avg_scores.get(focus_metric, 0)
             threshold = round(float(score) + 0.3, 1)
