@@ -1,7 +1,18 @@
-Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.
+## Ogólne zasady działania firmy
 
-Jutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skryptów, testy A/B w symulacji, itp.).
+Firma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.
 
-Przestańcie proponować ręczne kontakty, ulotki, programy poleceń oparte na ludzkich sieciach, płatne kanały Facebook, czy partnerstwa wymagające mojej interwencji. Nie chcę dawać Wam zgody, kontaktów ani wysyłać za Was maili. Firma ma żyć i rosnąć **bez mojego codziennego udziału**.
+Firma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.
 
-Zadajcie mi tylko pytania, na które **naprawdę nie możecie odpowiedzieć sami** i które są niezbędne do zbudowania autonomicznego modelu działania.
+## Odpowiedzi właściciela (2026-07-01)
+
+**1. Kanał akwizycji:**
+Akwizycja ma się odbywać w internecie przez **posty na forach, X (Twitter) i LinkedIn**. Firma ma samodzielnie generować treści i publikować je przez API tych platform (lub przygotowywać gotowe posty do wklejenia, jeśli brak API). Priorytet: fora i grupy tematyczne dotyczące opieki nad seniorami.
+
+**2. Autonomia A/B testów:**
+**Tak** — firma może samodzielnie testować warianty skryptów i komunikatów w symulacji, a następnie wdrażać wygraną wersję bez prośby o zgodę na każdą drobną zmianę.
+
+**3. Limity operacyjne:**
+- **Budżet:** pomijamy (brak ograniczeń budżetowych dla działań AI)
+- **Etyka:** maksymalne standardy — żadnych manipulacyjnych technik, pełna transparentność wobec rodzin i seniorów
+- **Prawo:** fully compliant — RODO, prawo polskie, standardy ochrony danych osób starszych
