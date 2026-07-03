@@ -49,7 +49,7 @@ class CMOAgent(BaseAgent):
 
     def __init__(self, model: str | None = None):
         model = model or os.getenv("CMO_MODEL") or os.getenv("SUPERVISOR_MODEL")
-        super().__init__(model=model, temperature=0.5, max_tokens=1100)
+        super().__init__(model=model, temperature=0.5, max_tokens=2048)
 
     @property
     def system_prompt(self) -> str:

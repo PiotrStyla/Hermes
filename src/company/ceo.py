@@ -50,7 +50,7 @@ class CEOAgent(BaseAgent):
 
     def __init__(self, model: str | None = None):
         model = model or os.getenv("CEO_MODEL") or os.getenv("SUPERVISOR_MODEL")
-        super().__init__(model=model, temperature=0.6, max_tokens=1100)
+        super().__init__(model=model, temperature=0.6, max_tokens=2048)
 
     @property
     def system_prompt(self) -> str:
@@ -137,7 +137,7 @@ No prose outside JSON."""
             {"role": "user", "content": prompt},
         ]
         try:
-            raw = self.chat(messages, temperature=0.8, max_tokens=900)
+            raw = self.chat(messages, temperature=0.8, max_tokens=1600)
             data = self._parse_json(raw)
         except Exception:  # noqa: BLE001 — never let innovation planning crash governance
             data = {}
