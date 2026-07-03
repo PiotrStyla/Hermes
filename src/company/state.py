@@ -185,7 +185,7 @@ class StaffingPlan:
             stage_normalized = DEFAULT_STAFFING_STAGE
 
         if stage_normalized == "light":
-            budget = 180_000
+            budget = 190_000
             positions = [
                 Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
@@ -197,10 +197,11 @@ class StaffingPlan:
                 Position(title="MLOps/SRE Engineer", headcount=1, monthly_cost_pln=15_000),
                 Position(title="Customer Success Specialist", headcount=1, monthly_cost_pln=10_000),
                 Position(title="Cybersecurity Officer", headcount=1, monthly_cost_pln=9_000),
+                Position(title="Sprzedawca", headcount=1, monthly_cost_pln=14_000),
                 Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
             ]
         elif stage_normalized == "scale":
-            budget = 320_000
+            budget = 340_000
             positions = [
                 Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
@@ -214,10 +215,11 @@ class StaffingPlan:
                 Position(title="MLOps/SRE Engineer", headcount=2, monthly_cost_pln=15_000),
                 Position(title="Customer Success Specialist", headcount=2, monthly_cost_pln=10_000),
                 Position(title="Cybersecurity Officer", headcount=2, monthly_cost_pln=9_000),
+                Position(title="Sprzedawca", headcount=2, monthly_cost_pln=14_000),
                 Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
             ]
         else:
-            budget = 220_000
+            budget = 230_000
             positions = [
                 Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
@@ -231,6 +233,7 @@ class StaffingPlan:
                 Position(title="MLOps/SRE Engineer", headcount=1, monthly_cost_pln=15_000),
                 Position(title="Customer Success Specialist", headcount=1, monthly_cost_pln=10_000),
                 Position(title="Cybersecurity Officer", headcount=1, monthly_cost_pln=9_000),
+                Position(title="Sprzedawca", headcount=1, monthly_cost_pln=14_000),
                 Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
             ]
 

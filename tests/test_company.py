@@ -264,9 +264,9 @@ class TestStaffingPlanState:
         assert "Customer Success Specialist" in titles
         assert "Cybersecurity Officer" in titles
         assert "Księgowy" in titles
-        assert plan.monthly_budget_pln == 220_000
-        assert plan.total_monthly_payroll_pln == 215_000
-        assert plan.remaining_budget_pln == 5_000
+        assert plan.monthly_budget_pln == 230_000
+        assert plan.total_monthly_payroll_pln == 229_000
+        assert plan.remaining_budget_pln == 1_000
         assert plan.is_balanced
 
     def test_staffing_roundtrip(self, tmp_path: Path) -> None:
@@ -291,9 +291,9 @@ class TestStaffingPlanState:
     @pytest.mark.parametrize(
         ("stage", "budget", "payroll"),
         [
-            ("light", 180_000, 167_000),
-            ("standard", 220_000, 215_000),
-            ("scale", 320_000, 306_000),
+            ("light", 190_000, 181_000),
+            ("standard", 230_000, 229_000),
+            ("scale", 340_000, 334_000),
         ],
     )
     def test_stage_presets_are_balanced(self, stage: str, budget: int, payroll: int) -> None:
@@ -313,7 +313,7 @@ class TestStaffingPlanState:
         state = CompanyState()
         state.apply_staffing_stage("light", set_by="board")
         assert state.staffing_plan.stage == "light"
-        assert state.staffing_plan.monthly_budget_pln == 180_000
+        assert state.staffing_plan.monthly_budget_pln == 190_000
         assert any("light" in d.summary for d in state.decisions)
 
 
