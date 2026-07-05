@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-06-29T15:11:28.889388+00:00",
+  "rounds": 1,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.0,
+    "listening": 7.0,
+    "info_quality": 5.0,
+    "brevity": 6.0
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 5,
+    "brevity": 6
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 5,
+    "brevity": 6
+  },
+  "total_updates": 3,
+  "total_time_s": 507.23399999999674,
+  "sounds_injected": 1,
+  "average_checklist_completion": 28.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 76)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin",
+        "mood-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator never asked about the senior's own medications or known conditions; despite the senior mentioning knee pain, the operator asked about wife's meds but not his medication adherence.",
+        "Operator skipped the explicit sleep quality question required by the mood-checkin skill ('A jak spała pani dzisiaj w nocy?').",
+        "Call went well beyond 5 minutes — the senior trailed off with empty responses ('') and the operator prolonged unnecessarily instead of wrapping up earlier.",
+        "Operator did not mention the senior's known condition or medication profile (none visible, but still no general health question asked about meds)."
+      ],
+      "duration_s": 507.23399999999674,
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

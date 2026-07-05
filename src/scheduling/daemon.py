@@ -64,6 +64,23 @@ def _run_board_meeting(console: Console) -> None:
         log.exception("Scheduled board meeting failed")
 
 
+def _run_training(rounds: int, console: Console) -> None:
+    """Job entrypoint: run a self-play training loop with N rounds."""
+    from ..training import TrainingLoop
+
+    console.print(f"[cyan]>> Scheduled training: {rounds} rounds[/cyan]")
+    try:
+        loop = TrainingLoop(rounds=rounds, console=console)
+        report = loop.run()
+        console.print(
+            f"[green]  -> training complete: {report['rounds']} rounds, "
+            f"{report['total_updates']} skill updates[/green]"
+        )
+    except Exception as exc:  # noqa: BLE001
+        console.print(f"[red]  -> training failed: {exc}[/red]")
+        log.exception("Scheduled training failed")
+
+
 def _load_timezone(tz_name: str):
     """Return a tzinfo object, falling back to UTC on unknown zone."""
     try:
@@ -88,6 +105,9 @@ def start_daemon(
     board_review_hours: int = 0,
     board_review_time: str | None = None,
     board_review_timezone: str = "Europe/Warsaw",
+    train_time: str | None = None,
+    train_rounds: int = 0,
+    train_timezone: str = "Europe/Warsaw",
     console: Console | None = None,
 ) -> None:
     """Start the APScheduler daemon.
@@ -98,6 +118,8 @@ def start_daemon(
 
     If `board_review_hours > 0`, run an executive board meeting every N hours.
     If `board_review_time` is set (HH:MM), run it daily at a fixed local time.
+    If `train_time` is set (HH:MM) and `train_rounds > 0`, run a self-play
+    training loop daily at that time with the given number of rounds.
     """
     if board_review_hours > 0 and board_review_time:
         raise ValueError("Use either board_review_hours OR board_review_time, not both.")
@@ -107,13 +129,17 @@ def start_daemon(
         board_fixed_time = _parse_time_hhmm(board_review_time)
 
     board_enabled = board_review_hours > 0 or board_fixed_time is not None
+    train_fixed_time: tuple[int, int] | None = None
+    if train_time:
+        train_fixed_time = _parse_time_hhmm(train_time)
+    train_enabled = train_fixed_time is not None and train_rounds > 0
 
     log_console = console or Console()
     store = ScheduleStore()
     schedules = store.list_all(only_enabled=True)
 
-    if not schedules and not board_enabled:
-        log_console.print("[yellow]No enabled call schedules found. Use `schedule set` first.[/yellow]")
+    if not schedules and not board_enabled and not train_enabled:
+        log_console.print("[yellow]No enabled schedules found. Use `schedule set` first, or enable board/training options.[/yellow]")
         return
 
     if once:
@@ -123,6 +149,8 @@ def start_daemon(
                 _call_senior(s.senior_id, log_console)
         if board_enabled:
             _run_board_meeting(log_console)
+        if train_enabled:
+            _run_training(train_rounds, log_console)
         return
 
     # Only the long-running daemon needs APScheduler.
@@ -190,7 +218,36 @@ def start_daemon(
             f"daily at {board_review_time} {board_review_timezone}"
         )
 
-    n_jobs = len(schedules) + (1 if board_enabled else 0)
+    if train_enabled:
+        train_hour, train_minute = train_fixed_time
+        train_tz = _load_timezone(train_timezone)
+        from datetime import datetime, timedelta, timezone as dt_timezone
+
+        tomorrow = datetime.now(train_tz).date() + timedelta(days=1)
+        start_date = datetime(
+            tomorrow.year, tomorrow.month, tomorrow.day,
+            train_hour, train_minute, tzinfo=train_tz,
+        ).astimezone(dt_timezone.utc)
+        scheduler.add_job(
+            _run_training,
+            trigger="cron",
+            args=[train_rounds, log_console],
+            hour=train_hour,
+            minute=train_minute,
+            timezone=train_tz,
+            start_date=start_date,
+            id="training",
+            name=f"Self-play training ({train_rounds} rounds)",
+            misfire_grace_time=600,
+            replace_existing=True,
+        )
+        log_console.print(
+            f"  [green]+[/green] Scheduled [bold]training[/bold] "
+            f"daily at {train_time} {train_timezone} starting {tomorrow} "
+            f"({train_rounds} rounds)"
+        )
+
+    n_jobs = len(schedules) + (1 if board_enabled else 0) + (1 if train_enabled else 0)
     log_console.print(
         f"\n[bold green]Hermes scheduler running - {n_jobs} job(s). "
         "Press Ctrl-C to stop.[/bold green]\n"

@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-07-03T13:10:11.155900+00:00",
+  "rounds": 1,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 9.0,
+    "listening": 8.0,
+    "info_quality": 5.0,
+    "brevity": 9.0
+  },
+  "first_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 5,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 5,
+    "brevity": 9
+  },
+  "total_updates": 2,
+  "total_time_s": 90.28199999999924,
+  "sounds_injected": 0,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Samotna wdowa (wiek 80)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 5,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Did not ask the mandatory medication adherence question ('A czy wziął Pan / wzięła Pani dzisiaj swoje leki?') in a standalone turn.",
+        "Did not explicitly ask the mandatory safety question as written in the safety-check skill: 'A jak ogólnie – czuje się pani bezpiecznie w domu? Nic pani nie doskwiera?' The operator asked a variant ('Nic pani nie doskwiera?') but omitted the first clause.",
+        "Missed the opportunity to follow up on the senior's mention of difficult nights and missing her husband before pivoting to safety."
+      ],
+      "duration_s": 90.28199999999924,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-07-05T13:09:10.950687+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.0,
+    "listening": 5.333333333333333,
+    "info_quality": 6.0,
+    "brevity": 8.666666666666666
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 5,
+    "info_quality": 6,
+    "brevity": 8
+  },
+  "total_updates": 8,
+  "total_time_s": 432.3280000000086,
+  "sounds_injected": 1,
+  "average_checklist_completion": 47.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Depresyjny nastrój (wiek 76)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "disclosure",
+        "mood-checkin",
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "Operator missed the mandatory disclosure (Art. 13 RODO + AI Act) in the first turn, which is a critical compliance failure.",
+        "Operator did not ask the sleep question as a standalone turn; it was combined with a reflection on pain, violating the mood-checkin skill.",
+        "Operator failed to acknowledge the senior's emotionally significant statement about loneliness ('Samotnie w tych czterech ścianach') before moving on to safety.",
+        "Farewell was generic ('Cieszę się, że moja rozmowa przynosi trochę radości') and did not reference any concrete detail the senior shared, violating the farewell skill."
+      ],
+      "duration_s": 145.65600000000268,
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Małomówny introwertyk (wiek 70)",
+      "scores": {
+        "warmth": 7,
+        "listening": 5,
+        "info_quality": 7,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator missed the probe after the senior said 'Dobrze' to the mood question – should have asked 'Co sprawia, że czuje się Pan dzisiaj dobrze?' before moving to sleep.",
+        "Operator combined the sleep question and medication question too quickly, with only a generic acknowledgment in between, missing the chance to reflect or show listening.",
+        "Farewell was generic ('Cieszę się, że wszystko u Pana w porządku') without referencing any concrete detail the senior shared – even a short statement like 'Cieszę się, że dzisiaj wszystko gra' would have been better, but the senior only said 'Dobrze' and 'Wszystko gra', so the operator could have used one of those exact phrases.",
+        "Operator did not use the senior's exact words or reflect back any detail, making the call feel scripted rather than truly responsive."
+      ],
+      "duration_s": 144.75,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Niedosłyszący (wiek 75)",
+      "scores": {
+        "warmth": 7,
+        "listening": 5,
+        "info_quality": 6,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "Operator asked the safety question twice in a row (once generically, once repeated with a pain link) without giving the senior space to answer the first time fully.",
+        "Operator failed to acknowledge the senior's exact phrasing ('narzekać nie będę') – ignored the implicit cue that he might be downplaying his knee pain.",
+        "Operator skipped the mandatory follow-up probe after the senior said sleep was 'nieźle' – should have asked 'Co sprawia, że spało się nieźle mimo wczesnego budzenia?' per mood-checkin skill.",
+        "Operator did not tailor the farewell – used a generic 'Cieszę się, że żona wszystko ogarnia' instead of mirroring the senior's own phrase 'żona mi je zawsze przygotowuje' or the exact word 'leki'."
+      ],
+      "duration_s": 141.92200000000594,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

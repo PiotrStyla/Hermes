@@ -4,36 +4,38 @@
   "directive": {
     "focus_metric": "info_quality",
     "focus_skill": "health-checkin",
-    "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it.",
-    "falsification_condition": "Jeśli 'info_quality' nie wzrośnie do 7.1 pkt w ciągu 14 dni, dyrektywa musi być zrewidowana.",
+    "rationale": "'info_quality' is the weakest axis (avg 3.9); prioritising the 'health-checkin' skill to lift it.",
+    "falsification_condition": "Jeśli 'info_quality' nie wzrośnie do 4.2 pkt w ciągu 14 dni, dyrektywa musi być zrewidowana.",
     "owner_questions": [
-      "Jakie konkretne wyniki lub zmiany chciałbyś zobaczyć w ciągu najbliższych 7 dni?"
+      "Który z proponowanych kanałów autonomicznej akwizycji (udostępniane raporty dla rodzin, self-play A/B messagingu, wewnętrzne case study z rozmów) powinniśmy wdrożyć jako pierwszy i dlaczego?",
+      "Czy zgadzasz się, aby firma samodzielnie testowała warianty skryptów i komunikatów w symulacji, a następnie wdrażała wygraną wersję bez prośby o zgodę na każdą drobną zmianę?",
+      "Jakie są Twoje twarde limity (budżetowe, etyczne lub prawne) dla działań akwizycyjnych i komunikacyjnych prowadzonych wyłącznie przez AI bez kontaktu zewnętrznego?"
     ],
-    "set_at": "2026-06-24T07:56:04.017324+00:00",
+    "set_at": "2026-07-05T13:01:23.708666+00:00",
     "set_by": "ceo"
   },
   "growth_plan": {
-    "posture": "scale",
+    "posture": "stabilize",
     "channels": [
-      "Przychodnie POZ i lekarze rodzinni (ulotki, polecenia)",
-      "Domy i kluby seniora oraz Uniwersytety Trzeciego Wieku",
-      "Parafie i organizacje kościelne",
-      "Grupy i fora dla opiekunów rodzinnych (Facebook, lokalne)",
-      "Partnerstwa z MOPS/OPS i programami NFZ dla seniorów",
-      "Program poleceń dla rodzin obecnych klientów"
+      "Gotowe posty na forach opieki nad seniorami (np. forumseniora.pl, fora klubów seniora) — treści edukacyjne z symulacji treningowych, gotowe do wklejenia, bez danych rejestrowych firmy",
+      "Gotowe posty na X/Twitter po polsku — anonimowe wnioski z self-play (np. '7 sposobów na ciepłą rozmowę z seniorem rano'), gotowe do wklejenia",
+      "Gotowe posty na LinkedIn po polsku — skierowane do dorosłych dzieci seniorów, ton profesjonalny, budowanie zaufania przez wiedzę z symulacji",
+      "Product-led referrals — udostępniane raporty rodzinne z wbudowanym zachęceniem do polecania, testowane w self-play przed wdrożeniem",
+      "Wewnętrzne self-play A/B testy wszystkich wariantów komunikatów — symulacja reakcji odbiorców, wybór najlepszego wariantu przed generowaniem finalnego copy"
     ],
     "target_segments": [
-      "Dorosłe dzieci seniorów mieszkające daleko od rodziców",
-      "Samotni seniorzy 75+ mieszkający samodzielnie"
+      "Dorosłe dzieci seniorów (30–55 lat) poszukujące rozwiązania codziennej kontroli i ciepłego kontaktu dla rodzica",
+      "Opiekunowie i osoby zaangażowane w opiekę nad seniorami aktywne na forach tematycznych",
+      "Rodziny obecnych użytkowników (2 seniorów) — potencjalni ambasadorzy przez raporty i referencje"
     ],
-    "messaging": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok.",
+    "messaging": "Codzienny, ciepły telefon od AI do Twojego rodzica — Ty otrzymujesz raport o samopoczuciu. Obecnie doskonalimy jakość rozmów przed szerszym otwarciem — dzielimy się wnioskami z naszych treningów, aby pomóc każdemu, kto dzwoni do seniora.",
     "next_steps": [
-      "Nawiąż kontakt z 3 domami/klubami seniora w okolicy.",
-      "Przygotuj ulotkę i skrypt dla lekarzy rodzinnych.",
-      "Uruchom program poleceń z benefitem dla polecającej rodziny.",
-      "Przetestuj jeden płatny kanał (lokalny Facebook dla opiekunów)."
+      "Uruchomić intensywne self-play sesje treningowe skoncentrowane na podniesieniu wyników 'warmth' (6.0), 'listening' (5.0) i 'info_quality' (3.9) powyżej 7.5 — priorytet naprawczy przed skalowaniem akwizycji",
+      "Wygenerować 3 warianty gotowych postów edukacyjnych po polsku z wnioskami z self-play (np. 'Czego uczy nas 40 symulowanych rozmów z seniorami o samotności poranku') i przetestować je w symulacji A/B — wybrać zwycięski wariant do wklejenia na forach",
+      "Przygotować 5 gotowych postów na X/Twitter i 3 na LinkedIn — anonimowe, oparte wyłącznie na danych treningowych, bez danych rejestrowych firmy — gotowe do wklejenia przez właściciela",
+      "Zaprojektować i przetestować w self-play ulepszony format raportu rodzinnego z dyskretnym, etycznym zachęceniem do polecania ('Jeśli znasz kogoś, kto martwi się o samotność rodzica — podziel się tym raportem') — wdrożyć po osiągnięciu średniej jakości ≥ 7.5"
     ],
-    "set_at": "2026-06-24T07:56:04.591342+00:00",
+    "set_at": "2026-07-05T13:01:57.516997+00:00",
     "set_by": "cmo"
   },
   "staffing_plan": {
@@ -373,6 +375,222 @@
       "n_calls": 28,
       "n_seniors": 2,
       "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 28,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 30,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-25T11:56:13.790419+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 32,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 34,
+      "n_seniors": 2,
+      "n_training_rounds": 260
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.9,
+        "info_quality": 6.8,
+        "brevity": 7.8
+      },
+      "n_calls": 34,
+      "n_seniors": 2,
+      "n_training_rounds": 261
+    },
+    {
+      "date": "2026-06-30T12:55:15.700135+00:00",
+      "avg_scores": {
+        "warmth": 8.5,
+        "listening": 7.8,
+        "info_quality": 7.0,
+        "brevity": 7.4
+      },
+      "n_calls": 34,
+      "n_seniors": 2,
+      "n_training_rounds": 264
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "avg_scores": {
+        "warmth": 8.6,
+        "listening": 7.8,
+        "info_quality": 6.8,
+        "brevity": 7.7
+      },
+      "n_calls": 34,
+      "n_seniors": 2,
+      "n_training_rounds": 265
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "avg_scores": {
+        "warmth": 8.3,
+        "listening": 7.4,
+        "info_quality": 6.3,
+        "brevity": 7.7
+      },
+      "n_calls": 36,
+      "n_seniors": 2,
+      "n_training_rounds": 268
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "avg_scores": {
+        "warmth": 8.0,
+        "listening": 7.0,
+        "info_quality": 5.8,
+        "brevity": 7.9
+      },
+      "n_calls": 36,
+      "n_seniors": 2,
+      "n_training_rounds": 269
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "avg_scores": {
+        "warmth": 7.7,
+        "listening": 6.8,
+        "info_quality": 5.3,
+        "brevity": 8.2
+      },
+      "n_calls": 38,
+      "n_seniors": 2,
+      "n_training_rounds": 272
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "avg_scores": {
+        "warmth": 6.3,
+        "listening": 5.4,
+        "info_quality": 4.5,
+        "brevity": 7.0
+      },
+      "n_calls": 40,
+      "n_seniors": 2,
+      "n_training_rounds": 275
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "avg_scores": {
+        "warmth": 6.3,
+        "listening": 5.4,
+        "info_quality": 4.2,
+        "brevity": 7.0
+      },
+      "n_calls": 40,
+      "n_seniors": 2,
+      "n_training_rounds": 276
+    },
+    {
+      "date": "2026-07-05T13:01:57.521042+00:00",
+      "avg_scores": {
+        "warmth": 6.0,
+        "listening": 5.0,
+        "info_quality": 3.9,
+        "brevity": 7.2
+      },
+      "n_calls": 40,
+      "n_seniors": 2,
+      "n_training_rounds": 279
     }
   ],
   "decisions": [
@@ -1029,6 +1247,654 @@
       "actor": "ceo",
       "summary": "Innovation agenda: core + adjacent + moonshot",
       "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi."
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes dominate. First, calls consistently exceed ideal length, leading to rushed endings, fatigue, and reduced brevity—this axis has dropped sharply from 6.9 to 6.1. Second, operators fail to complete required health, medication, and safety checks, directly harming info_quality, which fell from 7.8 to 7.1. The owner flags repetitive, circular conversations as a priority. The systemic fix: redesign the call flow as a branching decision tree that auto-advances only after each requir"
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Warmth and listening remain strong, but info_quality and brevity are both declining sharply—especially brevity, which dropped the most. The owner flags repetitive, circular conversations as a systemic issue. I endorse coaching but add a targeted fix: implement a \"conversation branching\" module that trains the operator to introduce new, relevant topics or redirect loops after two repeated statements. This directly addresses the owner's call for creativity and progressiveness."
+    },
+    {
+      "date": "2026-06-24T08:00:22.748246+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 6 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby zarząd był bardziej twórczy i progresywny — niech nie powtarza ciągle tego samego.\nNiech zadaje mi strategiczne pytania.\nDodatkowo rozmowy operatora kręcą się w kółko; niech zarząd wymyśli systemowy fix, który to naprawi.\n\nJutrzejsze posiedzenie ma być dedykowane TYLKO jednemu zadaniu: **zdecydujcie czego konkretnie potrzebujecie ode mnie** — decyzji, pieniędzy, danych, priorytetów, zgody, kontaktu, czy czegokolwiek innego. Przeanalizujcie KPI, trendy, bariery i plany "
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes emerge: **call length consistently exceeds ideal** (brevity dropped from 6.9 to 6.1) and **critical health/safety checks are skipped** (info_quality fell from 7.8 to 7.1). A third pattern is **missed emotional follow-up** (listening and warmth both declined slightly). These aren’t one-offs—every issue list shows multiple instances of each.\n\nThe owner flags that conversations “circle” without progress. That matches the data: operators repeat the same loops (long calls, incomp"
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.6); weakest is info_quality (6.8). The downward trend across all axes is concerning, particularly the sharp drop in brevity and info_quality, reflecting the circular conversations the owner flagged. I endorse the **coach** recommendation but add a systemic fix: implement a “concise call script” with built-in checkpoints to prevent repetition. **Concrete action:** Develop a 15-minute micro-training module on focused information delivery, paired with a real"
+    },
+    {
+      "date": "2026-06-25T08:00:20.924220+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out: **call length consistently exceeding ideal** (hurts brevity, which dropped from 6.9 to 6.1) and **missing health/safety/medication checks** (hurts info_quality, down from 7.8 to 7.1). A third pattern is **failure to follow up on emotional cues** (hurts warmth and listening, both slightly declining). These are systemic, not one-off.\n\nThe owner wants autonomous, self-sufficient fixes. **Concrete fix:** Use call data to auto-generate adaptive scripts that dynamically"
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.6, excellent) but info_quality is the weakest at 6.8, and all axes are trending down—especially info_quality (-0.7) and brevity (-0.8). I endorse the 'coach' recommendation, but it must be fully internal. Propose a self‑guided info_quality drill: have the operator review three recent calls where info was unclear, then auto‑generate improved responses using the call‑data system and test them in simulation, with no manual owner input. This builds autonomy and"
+    },
+    {
+      "date": "2026-06-25T11:54:34.649663+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes dominate: calls consistently exceed ideal length, and operators are failing to complete required health, safety, and medication check-ins. The length issue directly hurts **brevity** (dropped from 6.9 to 6.1) and likely contributes to rushed endings that undermine **warmth** (8.3 to 8.1). The missed check-ins damage **info_quality** (7.8 to 7.1) and **listening** (8.1 to 7.9). The owner demands autonomous, self-contained fixes. The systemic fix: generate an internal, adaptiv"
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth; weakest is info_quality, with troubling downward trends across all axes. The system recommendation to coach is appropriate, but given the owner's emphasis on autonomous improvement, replace general coaching with an internal skill drill: generate a personalised script‑refinement module using past call transcripts and A/B test variations in simulation to lift info_quality and brevity. Track under a self‑correcting loop—no external inputs needed."
+    },
+    {
+      "date": "2026-06-25T11:56:13.791102+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes stand out. First, operators consistently fail to complete required health, medication, and safety checks, which directly hurts **info_quality** (dropping from 7.8 to 7.1). Second, calls are routinely too long, with multiple mentions of exceeding ideal length and rushed endings, dragging down **brevity** (falling from 6.9 to 6.1). Third, emotional follow-ups are missed—operators don't probe sadness or validate concerns about the automated call—undermining **listening** (sli"
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator’s strongest area is warmth (8.6); weakest is info_quality (6.8). The sharp downward trend across info_quality and brevity (-0.7, -0.8) is concerning. I endorse the “coach” recommendation. Given the owner’s priority for fully autonomous operations, propose a concrete action: have the operator self-audit its own call transcripts to pinpoint where info_quality lapses occur, then auto-generate corrective script variations and A/B test them in simulation. No external tools or manual interven"
+    },
+    {
+      "date": "2026-06-26T11:37:04.580737+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two themes dominate. First, operators consistently miss required health, safety, and medication checks, dragging down info_quality (7.8→7.1). Second, calls systematically exceed ideal length, worsening brevity (6.9→6.1) and leading to rushed, low-warmth endings. A third, subtler theme: failure to follow up on emotional cues (e.g., sadness about forgetting, frustration with automated calls) erodes listening (8.1→7.9) and warmth (8.3→8.1). The trend is declining across all axes.\n\nSystemic fix: Aut"
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "**Performance Verdict for Operator Agent**\n\nThe operator's strongest area is warmth (8.6), but its weakest is info_quality (6.8), and the downward trend across all axes—especially brevity (-0.8) and info_quality (-0.7)—is concerning. I endorse the \"coach\" recommendation. Given the owner's priority for autonomous operation, propose a **self-improvement script drill**: the operator runs simulated calls, auto-generates and tests two shorter, more accurate responses per scenario, then self-scores in"
+    },
+    {
+      "date": "2026-06-27T19:10:16.499772+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two themes recur across calls: **rushed, overlong conversations** (brevity cratering from 6.9 to 6.1) and **missing mandatory health/safety or emotional follow-ups** (info_quality dropping 7.8→7.1, warmth also slipping). Operators skip medications, home safety, mood checks, and fail to validate sadness or concerns. These are not one-offs — they appear in almost half the issues.\n\nThe owner demands fully autonomous operation — no external contacts, no manual outreach. The systemic fix: **build an "
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "The operator excels in warmth (8.6) but information quality is the weak spot (6.8) and all scores are declining, especially brevity (-0.8). The downward trend is concerning. I endorse the \"coach\" recommendation but make it self-directed: assign a weekly call-simulation drill where the operator must answer a scenario using only internal scripts and data, then self-grade info accuracy and brevity. No external tools or manager oversight needed."
+    },
+    {
+      "date": "2026-06-28T11:51:45.322938+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes: calls consistently run too long, crushing brevity (6.1, down from 6.9), and operators routinely skip required health/safety checks (medications, safety, mood), dragging down info_quality (7.1, down from 7.8). A third theme is missed emotional follow-up on sadness or concerns, eroding listening and warmth—both also declining.\n\nSystemic fix: using internal call data and simulation, design and A/B test a condensed script that interleaves mandatory health/safety questions into "
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Strongest: warmth (8.6). Weakest: info_quality (6.8). Trend is concerning – all axes declining, especially info_quality (-0.7) and brevity (-0.8). Endorse coaching, but adjust to align with owner’s autonomy mandate: replace manual script revision with an internal self-improvement loop. Concrete action: build an auto-generation module that mines high-scoring call transcripts to produce improved info_quality scripts, then A/B test them in simulation – no external contacts or owner intervention nee"
+    },
+    {
+      "date": "2026-06-29T08:00:36.088621+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out. First, operators consistently fail to complete required health and safety check-ins—medications, mood, home safety—which directly hurts **info_quality** (dropping from 7.8 to 7.1). Second, calls are systematically too long, with repeated \"exceeded ideal length\" issues, dragging down **brevity** (6.9 to 6.1). The trend shows clear decline on both axes. The owner's priority is autonomy: stop proposing external fixes. The concrete systemic fix is to embed mandatory, "
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.6); weakest is info_quality (6.8). All axes are declining, with info_quality and brevity dropping fastest. I endorse the 'coach' recommendation, but adjust it to align with your autonomy-first directive: implement an automated script refinement drill using the operator's own call logs and simulated A/B tests. This lets the operator self-correct by testing and adopting better response patterns without any manual intervention, keeping growth internal and inde"
+    },
+    {
+      "date": "2026-06-29T15:02:59.430471+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes jump out: calls consistently run too long (brevity down to 6.0), and operators systematically skip medication and safety questions (info_quality cratered from 7.1 to 5.0). A third is weak emotional follow-up, dragging listening to 7.0. The trend is a clear across-the-board decline.\n\nThe systemic fix: **Build an internal script generator that auto-inserts mandatory, timed health/safety prompts** (e.g., “ask about meds at turn 3, safety at turn 5”) and enforces a hard wrap aft"
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Warmth is strong, but info_quality is the clear weakness and dropping sharply (-2.1). The downward trend across all axes, especially listening, signals a systemic issue. I endorse coaching but with a twist: design an autonomous script-auto-generation module that mines past call data for high-quality responses, then runs A/B simulations to refine. This avoids manual tweaks and aligns with the owner's call for self‑sufficient growth. No human intervention needed."
+    },
+    {
+      "date": "2026-06-30T09:56:22.910570+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-06-30T12:55:15.700135+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 7.0); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-06-30T12:55:15.700655+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-06-30T12:55:15.700655+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-06-30T12:55:15.700655+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out: **mandatory skill steps are being skipped** (sleep questions, health check-ins, safety checks) and **calls are running too long** without a concise, personalized wrap-up. These most hurt **info_quality** (missing critical health data) and **brevity** (exceeding ideal length). The trend shows info_quality is still the lowest axis at 6.0, though improving from 5.0; brevity jumped to 8.7, but the pool still shows many long calls, suggesting the average masks persiste"
+    },
+    {
+      "date": "2026-06-30T12:55:15.700655+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: keep",
+      "rationale": "Strongest area: warmth (8.5). Weakest: info_quality (7.0). Trend is excellent across all axes, especially brevity (+2.7). Endorse **keep** — trajectory is positive. However, to align with the owner's autonomy directive, propose a concrete action: launch a script self-optimization drill where the operator analyzes its own low-info_quality calls, identifies missing details, and regenerates improved responses using only internal conversation data. No external resources needed."
+    },
+    {
+      "date": "2026-06-30T12:55:15.700655+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on brevity / skill 'farewell'",
+      "rationale": "'brevity' is the weakest axis (avg 7.7); prioritising the 'farewell' skill to lift it."
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (scale): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "Jako właściciel chcę, żeby firma była **samodzielna i autonomicznie działająca**. Niech nie powtarza ciągle tego samego planu, którego nie da się zrealizować bez dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych i innych środków, którymi nie dysponuje.\n\nJutrzejsze posiedzenie ma być dedykowane: **zaprojektujcie działania, które firma może wykonać sama**, wykorzystując wyłącznie to, co ma wewnętrznie (operatorów, rozmowy, dane z rozmów, training, samodoskonalenie, autogenerowanie skry"
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Scores are improving, but three systemic patterns persist. First, operators repeatedly skip mandatory script elements: the sleep question, health check-ins on known conditions, and safety checks. This hurts **info_quality** and **listening**—you can't gather accurate health data if you never ask. Second, farewells remain generic instead of referencing call-specific details (heart racing, family conflict), undercutting **warmth**. Third, calls run long due to trailing off or rapid-fire questions,"
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.6, trending up); weakest is info_quality (6.8) despite a strong +1.0 gain. The trend is positive across all axes, showing clear improvement. I endorse the \"coach\" recommendation. Concrete action: design an autonomous info_quality drill where the operator self-generates and A/B tests response scripts using only internal call data, no external resources—aligning with your owner directive for self-sufficiency."
+    },
+    {
+      "date": "2026-07-01T08:00:36.849346+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 6.3); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 3 channel(s), 3 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Warmth, listening, and info_quality are all declining sharply, with info_quality dropping from 7.0 to 5.67. Three recurring themes stand out across the issues. First, operators systematically fail to reflect seniors' emotions or confusion (e.g., ignoring disorientation, not mirroring distress from noise or memory mix-ups) — this hurts listening and warmth, as seen in multiple missed active-listening opportunities. Second, health and medication follow-ups are shallow: operators don't ask for exac"
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "Operator's strongest area is warmth (8.3), but the steep decline across all axes—especially listening (-1.7) and brevity (-1.7)—is alarming. Weakest is info_quality (6.3). I endorse the coach recommendation but stress urgency: the negative trend suggests the agent is drifting, not just lacking a skill. Action: implement a weekly \"info accuracy drill\" where the agent must verify three senior-care facts from internal sources before each call, with immediate feedback. This rebuilds both info_qualit"
+    },
+    {
+      "date": "2026-07-01T11:16:54.310815+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 5.8); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 3 channel(s), 3 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Three recurring themes: (1) **Mandatory script steps are skipped** — sleep question, medication adherence, safety verbatim, and disclosure are missing, hurting **info_quality** (avg 4.0, down from 5.7). (2) **Emotional reflection is absent** — operators fail to name the senior’s confusion, frustration, or disorientation before answering, directly eroding **warmth** (6.0, down from 7.0) and **listening** (5.0, down from 6.3). (3) **Probing stops too early** — knee pain, medication organization, a"
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: coach",
+      "rationale": "This operator’s strongest area is brevity (7.9), but info_quality (5.8) is a clear weakness and the only axis needing coaching. The trend is concerning: all four scores dropped, with info_quality falling most sharply (-1.7). I endorse the coach recommendation. Owner input emphasizes autonomy and ethical transparency, so the coaching should focus on improving information accuracy and completeness without sacrificing brevity. **Action:** Assign a targeted drill where the operator must verify and c"
+    },
+    {
+      "date": "2026-07-02T08:00:46.403476+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on listening / skill 'active-listening'",
+      "rationale": "'listening' is the weakest axis (avg 6.8); prioritising the 'active-listening' skill to lift it."
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 3 channel(s), 3 next step(s)",
+      "rationale": "Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok."
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Across the call issues, three recurring themes emerge. First, operators consistently fail to handle senior skepticism or distrust, missing required proof points like naming the family member who registered the service. This directly hurts **listening** and **info_quality** scores. Second, mandatory health and safety checks—mood, sleep, medication, safety question—are routinely skipped or paraphrased, again damaging **info_quality**. Third, operators use generic, closed-ended responses instead of"
+    },
+    {
+      "date": "2026-07-03T08:00:22.961239+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: retrain",
+      "rationale": "Warmth and brevity are solid, but info_quality is the weakest axis and declining sharply—that’s a retrain priority. The listening dip of -0.3 adds concern. The owner emphasizes autonomy and compliance: your silence on this drop creates risk. Endorse retrain, but propose a targeted skill drill: three call scenarios where the operator must verify a fact or offer a sourced resource before moving on—no shortcut allowed. This directly addresses info_quality while respecting the owner’s “no daily over"
+    },
+    {
+      "date": "2026-07-03T08:00:22.962250+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on warmth / skill 'farewell'",
+      "rationale": "Warmth (6.3) has been neglected across recent directives while info_quality and listening were prioritized, yet quality issues repeatedly flag generic farewells that fail to reference concrete call details — a direct warmth failure that leaves seniors and families with a flat last impression. With the owner pushing for autonomous growth via social media acquisition, every call's farewell becomes a potential referral moment; a warm, personalized close is the cheapest conversion lever we have. The latest training trend shows warmth improving (6.0→7.33), so now is the moment to consolidate that momentum with a targeted farewell redesign."
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 4 channel(s), 4 next step(s)",
+      "rationale": "We are an AI-powered daily wellness check-in service for seniors — fully transparent, GDPR-compliant, and currently improving our conversation quality before scaling. Families get daily reports; seniors get a warm call."
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes stand out. First, operators consistently violate skill requirements by combining mandatory standalone questions (medication, sleep, safety) with other turns or reflections. Second, active listening is weak—skepticism is not validated, one-word answers are not probed, and farewells are generic. These themes most hurt **info_quality** (4.5) and **listening** (5.4). While the trend shows improvement across all axes, the underlying issues persist and limit further gains.\n\nSince "
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: retrain",
+      "rationale": "Info quality is the weakest area at 4.5, but the trend is excellent: a +2.3 jump shows strong improvement. Warmth and listening still need coaching. I endorse the retrain recommendation, but adjust it to a targeted drill: run a simulation focused on verifying medical details before answering. Owner input prioritizes autonomy—so let the agent self-correct via A/B tested scripts in training. Concrete action: assign a \"fact-check first\" module with three practice calls."
+    },
+    {
+      "date": "2026-07-03T13:08:38.637965+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] Autonomous Quality Loop | Owner: Manager | KPI: info_quality score rises from 4.5 to ≥6.0 with at least 5 self-tested script variants deployed without manual approval | Deadline: D+30\n   Why now: info_quality is our weakest axis and the owner explicitly authorized autonomous A/B testing, so we should close the loop end-to-end now.\n2. [adjacent] Self-Publishing Acquisition Engine | Owner: Manager | KPI: 40 original posts published across forums, X, and LinkedIn generating at least 8 inb"
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'safety-check'",
+      "rationale": "info_quality is the lowest KPI at 4.2 and actively declining (5.67→5.0 in training), driven primarily by repeated safety-check script-adherence failures: medication, safety, and sleep questions are not being asked standalone or verbatim. These failures represent direct risk to seniors and cannot be tolerated even as other metrics improve."
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 5 channel(s), 5 next step(s)",
+      "rationale": "Codzienny ciepły telefon od AI może zmniejszyć samotność seniora i dać rodzinie spokój ducha — ale najpierw musimy udowodnić, że nasze rozmowy są naprawdę empatyczne i wartościowe, zanim będziemy się skalować."
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Two recurring themes emerge: **script adherence failures** (medication, safety, and sleep questions not asked standalone or verbatim) and **active listening gaps** (missing emotional cues, not probing one-word answers, failing to handle skepticism). These primarily hurt **info_quality** (declining from 5.67 to 5.0) and **listening** (still low at 5.4, though improved). A third theme is **generic, untailored interactions** (farewells, safety questions not referencing call context), which drags do"
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: retrain",
+      "rationale": "Info quality is the weakest area at 4.2, and the recent -0.7 drop is concerning. Warmth and listening are improving strongly, which is good. I endorse the retrain recommendation. Concrete action: design a new training module focused on delivering accurate, relevant information in calls, using self-play scenarios to rebuild this skill."
+    },
+    {
+      "date": "2026-07-04T08:01:33.894941+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] Info Quality Sprint — Structured Response Frameworks | Owner: Manager | KPI: info_quality average score rises from 4.2 to ≥6.0 across 50 new calls | Deadline: D+30\n   Why now: Info_quality is our weakest axis by a wide margin and every call underperforms on substance until we fix it.\n2. [adjacent] Polish Content Engine — Self-Play-to-Post Pipeline | Owner: Manager | KPI: 30 ready-to-paste Polish posts generated from anonymized training data, A/B tested in simulation, covering 3 forum/X"
+    },
+    {
+      "date": "2026-07-05T13:01:57.521042+00:00",
+      "actor": "ceo",
+      "summary": "New directive: focus on info_quality / skill 'health-checkin'",
+      "rationale": "'info_quality' is the weakest axis (avg 3.9); prioritising the 'health-checkin' skill to lift it."
+    },
+    {
+      "date": "2026-07-05T13:01:57.521042+00:00",
+      "actor": "cmo",
+      "summary": "Growth plan (stabilize): 5 channel(s), 4 next step(s)",
+      "rationale": "Codzienny, ciepły telefon od AI do Twojego rodzica — Ty otrzymujesz raport o samopoczuciu. Obecnie doskonalimy jakość rozmów przed szerszym otwarciem — dzielimy się wnioskami z naszych treningów, aby pomóc każdemu, kto dzwoni do seniora."
+    },
+    {
+      "date": "2026-07-05T13:01:57.521042+00:00",
+      "actor": "owner",
+      "summary": "Owner input for this board meeting",
+      "rationale": "## Ogólne zasady działania firmy\n\nFirma ma być **samodzielna i autonomicznie działająca**. Nie powtarzamy planów wymagających dostępu do poczty, telefonu, drukarni, kontaktów zewnętrznych ani innych zasobów poza naszymi wewnętrznymi możliwościami.\n\nFirma ma żyć i rosnąć **bez mojego codziennego udziału**. Zadajcie mi tylko pytania, na które naprawdę nie możecie odpowiedzieć sami.\n\n## Odpowiedzi właściciela (2026-07-01)\n\n**1. Kanał akwizycji:**\nAkwizycja ma się odbywać w internecie przez **posty "
+    },
+    {
+      "date": "2026-07-05T13:01:57.521551+00:00",
+      "actor": "quality_director",
+      "summary": "Systemic quality analysis",
+      "rationale": "Warmth and listening scores have collapsed (warmth from 9.0 to 4.7, listening from 8.0 to 3.7), while info_quality remains critically low at 3.0. The dominant theme is **mandatory protocol abandonment** — operators consistently skip the medication adherence question, the safety question's full wording, and any mood/health data gathering. This directly destroys info_quality and listening. A second theme is **generic, non-personalized interaction** — operators fail to reflect seniors' exact words,"
+    },
+    {
+      "date": "2026-07-05T13:01:57.521551+00:00",
+      "actor": "hr",
+      "summary": "Operator review — recommendation: retrain",
+      "rationale": "Operator’s strongest area is brevity (7.2, solid), but every other axis is declining sharply—info_quality and listening are critically low, and warmth dropped 4.3 points. The downward trend across the board confirms the system’s retrain recommendation. Owner’s input reinforces the need for a focused, self-contained fix: no external resources, only internal training data.\n\n**Action:** Require the operator to complete a daily empathy-and-clarification drill using self-play scenarios, targeting inf"
+    },
+    {
+      "date": "2026-07-05T13:01:57.521551+00:00",
+      "actor": "ceo",
+      "summary": "Innovation agenda: core + adjacent + moonshot",
+      "rationale": "1. [core] Info Quality Sprint — Self-Play Bootcamp | Owner: Manager | KPI: info_quality average score rises from 3.9 to 5.5 across next 20 calls | Deadline: D+14\n   Why now: info_quality is the weakest axis at 3.9 and 279 training rounds have produced enough self-play data to build targeted retraining scenarios without any external resources.\n2. [adjacent] Polish Content Engine — Ready-to-Paste Posts | Owner: Manager | KPI: 20 anonymized Polish-language posts generated from self-play training in"
     }
   ]
 }

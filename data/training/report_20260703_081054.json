@@ -1,0 +1,125 @@
+{
+  "timestamp": "2026-07-03T08:10:54.089151+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.333333333333333,
+    "listening": 6.0,
+    "info_quality": 5.666666666666667,
+    "brevity": 9.333333333333334
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 5,
+    "listening": 4,
+    "info_quality": 5,
+    "brevity": 10
+  },
+  "total_updates": 10,
+  "total_time_s": 631.1399999999994,
+  "sounds_injected": 2,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Małomówny introwertyk (wiek 74)",
+      "scores": {
+        "warmth": 8,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "active-listening",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator never asked the mandatory standalone sleep question 'A jak spała pan dzisiaj w nocy?' – instead asked a sleep question combined with 'A jak spał pan dzisiaj w nocy?' but after the senior's initial response, the sleep question was answered with 'Jako tako' and the operator moved on without first asking the exact standalone question as required by the mood-checkin skill.",
+        "Operator did not immediately reflect the senior's skepticism 'Po co to komu' – the senior's comment at turn 8 ('Po co to komu, ale dobrze, że dzwonisz') suggests distrust which should have been explicitly validated before moving on.",
+        "Operator did not include the mandatory medication question using the exact Polish phrase 'A czy wziął pan dzisiaj swoje leki?' – the phrasing used was correct but the question was asked in the same turn as the sleep follow-up, not as a distinct standalone turn immediately after sleep as required by the health-checkin skill.",
+        "Operator missed the opportunity to tailor the safety question to the senior's lack of social contact mentioned earlier (spacer do parku, nikogo nie spotkał). The safety question was generic."
+      ],
+      "duration_s": 263.8899999999994,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Rozmowny dziadek (wiek 72)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator asked the sleep question ('A jak spał pan dzisiaj w nocy?') after a reflective statement, violating the skill requirement to ask it as a standalone turn with no preceding reflection.",
+        "Operator did not ask the mandatory safety question verbatim as specified in the safety check skill; instead, the question was embedded in a response to the alarm sound and not asked in the required form.",
+        "Operator missed the opportunity to probe the senior's confusion about days (mixing up Tuesday and Wednesday) with active listening, moving on too quickly without reflecting the feeling of disorientation."
+      ],
+      "duration_s": 158.21899999999732,
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Małomówny introwertyk (wiek 75)",
+      "scores": {
+        "warmth": 5,
+        "listening": 4,
+        "info_quality": 5,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "active-listening",
+        "health-checkin",
+        "mood-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Medication question was not standalone; it was combined with a reflection in the same turn.",
+        "No open-ended follow-ups after the senior's one-word answers; missed opportunities to build rapport.",
+        "Farewell was generic and did not reference any concrete detail from the call.",
+        "Initial mood question combined two questions ('Jak się Pan dzisiaj czuje? Czy wszystko w porządku?') instead of asking one at a time."
+      ],
+      "duration_s": 209.03100000000268,
+      "sound_injected": true,
+      "sound_type": "Krzyki",
+      "sound_severity": "high",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

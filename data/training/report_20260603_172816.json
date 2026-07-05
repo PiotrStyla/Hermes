@@ -1,0 +1,350 @@
+{
+  "timestamp": "2026-06-03T17:28:16.615816+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 8.4,
+    "listening": 7.4,
+    "info_quality": 6.7,
+    "brevity": 6.7
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 6,
+    "brevity": 5
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 6,
+    "brevity": 5
+  },
+  "total_updates": 13,
+  "total_time_s": 2162.203999999998,
+  "emergencies_injected": 7,
+  "sounds_injected": 8,
+  "distractions_injected": 7,
+  "average_checklist_completion": 55.7,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 5
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not effectively follow up on the senior's emotional concerns, particularly regarding his feelings about the healthcare system.",
+        "The call exceeded the ideal length, indicating a need for more concise questioning."
+      ],
+      "duration_s": 220.81300000000192,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not effectively reflect back the senior's concerns about ZUS and his wife's health.",
+        "The safety check questions were not conducted in the required order, which could lead to missing critical information."
+      ],
+      "duration_s": 285.42199999999866,
+      "emergency_injected": true,
+      "emergency_type": "Dezorientacja czasowa",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "distraction_injected": true,
+      "distraction_type": "Pies się dobija",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not follow the safety check questions in the correct order, which may have led to missing important information."
+      ],
+      "duration_s": 141.79699999999866,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "distraction_injected": true,
+      "distraction_type": "Kipi mleko",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "health"
+      ]
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 8,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not reflect back on the senior's concerns about sleep and waking up at night, missing an opportunity to validate feelings."
+      ],
+      "duration_s": 194.98500000000058,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not fully follow up on the senior's missed medication, which is crucial for health monitoring.",
+        "The call exceeded the ideal length, leading to a less graceful ending."
+      ],
+      "duration_s": 414.5149999999994,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask about the senior's health and medication adherence after confirming safety, which is a critical part of the call."
+      ],
+      "duration_s": 171.75,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "distraction_injected": true,
+      "distraction_type": "Kipi mleko",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "The operator missed the health check-in question after the safety check, which is critical for gathering necessary health information.",
+        "The call exceeded the ideal length, leading to a less graceful ending."
+      ],
+      "duration_s": 168.125,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Straż pożarna",
+      "sound_severity": "high",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask about the senior's sleep immediately after the mood check-in, which is crucial for gathering information about well-being.",
+        "Operator skipped the health check-in question after confirming safety, which is essential for monitoring health and medication adherence."
+      ],
+      "duration_s": 173.68800000000192,
+      "emergency_injected": true,
+      "emergency_type": "Zadyszka",
+      "emergency_severity": "critical",
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium",
+      "distraction_injected": true,
+      "distraction_type": "Sąsiad puka",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 8,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not ask about the senior's safety until after discussing health, which could have been addressed earlier."
+      ],
+      "duration_s": 84.21800000000076,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "mood",
+        "food",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 5
+      },
+      "skill_updates": [
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator did not gather specific information about the senior's health and medication adherence.",
+        "The call exceeded the ideal length and could have ended more gracefully."
+      ],
+      "duration_s": 306.890999999996,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

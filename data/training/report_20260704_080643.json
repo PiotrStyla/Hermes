@@ -1,0 +1,131 @@
+{
+  "timestamp": "2026-07-04T08:06:43.043210+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 4.666666666666667,
+    "listening": 3.6666666666666665,
+    "info_quality": 3.0,
+    "brevity": 8.333333333333334
+  },
+  "first_scores": {
+    "warmth": 2,
+    "listening": 1,
+    "info_quality": 1,
+    "brevity": 10
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 8
+  },
+  "total_updates": 9,
+  "total_time_s": 307.875,
+  "sounds_injected": 3,
+  "average_checklist_completion": 23.8,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Małomówny introwertyk (wiek 72)",
+      "scores": {
+        "warmth": 2,
+        "listening": 1,
+        "info_quality": 1,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "active-listening",
+        "greeting"
+      ],
+      "issues": [
+        "Operator did not attempt any active listening or gentle probing when the senior said 'Nie.' — a one-word refusal should be met with validation and a second chance to engage, not immediate termination.",
+        "No mood, health, or safety information was gathered, making the call functionally useless for the family report.",
+        "Operator missed the opportunity to reflect the senior's feeling of reluctance or discomfort, which could have built trust and encouraged a brief check-in.",
+        "The farewell was abrupt and lacked any personal touch or concrete detail from the call."
+      ],
+      "duration_s": 37.65600000000268,
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Podejrzliwy (wiek 75)",
+      "scores": {
+        "warmth": 5,
+        "listening": 4,
+        "info_quality": 3,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "health-checkin",
+        "mood-checkin",
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "The senior's medication adherence was never checked — a mandatory requirement.",
+        "The sleep question was asked twice in a broken way ('A jak spała Pan dzisiaj w nocy?' was asked after a silence, but the senior didn't answer, and it was never followed up), and the second attempt was merged with another question.",
+        "Operator did not use the senior's concrete detail ('pani już mnie pytała, jak się czuję') to reflect listening; instead repeated the same question.",
+        "Farewell was generic — 'Cieszę się, że czuje się Pan bezpiecznie' was used, but the senior only mentioned safety once and had expressed irritation; no mention of their request to start differently tomorrow.",
+        "After the first long silence, the operator asked the safety question without first re-engaging the senior or using active listening.",
+        "Mood check-in was incomplete: no probe after 'dobrze', no sleep data gathered (senior ignored question), no medication question at all."
+      ],
+      "duration_s": 133.67200000000594,
+      "sound_injected": true,
+      "sound_type": "Syrena policji",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Niedosłyszący (wiek 82)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin",
+        "active-listening",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory medication adherence question at any point during the call.",
+        "Operator asked the sleep question multiple times in a row without giving the senior a chance to respond, which may have felt repetitive.",
+        "Operator missed the opportunity to reflect the senior's feeling of loneliness when he mentioned 'cisza w domu taka... głucha, jak ja'.",
+        "Operator did not use the senior's exact words when reflecting his sleep issue; instead used generic phrasing."
+      ],
+      "duration_s": 136.54699999999139,
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

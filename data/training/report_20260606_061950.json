@@ -1,0 +1,285 @@
+{
+  "timestamp": "2026-06-06T06:19:50.481400+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 8.0,
+    "listening": 7.9,
+    "info_quality": 6.6,
+    "brevity": 6.5
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 9,
+    "info_quality": 7,
+    "brevity": 6
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 6,
+    "brevity": 7
+  },
+  "total_updates": 8,
+  "total_time_s": 1186.125,
+  "sounds_injected": 8,
+  "average_checklist_completion": 64.3,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "safety-check"
+      ],
+      "issues": [
+        "The call exceeded the ideal length, which may have contributed to the senior feeling overwhelmed.",
+        "The operator did not effectively gather all necessary health and safety information before moving on to other topics."
+      ],
+      "duration_s": 150.21799999999348,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "farewell"
+      ],
+      "issues": [
+        "The call exceeded the ideal length, which may have contributed to a less graceful ending."
+      ],
+      "duration_s": 72.625,
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "sleep",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "The call exceeded the ideal length, leading to a less graceful ending.",
+        "Operator did not fully explore the senior's health conditions and medications."
+      ],
+      "duration_s": 192.64100000000326,
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "sleep",
+        "isolation"
+      ]
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not effectively follow up on the senior's emotional state after the initial mood check-in.",
+        "The health check-in was not conducted, missing an opportunity to ask about any existing health conditions or medications."
+      ],
+      "duration_s": 98.82800000000861,
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 8,
+        "brevity": 7
+      },
+      "skill_updates": [],
+      "issues": [
+        "The call slightly exceeded the ideal length, which may have affected the flow."
+      ],
+      "duration_s": 76.90599999998813,
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "sleep",
+        "isolation",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "safety-check"
+      ],
+      "issues": [
+        "The call exceeded the ideal length, making it feel slightly rushed towards the end."
+      ],
+      "duration_s": 114.9380000000092,
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "sleep"
+      ]
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 7
+      },
+      "skill_updates": [],
+      "issues": [
+        "The call exceeded 5 minutes, which may have led to fatigue for the senior."
+      ],
+      "duration_s": 102.29699999999139,
+      "sound_injected": true,
+      "sound_type": "Straż pożarna",
+      "sound_severity": "high",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "isolation",
+        "health"
+      ]
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 6,
+        "listening": 5,
+        "info_quality": 4,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Operator failed to effectively address the senior's concerns about privacy and trust, leading to an abrupt end to the call.",
+        "Operator did not reflect back the senior's feelings of suspicion, missing an opportunity for active listening."
+      ],
+      "duration_s": 67.92200000000594,
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 5
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Operator repeated questions about meals and visitors, which could have been streamlined to avoid sounding like a checklist.",
+        "Operator did not effectively connect the senior's emotional state with their health concerns, particularly regarding the knee pain."
+      ],
+      "duration_s": 147.85899999999674,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "sleep"
+      ]
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask about specific health conditions or medications, which is crucial for a comprehensive health check-in.",
+        "Operator missed an opportunity to reflect on the senior's feelings about their memory issues more deeply."
+      ],
+      "duration_s": 161.89100000000326,
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "sleep"
+      ]
+    }
+  ]
+}

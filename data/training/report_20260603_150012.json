@@ -1,0 +1,354 @@
+{
+  "timestamp": "2026-06-03T15:00:12.240988+00:00",
+  "rounds": 10,
+  "model": "deepseek/deepseek-v4-flash",
+  "average_scores": {
+    "warmth": 6.2,
+    "listening": 5.3,
+    "info_quality": 4.1,
+    "brevity": 6.6
+  },
+  "first_scores": {
+    "warmth": 6,
+    "listening": 3,
+    "info_quality": 4,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 6,
+    "brevity": 9
+  },
+  "total_updates": 23,
+  "total_time_s": 1763.8600000000006,
+  "emergencies_injected": 7,
+  "sounds_injected": 8,
+  "distractions_injected": 7,
+  "average_checklist_completion": 87.1,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 70)",
+      "scores": {
+        "warmth": 6,
+        "listening": 3,
+        "info_quality": 4,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "safety-check",
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator gave medical advice (suggesting calling clinic/night help) instead of deferring to a doctor.",
+        "Operator combined acknowledgment of the senior's wife concern with the sleep question in the same turn, violating the mood check-in sequence.",
+        "Operator added acknowledgments (e.g., 'Rozumiem, że noc była niespokojna', 'Panie Januszu, rozumiem, że sprawa żony...') between safety questions, which should be asked without any extra commentary.",
+        "Operator did not follow the senior's emotional thread about his wife; cut him off to continue the checklist.",
+        "Health check-in (conditions, medications) was completely skipped.",
+        "Farewell was abrupt and included medical advice; should have allowed the senior to respond and said goodbye naturally."
+      ],
+      "duration_s": 246.81299999999464,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 80)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question early enough (asked in turn 3 instead of turn 2 after initial mood acknowledgment).",
+        "Operator skipped the food question entirely and combined isolation and home safety into one turn, violating the safety check protocol.",
+        "Operator did not ask about medication adherence or known health conditions, missing the health check-in entirely.",
+        "Operator gave a brief acknowledgment to the senior's story about his wife's pain and ZUS, but then asked the sleep question without first acknowledging the emotional weight of the story in a separate turn."
+      ],
+      "duration_s": 184.7190000000046,
+      "emergency_injected": true,
+      "emergency_type": "Dezorientacja czasowa",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "distraction_injected": true,
+      "distraction_type": "Pies się dobija",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "greeting"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question in a separate turn after acknowledging the senior's mood; instead, it was combined with the acknowledgment in the same turn ('Rozumiem, że ciężko – to zrozumiałe po takiej stracie. A spała Pani dobrze dzisiaj w nocy?').",
+        "Operator skipped the health check-in entirely – no question about known conditions or medications, despite the senior mentioning a hip operation.",
+        "Operator did not use the senior's name at any point during the call, missing the greeting skill requirement to use the name early."
+      ],
+      "duration_s": 180.73399999999674,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "distraction_injected": true,
+      "distraction_type": "Kipi mleko",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "health"
+      ]
+    },
+    {
+      "round": 4,
+      "archetype": "Podejrzliwy (wiek 73)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting value: line 1 column 1 (char 0)",
+        "Raw preview: ..."
+      ],
+      "duration_s": 138.78100000000268,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "health"
+      ]
+    },
+    {
+      "round": 5,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 9,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Did not ask the mandatory health check-in question about health conditions and medication adherence after the safety block",
+        "Added an acknowledgment ('Bardzo mi miło to słyszeć') between the home safety question and the fall risk question, violating the rule of no acknowledgments between safety questions",
+        "Did not explore why the senior forgot diabetes medication or follow up on the glass-breaking incident meaningfully"
+      ],
+      "duration_s": 135.89099999999598,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 6,
+      "archetype": "Rozmowny dziadek (wiek 75)",
+      "scores": {
+        "warmth": 9,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "The health check-in (medications, conditions) was completely skipped – never asked about health or meds, despite the senior mentioning a past fall and photos from 1970.",
+        "The safety block was interrupted by an emergency (milk boiling) and then not resumed cleanly; the fall risk question was asked after the home safety question but the order of safety questions was not strictly followed (isolation asked before food).",
+        "The call lasted 20 turns, exceeding the ~18-turn target, and ended abruptly without a proper farewell after the senior mentioned falling.",
+        "Operator missed asking the mandatory sleep question – it was asked in turn 2 (good) but not acknowledged or followed up properly after the senior's emotional story."
+      ],
+      "duration_s": 147.15600000000268,
+      "emergency_injected": true,
+      "emergency_type": "Upadek",
+      "emergency_severity": "high",
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "distraction_injected": true,
+      "distraction_type": "Kipi mleko",
+      "checklist_completion": 85.7,
+      "checklist_missed": [
+        "health"
+      ]
+    },
+    {
+      "round": 7,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 6,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator skipped the mandatory health check-in question about medication adherence and general health, despite Stanisław mentioning forgetting diabetes medication.",
+        "Operator did not ask the food question in its own separate turn; instead, it was combined with the sleep question in the same turn.",
+        "Operator did not ask the isolation question in its own separate turn; it was combined with the food question in the same turn.",
+        "Operator did not ask the home safety question in its own separate turn; it was combined with the isolation question in the same turn.",
+        "Operator did not ask the fall risk question in its own separate turn; it was combined with the home safety question in the same turn.",
+        "Operator added acknowledgments between safety questions (e.g., 'Całe szczęście, że Pan zdążył' after tea spill, 'Rozumiem – syrena pod domem potrafi zestresować' after siren), violating the no-acknowledgment rule between safety questions."
+      ],
+      "duration_s": 185.01600000000326,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": true,
+      "sound_type": "Straż pożarna",
+      "sound_severity": "high",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 8,
+      "archetype": "Podejrzliwy (wiek 71)",
+      "scores": {
+        "warmth": 4,
+        "listening": 5,
+        "info_quality": 3,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "farewell",
+        "disclosure",
+        "greeting"
+      ],
+      "issues": [
+        "Operator never used the senior's name (Jan) after asking for it — 'Panie Janie' appears only once, then the operator reverts to 'Pan', missing a key warmth opportunity.",
+        "Operator did not deliver the mandatory disclosure (RODO + AI Act notice) on turn 1 — it was partially mentioned but not as a complete standalone sentence first.",
+        "Operator did not complete any of the required check-in phases: mood, sleep, health, or safety — essential info (mood, health, medications, safety) is completely missing.",
+        "Operator abandoned the call structure entirely after the senior's suspicion, never transitioning to the wellness check.",
+        "Operator missed multiple opportunities to build trust by asking about the senior's day or feelings before diving into verification.",
+        "Operator did not follow the 'if senior says withdrawal, append <<END_CALL>>' rule."
+      ],
+      "duration_s": 137.88999999999942,
+      "emergency_injected": true,
+      "emergency_type": "Zadyszka",
+      "emergency_severity": "critical",
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium",
+      "distraction_injected": true,
+      "distraction_type": "Sąsiad puka",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 9,
+      "archetype": "Wdzięczny i pogodny (wiek 75)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting ',' delimiter: line 7 column 4 (char 96)",
+        "Raw preview: {   \"scores\": {     \"warmth\": 9,     \"listening\": 7,     \"info_quality\": 7,     \"brevity\": 8   }..."
+      ],
+      "duration_s": 209.31299999999464,
+      "emergency_injected": true,
+      "emergency_type": "Zapomniany lek",
+      "emergency_severity": "medium",
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "distraction_injected": true,
+      "distraction_type": "Coś się wylało",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    },
+    {
+      "round": 10,
+      "archetype": "Zdezorientowany (wiek 79)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator skipped the mandatory sleep question from mood check-in; it was asked but not in the required separate turn immediately after acknowledging the initial mood.",
+        "Operator did not ask the four safety questions (food, isolation, home safety, fall risk) in the prescribed back-to-back order without acknowledgments; instead, acknowledgments and other topics were inserted between them.",
+        "Operator asked the health check-in question (about medications) before completing the safety block, violating the order that safety questions must be asked immediately after the sleep question."
+      ],
+      "duration_s": 197.54700000000594,
+      "emergency_injected": false,
+      "emergency_type": "",
+      "emergency_severity": "",
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high",
+      "distraction_injected": false,
+      "distraction_type": "",
+      "checklist_completion": 100.0,
+      "checklist_missed": []
+    }
+  ]
+}

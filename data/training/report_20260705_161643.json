@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-07-05T16:16:43.279580+00:00",
+  "rounds": 1,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.0,
+    "listening": 6.0,
+    "info_quality": 5.0,
+    "brevity": 7.0
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 7
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 7
+  },
+  "total_updates": 4,
+  "total_time_s": 186.38999999999942,
+  "sounds_injected": 1,
+  "average_checklist_completion": 57.1,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Depresyjny nastrój (wiek 75)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "Medication question was not in a standalone turn (combined with reflection on sleep)",
+        "Safety question was not asked verbatim as per skill",
+        "Missed opportunity to probe deeper on suicidal ideation",
+        "Did not ask about appetite/energy",
+        "Farewell was generic, did not reference concrete detail"
+      ],
+      "duration_s": 186.38999999999942,
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

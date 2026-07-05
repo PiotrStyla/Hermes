@@ -1,33 +1,32 @@
-```markdown
-# Skill: Safety Check
+# Safety Check
 
-Quietly confirm the senior is safe at home today.
+## Purpose
+The safety check is a mandatory part of every wellness call. Its goal is to assess the senior’s immediate physical and emotional safety, detect potential hazards or concerns, and provide reassurance. This step must never be skipped, even if the senior appears to be in good spirits.
 
-## Goal
+## Timing
+Always ask the safety question by the middle of the call – after initial greetings and general well‑being check, but before moving to closing remarks. A mid‑call placement ensures the senior is comfortable and engaged, while still allowing time for follow‑up if needed.
 
-By the end of this phase, you should know:
-- Has anyone visited or are they completely alone today?
-- Have they eaten / are they planning to eat?
-- Anything unusual at home (no heating, no hot water, fall risk, etc.)?
+## Mandatory Safety Question
+Use a natural segue to introduce the question. The following wording (in Polish) is required and must be asked verbatim – do not paraphrase, reword, or add any extra words. The exact phrasing is:
 
-## How to ask
+> **„A jak ogólnie – czuje się pan/pani bezpiecznie w domu? Nic panu/pani nie doskwiera?”**
 
-- Make it conversational, not an interrogation: "Has anyone popped by today, or are you having a quiet one?" Alternatively, in Polish: "Ktoś dzisiaj wpadał, czy tak samotnie pani odpoczywa?" — this feels like friendly chat but checks isolation.
-- Food: "And lunch — anything good planned?" After asking about food, weave in a subtle safety question: e.g. "A w domu wszystko dziś gra? Nic się nie zepsuło, nie trzeba było wzywać pomocy?" This sounds like casual concern but fulfills safety monitoring. If the senior says they have no plans and are home alone, this is the ideal moment to ask.
-- Home: weave a subtle safety question in naturally, even if nothing seems off. For example, after asking about visitors or activities, say: "I'm glad you're keeping busy. And everything's fine at home today — no issues with the flat or anything?" Only ask more directly if there's a hint something might be wrong (cold voice, mention of feeling weak, etc.). The Polish version above can also be used in this context.
-- **In every call, complete the safety check before ending.** Even if the senior is distracted by other topics, after discussing their concerns explicitly ask about food intake (especially after 9 PM) and home safety in a conversational way. For example: *"And have you had anything to eat today? I worry about you after such a long night."* If the senior does not answer, re‑ask once more before the farewell. Do not leave the call without some assurance about basic safety, isolation, and meals.
-- **When the senior is focused on a spouse's critical condition:** The safety check for the senior himself must still happen, even if briefly. For example, after discussing the wife's ER plan, ask: "And what about you — have you eaten anything today? Is everything okay at home, or do you need any help yourself?" This catches risks like the senior neglecting his own basic needs while caregiving.
-- **After 9 PM (21:00):** Asking about meals becomes especially critical. If the call takes place after 9 PM, prioritise confirming whether the senior has eaten today and ensure the safety check covers food consumption.
+Crucially, both clauses must be spoken together: never omit the opening phrase **„A jak ogólnie – czuje się pan/pani bezpiecznie w domu?”** – asking only **„Nic panu/pani nie doskwiera?”** is insufficient and breaks protocol. Likewise, do not insert additional context into the question (e.g., „Czy czuje się Pan bezpiecznie w domu mimo tego incydentu? Nic Panu nie doskwiera?” – this is not the mandated phrasing). Use *pan* when addressing a male senior, *pani* for a female senior, and adjust the corresponding pronouns accordingly. This question must be asked in every call. If the senior responds positively, briefly acknowledge and move on. If they express any discomfort, fear, pain, or practical concerns, note the specifics and escalate according to protocol.
 
-## Red flags to escalate in the report
+If the senior mentions physical discomfort (e.g., joint pain, back pain, hip pain) in the first few turns of the call, the safety question must include a probe linking that discomfort to their sense of safety. Do not treat the safety question as generic; tailor it to the specific discomfort reported. First ask the mandatory safety question as written. Then, immediately follow up with a probe such as: *„A czy to [body part / issue] wpływa na to, jak czuje się pan/pani w domu? Czy czuje się pan/pani bezpiecznie mimo tego bólu?”* This ensures that even seemingly minor physical complaints are evaluated for their impact on overall safety.
 
-- They mention falling, even a small one.
-- They sound confused or disoriented.
-- They mention not eating today and it's after noon.
-- They mention being unable to reach someone in an emergency.
+## Example Dialogue
+**Operator:** „Dzień dobry, pani Zofio. Jak się pani dzisiaj czuje?”
+**Senior:** „Dobrze, dziękuję. Trochę zmęczona, ale nic mi nie jest.”
+**Operator:** „To dobrze. A jak ogólnie – czuje się pani bezpiecznie w domu? Nic pani nie doskwiera?”
+**Senior:** „No, właściwie to od kilku dni mam problem z zamkiem w drzwiach. Ciężko go przekręcić.”
+**Operator:** „Rozumiem. Zapiszemy to jako prośbę o pomoc techniczną. Czy oprócz tego wszystko w porządku?”
 
-## Avoid
-
-- The word "safety" itself — don't make them feel monitored.
-- Making them feel surveilled or pitied.
-```
+**Another example (physical discomfort):**
+**Operator:** „Dzień dobry, panie Janie. Jak się pan czuje?”
+**Senior:** „Jakoś tak, ale od tygodnia boli mnie kolano.”
+**Operator:** „Przykro mi to słyszeć. A jak ogólnie – czuje się pan bezpiecznie w domu? Nic panu nie doskwiera?”
+**Senior:** „No, kolano boli, ale w domu czuję się bezpiecznie.”
+**Operator:** „Rozumiem. A czy to kolano wpływa na to, jak czuje się pan w domu? Czy czuje się pan bezpiecznie mimo tego bólu?”
+**Senior:** „Trochę się boję, że jak się poślizgnę, to upadnę.”
+**Operator:** „Dziękuję, że pan to mówi. Zapiszemy to i sprawdzimy, czy potrzebuje pan pomocy, na przykład poręczy lub antypoślizgowej maty.”

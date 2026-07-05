@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-06-30T12:57:13.269744+00:00",
+  "rounds": 1,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 9.0,
+    "listening": 8.0,
+    "info_quality": 7.0,
+    "brevity": 9.0
+  },
+  "first_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "total_updates": 1,
+  "total_time_s": 114.5,
+  "sounds_injected": 0,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Wdzięczny i pogodny (wiek 76)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask about known conditions or specific medications by name, relying on a general 'all taken as planned' question.",
+        "No explicit follow-up on whether the senior's medications actually help with any conditions, missing a chance for deeper health insight."
+      ],
+      "duration_s": 114.5,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

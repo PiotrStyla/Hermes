@@ -418,6 +418,9 @@ def cmd_scheduler_start(args: argparse.Namespace) -> int:
         board_review_hours=args.board_review_hours,
         board_review_time=args.board_review_time,
         board_review_timezone=args.board_review_timezone,
+        train_time=args.train_time,
+        train_rounds=args.train_rounds,
+        train_timezone=args.train_timezone,
         console=console,
     )
     return 0
@@ -875,6 +878,21 @@ def build_parser() -> argparse.ArgumentParser:
         "--board-review-timezone",
         default="Europe/Warsaw",
         help="Timezone for --board-review-time, e.g. Europe/Warsaw.",
+    )
+    sch_start.add_argument(
+        "--train-time",
+        help="Run self-play training daily at fixed HH:MM (24h), e.g. 06:00. First run is tomorrow.",
+    )
+    sch_start.add_argument(
+        "--train-rounds",
+        type=int,
+        default=0,
+        help="Number of training rounds per scheduled training session (0 = disabled).",
+    )
+    sch_start.add_argument(
+        "--train-timezone",
+        default="Europe/Warsaw",
+        help="Timezone for --train-time, e.g. Europe/Warsaw.",
     )
     sch_start.set_defaults(func=cmd_scheduler_start)
 

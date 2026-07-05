@@ -1,0 +1,125 @@
+{
+  "timestamp": "2026-07-02T08:08:14.901507+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 6.0,
+    "listening": 4.666666666666667,
+    "info_quality": 3.3333333333333335,
+    "brevity": 7.666666666666667
+  },
+  "first_scores": {
+    "warmth": 5,
+    "listening": 4,
+    "info_quality": 3,
+    "brevity": 7
+  },
+  "last_scores": {
+    "warmth": 6,
+    "listening": 5,
+    "info_quality": 1,
+    "brevity": 7
+  },
+  "total_updates": 6,
+  "total_time_s": 459.125,
+  "sounds_injected": 1,
+  "average_checklist_completion": 23.8,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Podejrzliwy (wiek 79)",
+      "scores": {
+        "warmth": 5,
+        "listening": 4,
+        "info_quality": 3,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Repeated the same 'how are you feeling' question without adjusting to senior's distrust.",
+        "Failed to deeply validate senior's skepticism; used 'rozumiem' formulaically without showing genuine understanding.",
+        "Missed opportunity to offer concrete proof (e.g., family member's name) to build trust.",
+        "Did not attempt any health or safety check before senior ended the call."
+      ],
+      "duration_s": 203.18799999999464,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Małomówny introwertyk (wiek 80)",
+      "scores": {
+        "warmth": 7,
+        "listening": 5,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator did not reflect the senior's feelings or follow emotional threads; responses were generic and did not show active listening.",
+        "Operator asked closed-ended questions that invited one-word answers, failing to probe deeper or engage the senior.",
+        "Operator missed the opportunity to ask the sleep question as a standalone turn before any reflection, as required by the mood-checkin skill.",
+        "Operator did not tailor the farewell to any concrete detail shared by the senior; the farewell was generic."
+      ],
+      "duration_s": 199.9690000000046,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Podejrzliwy (wiek 80)",
+      "scores": {
+        "warmth": 6,
+        "listening": 5,
+        "info_quality": 1,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Operator failed to properly handle strong skepticism per the active listening skill: should have explicitly validated the emotion, then offered to provide the family member's name who registered the service (as allowed by the skill), instead of citing privacy and refusing to give any details.",
+        "No information was gathered on mood, health, or safety because the operator did not successfully build trust or redirect after the initial refusal.",
+        "Operator did not follow the active listening guidance for 'strong skepticism or distrust' which requires offering a specific proof point (e.g., name of the person who signed up) before redirecting to the mood question."
+      ],
+      "duration_s": 55.96800000000076,
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

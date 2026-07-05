@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-06-30T10:02:47.938277+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.666666666666666,
+    "listening": 7.666666666666667,
+    "info_quality": 6.0,
+    "brevity": 8.666666666666666
+  },
+  "first_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 4,
+    "brevity": 9
+  },
+  "total_updates": 7,
+  "total_time_s": 383.78099999999904,
+  "sounds_injected": 1,
+  "average_checklist_completion": 33.4,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Po kłótni z rodziną (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "disclosure",
+        "farewell"
+      ],
+      "issues": [
+        "Missed the mandatory sleep quality question ('A jak spała pani dzisiaj w nocy?') during mood check-in",
+        "Disclosure skill missing the pointer to data privacy details (e.g., 'szczegóły w umowie podpisanej przez rodzinę')",
+        "Farewell too long and not focused on one concrete detail; missed opportunity to reference the senior's expressed desire for company",
+        "Did not follow up on whether the knee medication helps (as per health check-in skill)"
+      ],
+      "duration_s": 151.03099999999904,
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not explicitly ask about the senior's own known conditions or medications for his back pain; only asked about his wife's medications.",
+        "Operator did not explicitly ask about safety at home (safety-check skill was not used).",
+        "Operator missed an opportunity to ask about the senior's own health after he mentioned back pain; instead focused on his wife's medication."
+      ],
+      "duration_s": 146.09400000000096,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Po kłótni z rodziną (wiek 69)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 4,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question ('A jak spała Pani dzisiaj w nocy?') as required by the mood-checkin skill.",
+        "Operator failed to perform a health check-in: she did not ask about known conditions, medications, or follow up on the senior's mention of heart racing ('serce mi wali jak młotem') with a medication adherence question.",
+        "Operator's farewell was generic ('Życzę Pani spokoju i siły') instead of referencing a specific detail from the call, such as the family conflict or the heart racing."
+      ],
+      "duration_s": 86.65599999999904,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

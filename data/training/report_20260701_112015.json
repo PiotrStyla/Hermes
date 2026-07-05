@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-07-01T11:20:15.250235+00:00",
+  "rounds": 1,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 6.0,
+    "listening": 5.0,
+    "info_quality": 4.0,
+    "brevity": 7.0
+  },
+  "first_scores": {
+    "warmth": 6,
+    "listening": 5,
+    "info_quality": 4,
+    "brevity": 7
+  },
+  "last_scores": {
+    "warmth": 6,
+    "listening": 5,
+    "info_quality": 4,
+    "brevity": 7
+  },
+  "total_updates": 4,
+  "total_time_s": 198.38999999999942,
+  "sounds_injected": 0,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Podejrzliwy (wiek 74)",
+      "scores": {
+        "warmth": 6,
+        "listening": 5,
+        "info_quality": 4,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator failed to reflect and fully address the senior's underlying frustration about not being informed by his family before the scheduled calls; he used 'wolałbym, żeby mnie wcześniej uprzedzili' but was not asked how that made him feel.",
+        "Operator skipped the mandatory explicit sleep question ('A jak spała pan dzisiaj w nocy?') from the mood check-in skill; the only sleep question was embedded in a reflective statement, not asked directly.",
+        "Operator did not ask about medication adherence, which is a required part of the health check-in.",
+        "Operator did not ask the exact safety question verbatim ('A jak ogólnie – czuje się pan bezpiecznie w domu? Nic panu nie doskwiera?') but only a paraphrase ('A jak ogólnie – czuje się pan bezpiecznie w domu? Nic panu nie doskwiera?') — actually it was close, but the senior's response about the knee was not linked back to safety at home.",
+        "Operator should have probed more about the knee pain instead of immediately suggesting a doctor visit; the senior already offered his coping methods, so the operator could have reflected gratitude rather than pushing a medical recommendation."
+      ],
+      "duration_s": 198.38999999999942,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}
