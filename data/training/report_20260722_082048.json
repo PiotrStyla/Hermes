@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-07-22T08:20:48.662774+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.0,
+    "listening": 6.0,
+    "info_quality": 5.0,
+    "brevity": 9.333333333333334
+  },
+  "first_scores": {
+    "warmth": 6,
+    "listening": 6,
+    "info_quality": 7,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 10
+  },
+  "total_updates": 6,
+  "total_time_s": 1116.625,
+  "sounds_injected": 0,
+  "average_checklist_completion": 23.8,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zdezorientowany (wiek 83)",
+      "scores": {
+        "warmth": 6,
+        "listening": 6,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator nie odpowiedział w pełni na wielokrotne pytania seniora o źródło numeru telefonu, co mogło osłabić zaufanie.",
+        "Operator nie pogłębił rozmowy o problemach z pamięcią i przyjmowaniem leków, mimo że senior sygnalizował dezorientację.",
+        "Operator nie ocenił stanu emocjonalnego seniora poza początkowym pytaniem o samopoczucie, pomimo oznak niepokoju.",
+        "Operator zakończył rozmowę, gdy senior jeszcze mówił, nie odnosząc się do ostatniej wypowiedzi seniora (pytanie o numer)."
+      ],
+      "duration_s": 406.79700000000594,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Podejrzliwy (wiek 70)",
+      "scores": {
+        "warmth": 6,
+        "listening": 4,
+        "info_quality": 1,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "active-listening"
+      ],
+      "issues": [
+        "Did not follow the active listening protocol for distrust: after the senior said 'A skąd pani ma mój numer? Bo ja niczego nie podpisywałem', the operator should have validated the specific concern, offered a verifiable detail about the family member (e.g., 'Pana syn/córka wspomniał/a, że lubi pan słuchać radia wieczorem'), or acknowledged the limitation and offered to end the call. Instead, the operator repeated the explanation and pushed for a question, which escalated the senior's refusal.",
+        "Operator did not directly address the senior's statement 'nie podpisywałem' – this was a key point that needed explicit acknowledgment (e.g., 'Rozumiem, że nie podpisywał pan żadnej umowy – to pana rodzina to zrobiła w pana imieniu').",
+        "After the senior's silence (blank response), the operator should have offered to end the call or asked if they preferred to stop, rather than immediately asking another question."
+      ],
+      "duration_s": 608.0,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Wdzięczny i pogodny (wiek 83)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Senior mentioned 'old bones hurting' but operator did not ask for pain scale (0-10) as required by safety-check skill.",
+        "After senior mentioned physical pain, operator did not follow up with a question about emotional state (e.g., 'A jak się pan czuje psychicznie?').",
+        "Farewell could have been more specific by directly quoting the senior's 'pomidory w ogródku' instead of generic 'ogród'."
+      ],
+      "duration_s": 101.82799999999406,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

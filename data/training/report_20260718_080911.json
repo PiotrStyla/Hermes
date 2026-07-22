@@ -1,0 +1,116 @@
+{
+  "timestamp": "2026-07-18T08:09:11.123002+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 2.3333333333333335,
+    "listening": 2.0,
+    "info_quality": 1.3333333333333333,
+    "brevity": 3.0
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 4,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 0,
+    "listening": 0,
+    "info_quality": 0,
+    "brevity": 0
+  },
+  "total_updates": 3,
+  "total_time_s": 419.35899999999674,
+  "sounds_injected": 2,
+  "average_checklist_completion": 23.8,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Małomówny introwertyk (wiek 76)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 4,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "Did not ask about medication adherence or recent doctor visits, violating the health-checkin skill.",
+        "Safety question was preceded by a reflective statement ('Cieszę się, że nie odczuwa pan bólu') which may bias the answer, contrary to safety-check skill.",
+        "Mood probe after 'Spokój' was shallow; could have asked 'Co sprawia, że czuje się pan spokojny?' to gather more info."
+      ],
+      "duration_s": 114.76600000000326,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Zmartwiony emeryt (wiek 77)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting ',' delimiter: line 7 column 4 (char 97)",
+        "Raw preview: {   \"scores\": {     \"warmth\": 8,     \"listening\": 7,     \"info_quality\": 5,     \"brevity\": 10   }..."
+      ],
+      "duration_s": 161.90599999998813,
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Małomówny introwertyk (wiek 76)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting ',' delimiter: line 7 column 4 (char 96)",
+        "Raw preview: {   \"scores\": {     \"warmth\": 7,     \"listening\": 7,     \"info_quality\": 6,     \"brevity\": 8   }..."
+      ],
+      "duration_s": 142.68700000000536,
+      "sound_injected": true,
+      "sound_type": "Krzyki",
+      "sound_severity": "high",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

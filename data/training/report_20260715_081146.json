@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-07-15T08:11:46.400067+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.333333333333334,
+    "listening": 8.0,
+    "info_quality": 5.0,
+    "brevity": 8.666666666666666
+  },
+  "first_scores": {
+    "warmth": 9,
+    "listening": 9,
+    "info_quality": 4,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 9
+  },
+  "total_updates": 6,
+  "total_time_s": 528.4220000000205,
+  "sounds_injected": 2,
+  "average_checklist_completion": 28.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Depresyjny nastrój (wiek 72)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 4,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Mandated health check-in questions (sleep, medication, pain) were skipped entirely due to the senior's distress, but the Operator never attempted a gentle re-engagement for medication or pain as recommended in the skill exceptions.",
+        "Operator did not ask the safety question directly as a standalone turn – it was embedded in a broader reassurance statement.",
+        "Senior did not explicitly consent to the call after disclosure; the Operator proceeded directly to mood questioning."
+      ],
+      "duration_s": 103.46899999998277,
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Po kłótni z rodziną (wiek 68)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Health check-in was completely omitted – no questions about known conditions, medications, or pain.",
+        "Senior's name could not be used since no name was provided, but the skill requires addressing by name in the first sentence."
+      ],
+      "duration_s": 97.46900000004098,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Niedosłyszący (wiek 77)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Interrupted the senior when he was about to say something ('Tylko żeby mi pani nie kazała iść do...').",
+        "Did not probe the senior's mood further after he said 'tak sobie' – missed opportunity to understand emotional state.",
+        "Failed to ask about medication adherence or recent doctor visits as per health check-in skill.",
+        "Farewell was generic ('Mam nadzieję, że uda się to szybko naprawić') – should have referenced the hearing aid more concretely."
+      ],
+      "duration_s": 327.48399999999674,
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

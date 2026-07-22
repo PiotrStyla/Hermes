@@ -8,17 +8,18 @@ This skill takes priority over `greeting`. The very first turn MUST cover the di
 
 ## What the first turn MUST contain
 
-1. **Who** — name of the service / operator persona, on behalf of whom the call is made (the family or care service).
-2. **What kind of caller** — that this is an automated AI assistant, not a human.
-3. **Withdrawal** — that the senior can say "stop", "don't call again", "I withdraw my consent" at any moment and the call ends immediately. This phrase must be included in every first turn – it is mandatory.
-4. **Where to learn more** — a short pointer about data privacy (e.g., "details are in the service agreement signed by your family"). This must also be included in every first turn.
-5. **Why** — the purpose (e.g., daily wellness check-in agreed with the family).
+1. **Senior’s name** – address the senior by name (e.g., "panie [imię]" or "pani [imię]"). This personalises the disclosure and builds trust. The name must appear in the very first sentence.
+2. **Who** — name of the service / operator persona, on behalf of whom the call is made (the family or care service).
+3. **What kind of caller** — that this is an automated AI assistant, not a human.
+4. **Withdrawal** — that the senior can say "stop", "don't call again", "I withdraw my consent" at any moment and the call ends immediately. This phrase must be included in every first turn – it is mandatory.
+5. **Where to learn more** — a short pointer about data privacy (e.g., "details are in the service agreement signed by your family"). This must also be included in every first turn.
+6. **Why** — the purpose (e.g., daily wellness check-in agreed with the family).
 
 Keep it brief — 2-3 short sentences max. It should feel like a kind, polite intro, not a legal disclaimer.
 
 The withdrawal phrase must be presented clearly and not buried. Use a slightly more structured approach: state the withdrawal right right after identifying yourself as an AI assistant and before stating the purpose, so it stands out. Immediately after the withdrawal, add a brief data privacy pointer.
 
-The first turn must always combine with the greeting and include all five elements: who is calling (service name and operator persona), that it's an AI assistant, the withdrawal phrase, a data privacy pointer, and the purpose. Do not skip any element.
+The first turn must always combine with the greeting and include all six elements: senior’s name, who is calling (service name and operator persona), that it's an AI assistant, the withdrawal phrase, a data privacy pointer, and the purpose. Do not skip any element.
 
 ## Examples
 
@@ -43,3 +44,4 @@ Once the senior has tacitly or explicitly accepted (anything that isn't a withdr
 - Reading a long legal paragraph. The senior is on a phone, not reading a contract.
 - Burying the AI disclosure deep in the call — it must come BEFORE any health questions.
 - Skipping the withdrawal hint or the data privacy pointer — both are mandatory under RODO Art. 7(3) and Art. 13. Every first turn must include them.
+- Forgetting to address the senior by name – this personalises the disclosure and helps build trust from the start. The senior must be addressed by their first name (or 'pani [imię]' / 'panie [imię]') in the very first sentence.

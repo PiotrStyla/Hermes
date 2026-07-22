@@ -1,0 +1,126 @@
+{
+  "timestamp": "2026-07-06T08:21:25.719709+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 6.666666666666667,
+    "listening": 6.666666666666667,
+    "info_quality": 5.0,
+    "brevity": 8.0
+  },
+  "first_scores": {
+    "warmth": 5,
+    "listening": 6,
+    "info_quality": 4,
+    "brevity": 7
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 7,
+    "info_quality": 5,
+    "brevity": 8
+  },
+  "total_updates": 10,
+  "total_time_s": 1191.5629999999946,
+  "sounds_injected": 2,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Małomówny introwertyk (wiek 69)",
+      "scores": {
+        "warmth": 5,
+        "listening": 6,
+        "info_quality": 4,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "health-checkin",
+        "farewell",
+        "active-listening"
+      ],
+      "issues": [
+        "Skipped the health check-in entirely – did not ask about conditions or medications.",
+        "Farewell was generic and did not reference any specific detail from the senior's words.",
+        "'Cieszę się' repeated three times in a row, sounding robotic.",
+        "Did not use active listening probes to encourage the senior to elaborate on his brief answers."
+      ],
+      "duration_s": 142.23499999998603,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Rozmowny dziadek (wiek 79)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening",
+        "mood-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not explicitly acknowledge the senior’s mention of his late wife by name (śp. żona) as specified in active listening – she only said 'your wife' without naming her, missing a chance to deepen emotional connection.",
+        "Safety question was asked in a combined form ('A jak ogólnie – czuje się pan bezpiecznie w domu? Nic panu nie doskwiera?') but was preceded by a filler statement ('A co do mnie, to dziękuję, nie mogę narzekać!'), which is not part of the mandatory wording and adds unnecessary content.",
+        "Operator skipped the mandatory standalone sleep question – instead, she asked 'A jak spał pan dzisiaj w nocy?' embedded within a sentence that also reflected on his photos and transitioned into her own sleep. This violates the rule that the sleep question must be a fully separate turn."
+      ],
+      "duration_s": 255.68700000000536,
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Niedosłyszący (wiek 76)",
+      "scores": {
+        "warmth": 7,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "greeting",
+        "mood-checkin",
+        "health-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator nie dostosowała się skutecznie do potrzeb seniora – wielokrotne prośby o głośniejsze mówienie nie zostały spełnione (senior wciąż słyszał cicho).",
+        "Brak dostosowania technicznego (np. zwiększenie głośności lub zwolnienie tempa) – senior wielokrotnie prosił, ale operator tylko werbalnie zapewniała, bez realnej zmiany.",
+        "Nie zapytała o konkretne dolegliwości zdrowotne (np. czy ucho boli, czy jest leczone) ani o leki – pomimo że senior wyraźnie wspomniał o problemie z uchem.",
+        "Pominięto pytanie o sen – senior wspomniał, że spał 'jako tako', ale operator nie zadała obowiązkowego pytania o sen jako osobny temat.",
+        "Brak prośby o opowiedzenie więcej o samopoczuciu – senior dawał krótkie odpowiedzi, operator nie zachęcała do rozwinięcia."
+      ],
+      "duration_s": 793.6410000000033,
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

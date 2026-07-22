@@ -29,7 +29,7 @@ class SupervisorAgent(BaseAgent):
 
     def __init__(self, model: str | None = None):
         model = model or os.getenv("SUPERVISOR_MODEL")
-        super().__init__(model=model, temperature=0.2, max_tokens=3000)
+        super().__init__(model=model, temperature=0.2, max_tokens=4000)
 
     @property
     def system_prompt(self) -> str:
@@ -99,7 +99,23 @@ Return your JSON evaluation now."""
         ]
 
         raw = self._chat_json(messages)
-        return self._parse_json(raw)
+        result = self._parse_json(raw)
+
+        # Retry once if the first attempt produced zero scores from a parse error.
+        if result.get("_raw"):
+            retry_messages = messages + [
+                {"role": "assistant", "content": raw},
+                {"role": "user", "content": (
+                    "Your previous response was not valid JSON. "
+                    "Please return ONLY a valid JSON object matching the schema. "
+                    "Ensure all commas are present between array and object elements. "
+                    "Do not include any text outside the JSON object."
+                )},
+            ]
+            raw_retry = self._chat_json(retry_messages)
+            result = self._parse_json(raw_retry)
+
+        return result
 
     def _chat_json(self, messages: list[dict[str, Any]]) -> str:
         """Send a chat completion that asks the model to return strict JSON.
@@ -142,16 +158,70 @@ Return your JSON evaluation now."""
 
         try:
             return json.loads(text)
-        except json.JSONDecodeError as e:
-            preview = text[:300].replace("\n", " ")
-            return {
-                "scores": {"warmth": 0, "listening": 0, "info_quality": 0, "brevity": 0},
-                "strengths": [],
-                "issues": [
-                    f"Supervisor returned unparseable JSON: {e}",
-                    f"Raw preview: {preview}...",
-                ],
-                "skill_updates": [],
-                "senior_notes": [],
-                "_raw": text,
-            }
+        except json.JSONDecodeError:
+            pass
+
+        # Attempt to repair common JSON issues.
+        repaired = SupervisorAgent._repair_json(text)
+        if repaired:
+            try:
+                return json.loads(repaired)
+            except json.JSONDecodeError:
+                pass
+
+        # If the JSON looks truncated, try closing open brackets.
+        closed = SupervisorAgent._close_truncated_json(text)
+        if closed and closed != repaired:
+            try:
+                return json.loads(closed)
+            except json.JSONDecodeError:
+                pass
+
+        preview = text[:300].replace("\n", " ")
+        return {
+            "scores": {"warmth": 0, "listening": 0, "info_quality": 0, "brevity": 0},
+            "strengths": [],
+            "issues": [
+                f"Supervisor returned unparseable JSON",
+                f"Raw preview: {preview}...",
+            ],
+            "skill_updates": [],
+            "senior_notes": [],
+            "_raw": text,
+        }
+
+    @staticmethod
+    def _repair_json(text: str) -> str | None:
+        """Try to fix common JSON syntax issues produced by LLMs.
+
+        Handles:
+        - Trailing commas before } or ]
+        - Missing commas between items (newline + quote without preceding comma)
+        """
+        # Remove trailing commas before closing brackets/braces.
+        fixed = re.sub(r",\s*([}\]])", r"\1", text)
+
+        # Add missing commas: a closing quote or bracket followed by
+        # whitespace and an opening quote or brace, without a comma.
+        fixed = re.sub(r'("\s*)\n(\s*["])', r'\1,\n\2', fixed)
+        fixed = re.sub(r'(\]\s*)\n(\s*["])', r'\1,\n\2', fixed)
+        fixed = re.sub(r'(\}\s*)\n(\s*["])', r'\1,\n\2', fixed)
+        fixed = re.sub(r'("\s*)\n(\s*\{)', r'\1,\n\2', fixed)
+
+        if fixed != text:
+            return fixed
+        return None
+
+    @staticmethod
+    def _close_truncated_json(text: str) -> str | None:
+        """Attempt to close unclosed brackets/braces in a truncated JSON string."""
+        opens = text.count("{") - text.count("}")
+        brackets = text.count("[") - text.count("]")
+        if opens <= 0 and brackets <= 0:
+            return None
+        # Try closing — but only if the text looks like it was cut off.
+        fixed = text.rstrip()
+        # Remove any trailing incomplete fragment (e.g., a partial string).
+        fixed = re.sub(r'["\'][^"\']*$', '', fixed)
+        fixed += ']' * max(brackets, 0) + '}' * max(opens, 0)
+        return fixed

@@ -243,3 +243,73 @@ _This file is auto-updated by the Supervisor after each call with notes specific
 - Grows pelargonie (geraniums) on her balcony and is worried about yellowing leaves.
 - Misses her late husband Tadzio – his music brings comfort during sleepless nights.
 - Takes Amlodypina (amlodipine) – forgot this morning, needs reminder.
+
+## 2026-07-06 10:04
+
+- Hip pain woke her at 3 AM; took a painkiller then.
+- Lonely in evenings since husband Tadzio died; Marek (son) calls Sundays.
+- Pelargonie (geraniums) on balcony are wilting; she waters them regularly.
+
+## 2026-07-07 10:02
+
+- Initial disappointment about AI but warmed up quickly.
+- Sleep difficulties due to memories of the past, waking at 5 AM.
+- Hip pain worse in the mornings, improves by afternoon.
+- Pelargonie are important – she wants to save them, reminiscent of late husband Tadzio.
+- Has a helpful sąsiadka z góry with beautiful flowers.
+
+## 2026-07-08 10:05
+
+- Hip pain is worse in the mornings but improves after moving around.
+- Uses a small pillow from granddaughter Zosia under her side for hip comfort.
+- Has difficulty remembering to take all medications (unsure about amlodipine today).
+- Nights are often restless; wakes up multiple times and has trouble falling back asleep.
+- Pelargonie (geraniums) on the balcony are drying up despite regular watering.
+- Lives alone since Tadzio passed away; feels the quietness especially in the evenings.
+- Enjoys listening to old music on the radio in the evenings.
+
+## 2026-07-14 10:01
+
+- Jadwiga has a hip that hurts in the morning but improves with movement.
+- She takes amlodypina and forgot once recently, but Marek reminds her.
+- She has a cane by the bed and feels safe at home.
+- She talked about pelargonie on the balcony that are drying despite watering.
+- She woke at 3 AM thinking about Tadzio (likely deceased husband).
+
+## 2026-07-15 10:01
+
+- Jadwiga forgot to take amlodipine for blood pressure this morning.
+- Jadwiga has hip pain that makes it hard to get up in the morning.
+- Jadwiga misses her late husband Tadeusz, especially at night; the song 'Miłość ci wszystko wybaczy' triggered strong emotions.
+- Jadwiga enjoys sitting on the balcony and looking at her pelargoniums.
+
+## 2026-07-16 10:01
+
+- Hip pain in the mornings, a regular issue
+- Geraniums are drying up – she is worried about them
+- Lives alone, uses radio with old music for company in the evening
+- Referenced her late husband Tadzio's advice on locking doors
+
+## 2026-07-20 10:04
+
+- Poranna sztywność biodra, gorsza rano.
+- Zapomina o amlodypinie (na ciśnienie) – dzisiaj rano nie wzięła.
+- Tęskni za zmarłym mężem Tadziem, szczególnie wieczorami.
+- Pelargonie na balkonie schną – podejrzewa za dużo słońca.
+- Słucha starych melodii, które lubił Tadzio.
+
+## 2026-07-21 10:01
+
+- Hip pain in the morning, but considers it normal
+- Misses her late husband Tadzio, especially at night
+- Uses radio with old music and melissa tea to help with sleep
+- Feels safe at home, has good neighbors (Pani Krysiowa)
+- Son Marek calls every Sunday
+- Has pelargonie on the balcony that she cares for
+
+## 2026-07-22 10:07
+
+- Jadwiga has leg and hip pain, especially in the morning – she misses her late husband Tadzio who used to massage her legs.
+- She is reading 'Krzyżacy' for comfort, enjoys books and radio.
+- Has good neighbors (pan Marek) who monitor her safety, but feels lonely.
+- No mention of medication or recent doctor visits – needs follow-up on next call.

@@ -1,0 +1,118 @@
+{
+  "timestamp": "2026-07-09T08:18:19.713692+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 4.666666666666667,
+    "listening": 4.666666666666667,
+    "info_quality": 3.6666666666666665,
+    "brevity": 5.666666666666667
+  },
+  "first_scores": {
+    "warmth": 0,
+    "listening": 0,
+    "info_quality": 0,
+    "brevity": 0
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 9,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "total_updates": 5,
+  "total_time_s": 307.25,
+  "sounds_injected": 2,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Wdzięczny i pogodny (wiek 78)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting value: line 1 column 1 (char 0)",
+        "Raw preview: ..."
+      ],
+      "duration_s": 77.29699999999139,
+      "sound_injected": true,
+      "sound_type": "Krzyki",
+      "sound_severity": "high",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Zdezorientowany (wiek 85)",
+      "scores": {
+        "warmth": 6,
+        "listening": 5,
+        "info_quality": 4,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not follow up on the senior's vague mood answer ('jakoś tak') with the required probe from the mood-checkin skill.",
+        "Operator skipped the mandatory sleep question from the health-checkin skill.",
+        "Operator did not ask the mandated safety question verbatim; the question was reworded and combined with other sentences.",
+        "Operator failed to ask the medication adherence question as a standalone turn; it was embedded in a longer response.",
+        "Operator did not use active listening to reflect the senior's confusion about identity; instead, repeated the same explanation multiple times."
+      ],
+      "duration_s": 146.6880000000092,
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Zmartwiony emeryt (wiek 74)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory sleep question as a standalone turn; it was embedded in a longer sentence.",
+        "Operator did not ask the mandatory medication adherence question as a standalone turn; it was embedded in a longer sentence.",
+        "Operator missed the opportunity to ask about the senior's wife (mentioned twice) to build more personal connection."
+      ],
+      "duration_s": 83.26499999999942,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

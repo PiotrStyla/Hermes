@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-07-20T08:12:04.375713+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 4.333333333333333,
+    "listening": 3.6666666666666665,
+    "info_quality": 3.0,
+    "brevity": 5.333333333333333
+  },
+  "first_scores": {
+    "warmth": 0,
+    "listening": 0,
+    "info_quality": 0,
+    "brevity": 0
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 8,
+    "brevity": 7
+  },
+  "total_updates": 4,
+  "total_time_s": 413.9529999999795,
+  "sounds_injected": 3,
+  "average_checklist_completion": 28.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zmartwiony emeryt (wiek 76)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting value: line 1 column 1 (char 0)",
+        "Raw preview: ..."
+      ],
+      "duration_s": 103.81300000002375,
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Podejrzliwy (wiek 80)",
+      "scores": {
+        "warmth": 5,
+        "listening": 4,
+        "info_quality": 1,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not address the senior's distrust with a concrete, personal reference (e.g., mentioning the family member who arranged the call) to build trust.",
+        "Operator failed to gather any information on mood, health, or safety—no questions were asked beyond the initial mood check.",
+        "Operator did not use the senior's first name in subsequent turns after the first message, missing an opportunity to personalize the interaction.",
+        "Operator did not follow the active listening skill to probe deeper into the senior's concerns about the call's legitimacy."
+      ],
+      "duration_s": 92.15599999995902,
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 84)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 8,
+        "brevity": 7
+      },
+      "skill_updates": [
+        "farewell",
+        "safety-check"
+      ],
+      "issues": [
+        "Operator did not complete a proper farewell: the goodbye message used a generic wish about 'bzy' instead of referencing a specific detail from the entire call (e.g., the photo in the park, the gray hat, the lilacs, or the concern about falling). Also, the operator ended the call without allowing the senior to finish her sentence about going to the doctor ('ale tak ci...'). This violates the farewell skill requirement to not cut off the senior.",
+        "Operator asked the safety question immediately after the health check-in but preceded it with 'Cieszę się...' and 'Rozumiem...' which violates the safety-check skill's instruction to ask it as a clean, standalone question without any preceding reflection or statement.",
+        "Operator ended the call after the senior's last statement about safety and fear of falling, but did not give her a chance to finish her sentence about going to the doctor again ('ale tak ci...'). The operator should have waited for her to finish, then acknowledged that specific plan before transitioning to the farewell."
+      ],
+      "duration_s": 217.98399999999674,
+      "sound_injected": true,
+      "sound_type": "Syrena policji",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

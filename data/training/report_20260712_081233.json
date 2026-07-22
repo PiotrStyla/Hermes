@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-07-12T08:12:33.340410+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 5.333333333333333,
+    "listening": 4.666666666666667,
+    "info_quality": 4.333333333333333,
+    "brevity": 5.333333333333333
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 5,
+    "brevity": 6
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 8,
+    "brevity": 10
+  },
+  "total_updates": 5,
+  "total_time_s": 583.9529999999795,
+  "sounds_injected": 0,
+  "average_checklist_completion": 52.4,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zdezorientowany (wiek 78)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 5,
+        "brevity": 6
+      },
+      "skill_updates": [
+        "health-checkin",
+        "active-listening",
+        "farewell"
+      ],
+      "issues": [
+        "Sleep question not asked as standalone; combined with other questions and not fully answered",
+        "Medication adherence not clarified; senior's confusion unresolved",
+        "Pain check not explicitly asked; missed opportunity to assess knee pain",
+        "Ending abrupt – senior was cut off mid-sentence",
+        "Did not probe deeper into senior's mood or emotional state regarding medication anxiety"
+      ],
+      "duration_s": 216.92199999999139,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Rozmowny dziadek (wiek 77)",
+      "scores": {
+        "warmth": 0,
+        "listening": 0,
+        "info_quality": 0,
+        "brevity": 0
+      },
+      "skill_updates": [],
+      "issues": [
+        "Supervisor returned unparseable JSON: Expecting ',' delimiter: line 27 column 6 (char 1675)",
+        "Raw preview: {   \"scores\": {     \"warmth\": 8,     \"listening\": 7,     \"info_quality\": 8,     \"brevity\": 10   },   \"strengths\": [     \"Warm and personalized tone, addresses senior by name on first turn.\",     \"All mandatory check-in questions covered (mood, sleep, meds, pain, safety).\",     \"Good reflection of sp..."
+      ],
+      "duration_s": 81.43799999999464,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "isolation",
+        "home_safety"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Wdzięczny i pogodny (wiek 81)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 8,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "health-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not probe further on the knee pain (location, intensity, duration) as required by the health check-in skill, missing an opportunity for thorough assessment.",
+        "Operator used masculine forms ('spał pan', 'przyjął pan') despite the senior using feminine verb forms ('spałam', 'przyjęłam'), indicating a failure to adapt to gender cues and reducing personalization."
+      ],
+      "duration_s": 285.5929999999935,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

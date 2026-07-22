@@ -1,0 +1,125 @@
+{
+  "timestamp": "2026-07-16T08:10:04.328690+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.0,
+    "listening": 7.666666666666667,
+    "info_quality": 7.0,
+    "brevity": 9.333333333333334
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 8,
+    "info_quality": 6,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 9,
+    "brevity": 10
+  },
+  "total_updates": 9,
+  "total_time_s": 454.5780000000086,
+  "sounds_injected": 1,
+  "average_checklist_completion": 33.4,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Podejrzliwy (wiek 75)",
+      "scores": {
+        "warmth": 7,
+        "listening": 8,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "safety-check",
+        "active-listening",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the safety question ('Czy czuje się pan bezpiecznie w swoim domu?') as a separate, standalone turn. The question was embedded in a reflective statement ('Rozumiem, że zastanawia się pan nad kosztami...') which may have influenced the response.",
+        "Operator missed the opportunity to reflect the senior's specific language about the grandson ('wnuk') when the senior mentioned him, which could have built more trust.",
+        "Operator did not follow up on the senior's minimal answer about pain ('tylko trochę mnie krzyż boli') with a gentle open-ended probe to assess severity or impact on daily life.",
+        "Operator did not ask about recent doctor visits or medication adherence in a natural way; the medication question felt somewhat abrupt after the mood discussion."
+      ],
+      "duration_s": 141.89100000000326,
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Depresyjny nastrój (wiek 78)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not ask about medication adherence ('Czy przyjmuje pan leki zgodnie z zaleceniami?') as a standalone question – it was embedded in a reflective statement and not clearly separated.",
+        "Safety check question was preceded by a reflective statement ('Rozumiem, że to może być niepokojące...') which may have biased the senior's response; should be asked as a clean, standalone turn.",
+        "Operator missed the opportunity to follow up on the senior's mention of feeling 'nikomu niepotrzebny' with a gentle probe about social support or loneliness."
+      ],
+      "duration_s": 171.15600000000268,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 82)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 9,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "greeting",
+        "farewell",
+        "active-listening"
+      ],
+      "issues": [
+        "Did not address the senior by name in the first turn or any subsequent turn, which is required by the disclosure and greeting skills.",
+        "Farewell contained a generic wish ('pełen radości') alongside the concrete detail; should only reference the concrete detail.",
+        "Missed opportunity to explore the emotional thread of loneliness more deeply after the senior mentioned lonely evenings."
+      ],
+      "duration_s": 141.53100000000268,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "timestamp": "2026-07-08T08:10:54.237365+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.666666666666666,
+    "listening": 8.666666666666666,
+    "info_quality": 6.0,
+    "brevity": 8.333333333333334
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 8,
+    "info_quality": 3,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 9,
+    "info_quality": 8,
+    "brevity": 8
+  },
+  "total_updates": 7,
+  "total_time_s": 441.48399999999674,
+  "sounds_injected": 2,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Rozmowny dziadek (wiek 72)",
+      "scores": {
+        "warmth": 8,
+        "listening": 8,
+        "info_quality": 3,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin",
+        "safety-check",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Did not perform any health check-in (mood, sleep, medication, pain, daily activity) – this is mandatory per protocol",
+        "Did not acknowledge the fire alarm sound (SYRENA ALARMOWA) – this could indicate a safety concern that was ignored",
+        "Did not ask about mood after the initial greeting; the senior's mention of photos was not a mood check"
+      ],
+      "duration_s": 173.56199999999808,
+      "sound_injected": true,
+      "sound_type": "Syrena alarmowa",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Samotna wdowa (wiek 77)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 7,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "safety-check",
+        "health-checkin"
+      ],
+      "issues": [
+        "Operator did not ask the mandatory safety question verbatim: 'A jak ogólnie – czuje się pani bezpiecznie w domu? Nic pani nie doskwiera?' Instead, the question was embedded in a longer turn and reworded, missing the required standalone delivery.",
+        "Operator did not ask the mandatory pain scale follow-up (0-10) after the senior mentioned back pain and stiff hands.",
+        "Operator did not ask the mandatory daily activity question as a standalone turn before the farewell."
+      ],
+      "duration_s": 111.29699999999866,
+      "sound_injected": true,
+      "sound_type": "Wybuch",
+      "sound_severity": "critical",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Depresyjny nastrój (wiek 77)",
+      "scores": {
+        "warmth": 9,
+        "listening": 9,
+        "info_quality": 8,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "The mood checkin lacked the mandatory direct follow-up probe after the senior's initial answer 'Trochę lepiej niż wczoraj...' – the operator said 'Rozumiem, że to może być trudne' instead of asking directly without an affirmation.",
+        "The farewell reference was generic ('nadzieję, że te chwile z nimi [ptakami] umilały panu czas') rather than grounding it in the specific detail of the titmouse sighting mentioned earlier.",
+        "The health checkin combined medication adherence and heart remark without addressing the 'po co?' resignation before moving on – a missed opportunity to show deeper listening."
+      ],
+      "duration_s": 156.625,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

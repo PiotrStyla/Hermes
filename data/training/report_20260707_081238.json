@@ -1,0 +1,131 @@
+{
+  "timestamp": "2026-07-07T08:12:38.978471+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.0,
+    "listening": 6.0,
+    "info_quality": 4.0,
+    "brevity": 8.666666666666666
+  },
+  "first_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 4,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 7,
+    "info_quality": 5,
+    "brevity": 8
+  },
+  "total_updates": 12,
+  "total_time_s": 647.4839999999967,
+  "sounds_injected": 2,
+  "average_checklist_completion": 42.9,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Depresyjny nastrój (wiek 72)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 4,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "active-listening",
+        "safety-check",
+        "farewell"
+      ],
+      "issues": [
+        "Missed the mandatory sleep question as a standalone turn — after the senior said 'słabo... bardzo słabo', the operator asked 'A jak spał Pan dzisiaj w nocy?' but it was embedded in a longer reflective turn instead of being a separate, bare question.",
+        "Did not ask any of the mandatory health-checkin questions: medication adherence, daily activity, pain scale, or specific health complaints.",
+        "Did not ask the safety check question in the mandated exact wording — the operator asked 'A jak ogólnie – czuje się Pan bezpiecznie w domu? Nic Panu nie doskwiera?' but this was the second part of a longer turn with reflection, not a standalone required turn.",
+        "Did not acknowledge the emotionally significant statement about grandchildren ('wnuki zapomniały o dziadku') with a specific reflection — the operator said 'brakuje Panu bliskich' which is generic, missing the chance to name 'wnuków' directly.",
+        "During the final farewell, did not reference any concrete detail the senior shared (e.g., longing for tea with someone, hope for family calls), instead used a generic wish.",
+        "After the senior's silent pause at turn 15–16, the operator moved to farewell without checking if the senior wanted to continue or had anything else to share."
+      ],
+      "duration_s": 189.68700000000536,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Małomówny introwertyk (wiek 76)",
+      "scores": {
+        "warmth": 6,
+        "listening": 4,
+        "info_quality": 3,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Operator did not follow the mandatory mood check-in flow: after the senior said 'Dobrze', the operator should have asked 'Co sprawia, że czuje się Pan dzisiaj dobrze?' but instead immediately said 'Cieszę się' and then asked the same probe. The probe was asked but the affirmation before it broke the required sequence.",
+        "Operator skipped the mandatory standalone sleep question 'A jak spała pan dzisiaj w nocy?' – instead, the sleep question was combined with a reflection ('Rozumiem, że cisza jest dla pana miła. To może być bardzo odprężające. A jak spał pan dzisiaj w nocy?'), which violates the rule that the sleep question must be a fully standalone turn with no other content.",
+        "Operator did not ask any health check-in questions: no medication adherence, no daily activity, no pain check. This is a critical omission.",
+        "Operator did not use active listening techniques to encourage elaboration on very brief answers. For example, after 'Cisza', the operator could have asked 'Czy może pan opowiedzieć coś więcej o tej ciszy?' instead of just reflecting and moving on.",
+        "Operator missed the opportunity to acknowledge the senior's personality (introvert, laconic) and adapt the conversation style accordingly."
+      ],
+      "duration_s": 148.42199999999139,
+      "sound_injected": true,
+      "sound_type": "Łomot do drzwi",
+      "sound_severity": "high",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Małomówny introwertyk (wiek 76)",
+      "scores": {
+        "warmth": 7,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "safety-check",
+        "active-listening"
+      ],
+      "issues": [
+        "Mood check-in: Operator said 'Cieszę się' before the probe, violating the skill's instruction to ask the probe directly without preceding affirmation.",
+        "Multiple questions asked in single turns (turn 6: two questions; turn 11: three questions), which can feel rushed.",
+        "Safety check was not asked as a standalone turn with the exact mandated phrasing ('A jak ogólnie – czuje się pan bezpiecznie w domu? Nic panu nie doskwiera?').",
+        "Health check-in missing: did not ask about pain/discomfort or specific health conditions, only medication adherence."
+      ],
+      "duration_s": 309.375,
+      "sound_injected": true,
+      "sound_type": "Tłuczone szkło",
+      "sound_severity": "high",
+      "checklist_completion": 57.1,
+      "checklist_missed": [
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

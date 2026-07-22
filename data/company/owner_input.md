@@ -30,3 +30,17 @@ Można używać **wyłącznie treści z treningów self-play** (symulacje, nie p
 
 **4. Dane rejestrowe firmy:**
 **Nie używamy danych rejestrowych.** Nie podajemy nazwy firmy, NIP, KRS ani żadnych danych rejestrowych w postach. Jeśli forum wymaga weryfikacji prawnej — pomijamy to forum.
+
+## Odpowiedzi właściciela (2026-07-10)
+
+**1. Który kanał akwizycji pierwszy?**
+Pierwszy kanał: **product-led referrals** (udostępniane raporty rodzinne z delikatnym promptem polecającym). Mamy już infrastrukturę — rodziny dostają raporty, wystarczy dodać dyskretny prompt polecający. Zero zewnętrznych zależności, zero manualnego publikowania. Fora i X/LinkedIn dalej jako drugi kanał (gotowe posty do wklejenia), ale referrals first.
+
+**2. Autonomia A/B testów:**
+**Tak, potwierdzam** — firma samodzielnie testuje warianty w symulacji i wdraża wygraną wersję bez prośby o zgodę. To już obowiązuje od 2026-07-01, nie trzeba pytać ponownie.
+
+**3. Twarde limity:**
+- **Budżet:** bez ograniczeń dla działań AI
+- **Etyka:** maksymalne standardy — żadnych technik manipulacyjnych, pełna transparentność wobec rodzin i seniorów
+- **Prawo:** w pełni zgodne z RODO, polskim prawem, standardami ochrony danych osób starszych
+- Te limity już obowiązują i nie ulegają zmianie. Nie pytajcie o nie ponownie.

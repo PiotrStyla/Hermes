@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-07-13T10:30:11.695841+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 8.333333333333334,
+    "listening": 8.666666666666666,
+    "info_quality": 7.0,
+    "brevity": 9.0
+  },
+  "first_scores": {
+    "warmth": 9,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 7,
+    "listening": 8,
+    "info_quality": 9,
+    "brevity": 10
+  },
+  "total_updates": 6,
+  "total_time_s": 338.6720000000205,
+  "sounds_injected": 2,
+  "average_checklist_completion": 52.4,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Wdzięczny i pogodny (wiek 78)",
+      "scores": {
+        "warmth": 9,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "health-checkin"
+      ],
+      "issues": [
+        "The health check-in skipped the mandatory pain question ('A czy odczuwa pan dzisiaj jakiś ból lub dyskomfort?'). This is a required step in the health-checkin skill.",
+        "The farewell was generic ('Mam nadzieję, że weekend z wnuczką będzie pełen radości') — it referenced a concrete detail (wnuczka, weekend) but could have been more specific by mentioning the tulips or the garden, which the senior was clearly excited about."
+      ],
+      "duration_s": 76.98500000004424,
+      "sound_injected": true,
+      "sound_type": "Rozbita szyba",
+      "sound_severity": "critical",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Depresyjny nastrój (wiek 81)",
+      "scores": {
+        "warmth": 9,
+        "listening": 10,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "disclosure",
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Did not address the senior by name in the disclosure or subsequent turns – missed personalization",
+        "Skipped mandatory health check-in questions: medication adherence and pain check (only sleep was asked)",
+        "Farewell was generic ('Mam nadzieję, że wkrótce poczuje się pani lepiej') – did not reference any concrete detail from the call (e.g., neighbor Halina's situation)"
+      ],
+      "duration_s": 151.34399999998277,
+      "sound_injected": true,
+      "sound_type": "Sygnał pogotowia",
+      "sound_severity": "medium",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Samotna wdowa (wiek 81)",
+      "scores": {
+        "warmth": 7,
+        "listening": 8,
+        "info_quality": 9,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "greeting",
+        "farewell"
+      ],
+      "issues": [
+        "Did not address the senior by name in the first turn (required by disclosure skill).",
+        "Farewell was somewhat generic; could have referenced the specific safety concern (walker/fall) or the offer to contact daughter."
+      ],
+      "duration_s": 110.34299999999348,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 71.4,
+      "checklist_missed": [
+        "food",
+        "home_safety"
+      ]
+    }
+  ]
+}

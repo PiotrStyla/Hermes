@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-07-06T08:25:21.901192+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.666666666666667,
+    "listening": 7.333333333333333,
+    "info_quality": 5.666666666666667,
+    "brevity": 9.0
+  },
+  "first_scores": {
+    "warmth": 7,
+    "listening": 6,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 7,
+    "info_quality": 5,
+    "brevity": 10
+  },
+  "total_updates": 8,
+  "total_time_s": 451.0,
+  "sounds_injected": 1,
+  "average_checklist_completion": 33.4,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Małomówny introwertyk (wiek 74)",
+      "scores": {
+        "warmth": 7,
+        "listening": 6,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Missed opportunity to directly ask about sleep quality as a standalone turn. After the senior said 'noga boli', operator skipped the sleep question and later combined it with a reflection ('Rozumiem, że sen był różny.'), breaking the protocol of a standalone sleep question.",
+        "Active listening was weak: after the senior's second 'noga' response, operator repeated a generic 'Dziękuję, że to pan mówi' instead of offering a more specific reflection (e.g., 'Słyszę, że ból nogi bardzo pana męczy.') or a gentle probe to elaborate (e.g., 'Czy może pan opowiedzieć coś więcej o tym bólu?')."
+      ],
+      "duration_s": 130.14100000000326,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Po kłótni z rodziną (wiek 66)",
+      "scores": {
+        "warmth": 8,
+        "listening": 9,
+        "info_quality": 5,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "safety-check"
+      ],
+      "issues": [
+        "Did not ask about medications or daily activities (mandatory health check-in items).",
+        "Did not ask the sleep question as a fully standalone turn – it was prefaced with reflections on the conflict.",
+        "Safety question was not asked verbatim – omitted 'Nic Panu nie doskwiera?' from the mandatory phrasing.",
+        "Missed opportunity to probe the senior's sleep quality (only asked about sleep once, but the answer was already given earlier in the context of worry)."
+      ],
+      "duration_s": 139.0,
+      "sound_injected": true,
+      "sound_type": "Straż pożarna",
+      "sound_severity": "high",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Niedosłyszący (wiek 81)",
+      "scores": {
+        "warmth": 8,
+        "listening": 7,
+        "info_quality": 5,
+        "brevity": 10
+      },
+      "skill_updates": [
+        "mood-checkin",
+        "health-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Did not ask about medication adherence or daily activities as required by health-checkin skill",
+        "Sleep question was not asked as a standalone turn (combined with reflection)",
+        "Missed opportunity to warmly acknowledge the granddaughter's help"
+      ],
+      "duration_s": 181.85899999999674,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    }
+  ]
+}

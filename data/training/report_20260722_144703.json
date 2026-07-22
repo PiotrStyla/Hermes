@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-07-22T14:47:03.891720+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 7.0,
+    "listening": 5.0,
+    "info_quality": 5.0,
+    "brevity": 8.333333333333334
+  },
+  "first_scores": {
+    "warmth": 6,
+    "listening": 4,
+    "info_quality": 3,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 9,
+    "listening": 7,
+    "info_quality": 6,
+    "brevity": 8
+  },
+  "total_updates": 9,
+  "total_time_s": 1059.9840000000258,
+  "sounds_injected": 2,
+  "average_checklist_completion": 28.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Zdezorientowany (wiek 88)",
+      "scores": {
+        "warmth": 6,
+        "listening": 4,
+        "info_quality": 3,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "health-checkin",
+        "farewell"
+      ],
+      "issues": [
+        "Operator did not respond to the senior's first question about what day it is — instead said 'cieszę się, że wszystko dobrze' and moved on, missing a clear opportunity to show listening",
+        "Operator asked health and safety questions without waiting for the senior to answer previous questions — the senior's responses are empty in the transcript, suggesting the operator did not pause for replies",
+        "Operator skipped the mandatory medication adherence and doctor visit questions entirely",
+        "Operator did not probe the senior's confusion about the day or the granddaughter's visit, which could indicate cognitive or safety concerns",
+        "Farewell was generic ('Mam nadzieję, że wnuczka odwiedzi pana') instead of referencing a concrete detail the senior shared"
+      ],
+      "duration_s": 94.73400000002584,
+      "sound_injected": true,
+      "sound_type": "Syrena policji",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Małomówny introwertyk (wiek 73)",
+      "scores": {
+        "warmth": 6,
+        "listening": 4,
+        "info_quality": 6,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening",
+        "farewell",
+        "safety-check"
+      ],
+      "issues": [
+        "Nie pogłębiono odpowiedzi seniora 'Nijak' i 'Wolę być sam' – brak aktywnego słuchania.",
+        "Pożegnanie było ogólne, nie odnosiło się do żadnego konkretnego szczegółu z rozmowy.",
+        "Nie zadano pytania o ból w skali 0-10 przed pytaniem o bezpieczeństwo (zgodnie z umiejętnością bezpieczeństwo-sprawdzenie)."
+      ],
+      "duration_s": 772.0309999999881,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Rozmowny dziadek (wiek 81)",
+      "scores": {
+        "warmth": 9,
+        "listening": 7,
+        "info_quality": 6,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "health-checkin",
+        "mood-checkin",
+        "active-listening"
+      ],
+      "issues": [
+        "Medication adherence question not asked exactly as protocol: 'Czy przyjmuje pan leki zgodnie z zaleceniami?' was not asked as a standalone question",
+        "No explicit safety check for feeling safe at home (e.g., 'Czy czuje się pan bezpiecznie w domu?')",
+        "Mood question was delayed; operator engaged in food talk before asking 'A jak się pan dzisiaj czuje?'",
+        "Missed emotional follow-up on the senior's late wife's rosół memory and grandson photo recollection",
+        "Farewell reference to ogród was slightly generic; could have anchored in 'róże z 1975 roku'"
+      ],
+      "duration_s": 193.21900000001187,
+      "sound_injected": true,
+      "sound_type": "Upadek przedmiotów",
+      "sound_severity": "medium",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}

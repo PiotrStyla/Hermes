@@ -185,9 +185,8 @@ class StaffingPlan:
             stage_normalized = DEFAULT_STAFFING_STAGE
 
         if stage_normalized == "light":
-            budget = 190_000
+            budget = 162_000
             positions = [
-                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
                 Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
                 Position(title="Manager", headcount=1, monthly_cost_pln=18_000),
@@ -201,9 +200,8 @@ class StaffingPlan:
                 Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
             ]
         elif stage_normalized == "scale":
-            budget = 340_000
+            budget = 312_000
             positions = [
-                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
                 Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
                 Position(title="HR Officer", headcount=1, monthly_cost_pln=16_000),
@@ -219,9 +217,8 @@ class StaffingPlan:
                 Position(title="Księgowy", headcount=1, monthly_cost_pln=7_000),
             ]
         else:
-            budget = 230_000
+            budget = 202_000
             positions = [
-                Position(title="CEO", headcount=1, monthly_cost_pln=28_000),
                 Position(title="Compliance & DPO Officer", headcount=1, monthly_cost_pln=13_000),
                 Position(title="Quality Director", headcount=1, monthly_cost_pln=22_000),
                 Position(title="HR Officer", headcount=1, monthly_cost_pln=16_000),

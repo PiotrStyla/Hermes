@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-07-11T08:07:56.121712+00:00",
+  "rounds": 3,
+  "model": "openai/gpt-4o-mini",
+  "average_scores": {
+    "warmth": 5.666666666666667,
+    "listening": 5.666666666666667,
+    "info_quality": 4.666666666666667,
+    "brevity": 8.666666666666666
+  },
+  "first_scores": {
+    "warmth": 4,
+    "listening": 5,
+    "info_quality": 2,
+    "brevity": 8
+  },
+  "last_scores": {
+    "warmth": 8,
+    "listening": 8,
+    "info_quality": 7,
+    "brevity": 9
+  },
+  "total_updates": 9,
+  "total_time_s": 382.4689999999973,
+  "sounds_injected": 0,
+  "average_checklist_completion": 28.6,
+  "rounds_detail": [
+    {
+      "round": 1,
+      "archetype": "Podejrzliwy (wiek 79)",
+      "scores": {
+        "warmth": 4,
+        "listening": 5,
+        "info_quality": 2,
+        "brevity": 8
+      },
+      "skill_updates": [
+        "active-listening",
+        "greeting",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator did not address the senior's specific concern about the day and time, missing an opportunity to build trust by providing a simple factual answer.",
+        "Operator failed to use the senior's name in any turn after the first, making the interaction feel impersonal.",
+        "Operator did not gather any information on mood, health, or safety; the call was entirely consumed by the trust issue without a pivot to the check-in purpose.",
+        "Operator repeated the same explanation multiple times without adapting to the senior's specific objections (e.g., not referencing the family member who arranged the call)."
+      ],
+      "duration_s": 129.59399999999732,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 14.3,
+      "checklist_missed": [
+        "sleep",
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 2,
+      "archetype": "Małomówny introwertyk (wiek 78)",
+      "scores": {
+        "warmth": 5,
+        "listening": 4,
+        "info_quality": 5,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "active-listening",
+        "health-checkin",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Operator did not follow up on the senior's minimal answers (e.g., 'Nieźle', 'Tak sobie') with an open-ended probe, missing an opportunity to show active listening.",
+        "Operator did not ask about medication adherence, which is a mandatory part of the health check-in.",
+        "Operator skipped the sleep question entirely, which is also mandatory.",
+        "Operator did not reflect or validate the senior's reluctance at the start (e.g., 'Po co to komu') before proceeding."
+      ],
+      "duration_s": 159.45300000000861,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 28.6,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk",
+        "health"
+      ]
+    },
+    {
+      "round": 3,
+      "archetype": "Zmartwiony emeryt (wiek 77)",
+      "scores": {
+        "warmth": 8,
+        "listening": 8,
+        "info_quality": 7,
+        "brevity": 9
+      },
+      "skill_updates": [
+        "safety-check",
+        "farewell",
+        "mood-checkin"
+      ],
+      "issues": [
+        "Missing safety check – the operator never asked if the senior feels safe at home, which is a mandatory part of the call.",
+        "Farewell was generic and did not reference a concrete detail from the call, such as making tea for his wife.",
+        "Mood question was combined with a reflection instead of being asked as a standalone, simple question."
+      ],
+      "duration_s": 93.42199999999139,
+      "sound_injected": false,
+      "sound_type": "",
+      "sound_severity": "",
+      "checklist_completion": 42.9,
+      "checklist_missed": [
+        "food",
+        "isolation",
+        "home_safety",
+        "fall_risk"
+      ]
+    }
+  ]
+}
