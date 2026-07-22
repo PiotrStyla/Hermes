@@ -2,7 +2,7 @@
 
 ## 1. Streszczenie wykonawcze
 
-Hermes to autonomiczne centrum telefoniczne oparte na sztucznej inteligencji, które codziennie dzwoni do seniorów, sprawdza ich nastrój, stan zdrowia i bezpieczeństwo, a następnie przekazuje spersonalizowane raporty rodzinom. Działamy w modelu subskrypcyjnym (opłata miesięczna od rodziny za objęcie seniora opieką). Obecnie obsługujemy 2 seniorów, wykonaliśmy 60 rozmów, a średnie oceny jakości wynoszą: warmth 6,1, listening 5,4, info_quality 3,7, brevity 6,9 (skala 1–10). Kluczowym celem strategicznym jest podniesienie najsłabszej osi – info_quality – do poziomu co najmniej 4,0 w ciągu 14 dni poprzez intensywne symulacje self-play i wdrożenie ulepszonego skryptu. W ciągu najbliższych 12 miesięcy planujemy rozszerzyć bazę do 50 seniorów, osiągnąć średnią jakość powyżej 7,5, uruchomić kanał product-led referrals oraz zakończyć proces rejestracji firmy i pełnego dostosowania RODO.
+Hermes to autonomiczne centrum telefoniczne oparte na sztucznej inteligencji, które codziennie dzwoni do seniorów, sprawdza ich nastrój, stan zdrowia i bezpieczeństwo, a następnie przekazuje spersonalizowane raporty rodzinom. Działamy w modelu subskrypcyjnym (opłata miesięczna od rodziny za objęcie seniora opieką). Obecnie obsługujemy 2 seniorów, wykonaliśmy 60 rozmów, a średnie oceny jakości wynoszą: warmth 6,1, listening 5,4, info_quality 3,7, brevity 6,9 (skala 1–10). Kluczowym celem strategicznym jest podniesienie najsłabszej osi – info_quality – do poziomu co najmniej 4,0 w ciągu 14 dni poprzez intensywne symulacje self-play i wdrożenie ulepszonego skryptu. W ciągu najbliższych 12 miesięcy planujemy rozszerzyć bazę do 70 seniorów, osiągnąć średnią jakość powyżej 7,5, uruchomić kanał product-led referrals oraz zakończyć proces rejestracji firmy i pełnego dostosowania RODO. Cena subskrypcji: 149 PLN/mies (matchowanie konkurencji: opiekunek.pl, eOpiekun.pl). Break-even przy 24 seniorach (~7-8 miesięcy).
 
 ## 2. Opis firmy i misja
 
@@ -16,11 +16,22 @@ Hermes powstał z misją zapewnienia ciepłego, uważnego codziennego kontaktu z
 | **SAM** (Serviceable Addressable Market) | Seniorzy, których rodziny są gotowe zapłacić za codzienny, zautomatyzowany kontakt (segment średniozamożny, świadomy cyfrowo) | ~300 tys. rodzin |
 | **SOM** (Serviceable Obtainable Market) | Liczba rodzin, które możemy realnie pozyskać w ciągu pierwszych 12 miesięcy przy obecnych kanałach (referrals + fora + social media) | 50–100 rodzin |
 
-**Konkurencja:**  
-- Tradycyjne call center opiekuńcze (wysoki koszt, ograniczona dostępność)  
-- Aplikacje mobilne dla seniorów (wymagają smartfona i umiejętności obsługi)  
-- Opiekunki prywatne (bardzo wysokie koszty, problemy kadrowe)  
-- Inne rozwiązania AI (brak na polskim rynku w modelu wellness check-in z raportowaniem rodzinie)
+**Konkurencja (zweryfikowana — Polska, lipiec 2026):**
+
+| Serwis | Model | Cena (PLN/mies) | Częstotliwość | Uwagi |
+|--------|-------|----------------|---------------|-------|
+| **opiekunek.pl** | AI "Anna" dzwoni, SMS o lekach, raport dla rodziny | 0 (2x/tydz) / 149 / 299 | Codziennie (płatne) | Bezpośrednia konkurencja — ten sam model |
+| **eOpiekun.pl** | AI asystent głosowy, monitoring leków, alerty SOS, raport tyg. | 149 | Codziennie | Bezpośrednia konkurencja — ten sam model |
+| **TeleGO Opieka** | Terminal z przyciskiem SOS, 24/7 centrum ratownictwa | od 15,90 | 24/7 (na żądanie) | Inna kategoria — SOS, nie codzienna rozmowa |
+| **Bezpieczna Rodzina** | Opaska SOS + teleopieka 24/7 z centrum medycznym | 69 + opaska 299-649 | 24/7 (na żądanie) | Inna kategoria — SOS + opaska |
+| Aplikacje senior | Mobilne przypomnienia o lekach | 50-100 | Przypomnienia | Wymagają smartfona |
+| Opiekunki prywatne | Osobista opieka w domu | 3 000-5 000 | Codziennie | Bardzo drogie, nie-skalowalne |
+
+**Kluczowe wnioski:**
+- **opiekunek.pl i eOpiekun.pl** to bezpośrednia konkurencja — AI dzwoni codziennie, pyta o samopoczucie/leki, raport dla rodziny. Cena rynkowa: **149 PLN/mies**
+- opiekunek.pl ma **plan darmowy** (2 rozmowy/tydzień) — główny threat akwizycyjny
+- TeleGO i Bezpieczna Rodzina to inna kategoria (SOS reaktywny, nie proaktywna rozmowa)
+- Przewaga Hermes: ciągłe self-play treningi, 4-osie jakości, innowacyjna agentic org, product-led referrals
 
 **Trendy demograficzne:**  
 - Liczba osób 80+ w Polsce wzrośnie o 50% do 2030 roku  
@@ -96,16 +107,32 @@ Firma samodzielnie testuje warianty skryptów w symulacji i wdraża wygraną wer
 
 Firma operuje w pełni autonomicznie — nie ma pracowników. Wszystkie role (Manager, Quality Director, HR, CMO, DPO, Supervisor, Operator) to agenty AI. Staffing plan w systemie (`data/company/state.json`) jest narzędziem planowania przyszłego skalowania, ale **nie reprezentuje rzeczywistych kosztów**.
 
-**Rzeczywiste koszty stałe:** **5 000 PLN / miesiąc**
+**Rzeczywiste koszty stałe:** **3 000 PLN / miesiąc** (bez kosztów głosu — te są zmienne, zależą od liczby seniorów)
 
 | Kategoria | Kwota (PLN/mies) |
 |-----------|------------------|
-| API LLM (OpenRouter) | ~2 000 |
-| Hosting i infrastruktura | ~1 000 |
-| Narzędzia (GitHub, monitoring) | ~500 |
-| Rezerwa (compliance, audyty, DPA) | ~1 000 |
-| Usługi księgowe (zewnętrzne) | ~500 |
-| **Razem** | **5 000** |
+| API LLM (OpenRouter — treningi self-play) | ~1 500 |
+| Hosting i infrastruktura | ~800 |
+| Narzędzia (GitHub, monitoring) | ~200 |
+| Rezerwa (compliance, audyty, DPA) | ~300 |
+| Usługi księgowe (zewnętrzne) | ~200 |
+| **Razem koszty stałe** | **3 000** |
+
+**Koszty zmienne (głos) na seniora / miesiąc:**
+
+Każda rozmowa = 5 min × 30 dni = 150 min/mies na seniora.
+
+| Komponent | Provider | Cena/min (USD) | Na 5 min (USD) | Na mies/senior (USD) | Na mies/senior (PLN) |
+|-----------|----------|---------------|----------------|---------------------|---------------------|
+| Telefon (stacjonarny PL) | Plivo → Polska landline | $0.024 | $0.12 | $3.60 | ~15 PLN |
+| Telefon (komórka PL, z EU) | Plivo → Polska mobile z EU | $0.055 | $0.275 | $8.25 | ~35 PLN |
+| STT (speech→text) | Whisper Large V3 | $0.0015 | $0.008 | $0.23 | ~1 PLN |
+| LLM (rozmowa) | Llama 3.3 70B (floor) | ~$0.0004 | $0.002 | $0.06 | ~0,3 PLN |
+| TTS (text→speech) | GPT Audio Mini | ~$0.008 | $0.04 | $1.20 | ~5 PLN |
+| **Razem stacjonarny** | | | | | **~21 PLN** |
+| **Razem komórka (EU)** | | | | | **~41 PLN** |
+
+**Strategia:** Preferowanie numerów stacjonarnych (większość seniorów ma). Przy komórce — routing przez europejski endpoint (Plivo EU).
 
 **Infrastruktura:**  
 - Model AI: dostęp przez OpenRouter (wymaga DPA – Art. 28 RODO)  
@@ -130,45 +157,49 @@ Firma operuje w pełni autonomicznie — nie ma pracowników. Wszystkie role (Ma
 
 ## 7. Plan finansowy
 
-**Model przychodów:**  
-- Subskrypcja miesięczna od rodziny: **100 PLN / senior** (cena docelowa, [WYMAGA DECYZJI WŁAŚCICIELA] – możliwa korekta w górę/dół po testach)  
+**Model przychodów:**
+- Subskrypcja miesięczna od rodziny: **149 PLN / senior** (matchowanie ceny rynkowej — opiekunek.pl i eOpiekun.pl)
+- Plan darmowy możliwy w przyszłości (2 rozmowy/tydzień) jako lead magnet
 - Dodatkowe usługi: alerty premium, dostęp do dashboardu, historia raportów – w planach na Q2 2027
 
 **Struktura kosztów (miesięczna):**
 
-| Kategoria | Kwota (PLN) |
-|-----------|-------------|
-| API LLM (OpenRouter) | 2 000 |
-| Hosting i infrastruktura | 1 000 |
-| Narzędzia (GitHub, monitoring) | 500 |
-| Rezerwa compliance (DPA, audyty) | 1 000 |
-| Usługi księgowe | 500 |
-| **Razem** | **5 000** |
+| Kategoria | Koszt stały (PLN) | Koszt zmienny / senior (PLN) |
+|-----------|-------------------|-----------------------------|
+| API LLM (treningi self-play) | 1 500 | — |
+| Hosting i infrastruktura | 800 | — |
+| Narzędzia (GitHub, monitoring) | 200 | — |
+| Rezerwa compliance | 300 | — |
+| Usługi księgowe | 200 | — |
+| Głos — telefon (stacjonarny) | — | 15 |
+| Głos — STT + LLM + TTS | — | 6 |
+| **Razem** | **3 000** | **21 / senior** |
 
-**Prognoza 12-miesięczna (zakładając start od lipca 2026):**
+**Prognoza 12-miesięczna (cena 149 PLN, koszt zmienny 21 PLN/senior, koszty stałe 3 000 PLN):**
 
-| Miesiąc | Liczba seniorów | Przychód (PLN) | Koszty (PLN) | Wynik (PLN) |
-|---------|----------------|----------------|--------------|-------------|
-| Lip 2026 | 2 | 200 | 5 000 | -4 800 |
-| Sie 2026 | 2 | 200 | 5 000 | -4 800 |
-| Wrz 2026 | 3 | 300 | 5 000 | -4 700 |
-| Paź 2026 | 5 | 500 | 5 000 | -4 500 |
-| Lis 2026 | 8 | 800 | 5 000 | -4 200 |
-| Gru 2026 | 12 | 1 200 | 5 000 | -3 800 |
-| Sty 2027 | 18 | 1 800 | 5 000 | -3 200 |
-| Lut 2027 | 25 | 2 500 | 5 000 | -2 500 |
-| Mar 2027 | 35 | 3 500 | 5 000 | -1 500 |
-| Kwi 2027 | 45 | 4 500 | 5 000 | -500 |
-| Maj 2027 | 55 | 5 500 | 5 000 | +500 |
-| Cze 2027 | 70 | 7 000 | 5 000 | +2 000 |
+| Miesiąc | Seniorów | Przychód | Koszty stałe | Koszty zmienne | Koszty razem | Wynik |
+|---------|----------|----------|-------------|----------------|-------------|-------|
+| Lip 2026 | 2 | 298 | 3 000 | 42 | 3 042 | -2 744 |
+| Sie 2026 | 2 | 298 | 3 000 | 42 | 3 042 | -2 744 |
+| Wrz 2026 | 3 | 447 | 3 000 | 63 | 3 063 | -2 616 |
+| Paź 2026 | 5 | 745 | 3 000 | 105 | 3 105 | -2 360 |
+| Lis 2026 | 8 | 1 192 | 3 000 | 168 | 3 168 | -1 976 |
+| Gru 2026 | 12 | 1 788 | 3 000 | 252 | 3 252 | -1 464 |
+| Sty 2027 | 18 | 2 682 | 3 000 | 378 | 3 378 | -696 |
+| Lut 2027 | 25 | 3 725 | 3 000 | 525 | 3 525 | +200 |
+| Mar 2027 | 35 | 5 215 | 3 000 | 735 | 3 735 | +1 480 |
+| Kwi 2027 | 45 | 6 705 | 3 000 | 945 | 3 945 | +2 760 |
+| Maj 2027 | 55 | 8 195 | 3 000 | 1 155 | 4 155 | +4 040 |
+| Cze 2027 | 70 | 10 430 | 3 000 | 1 470 | 4 470 | +5 960 |
 
-**Break-even:** przy **50 seniorach** (przychód 5 000 PLN = koszty stałe) — realnie osiągalne w ~10-12 miesięcy.
+**Break-even:** przy **24 seniorach** (przychód 3 576 PLN = koszty stałe 3 000 + zmienne 504 PLN) — realnie osiągalne w ~7-8 miesięcy.
 
-**Marginesy:**  
-- Koszt zmienny na seniora: bliski zeru (dodatkowy senior to tylko koszt API ~0,10 PLN/rozmowa)  
-- Przy 50 seniorach: wynik = 0 PLN (break-even)  
-- Przy 100 seniorach: zysk 5 000 PLN/mies (marża 50%)  
-- Przy 500 seniorach: zysk 45 000 PLN/mies (marża 90%)  
+**Marginesy (przy cenie 149 PLN, koszt zmienny 21 PLN):**
+- Marża jednostkowa: **128 PLN / senior / mies** (86%)
+- Przy 24 seniorach: break-even
+- Przy 50 seniorach: zysk 3 400 PLN/mies
+- Przy 100 seniorach: zysk 9 800 PLN/mies
+- Przy 500 seniorach: zysk 61 000 PLN/mies
 - Skalowanie nie wymaga zatrudniania ludzi — system w pełni autonomiczny
 
 ## 8. Analiza ryzyk i mitigacji
