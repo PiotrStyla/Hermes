@@ -92,24 +92,20 @@ Firma samodzielnie testuje warianty skryptów w symulacji i wdraża wygraną wer
 
 ## 6. Plan operacyjny
 
-**Zespół (staffing plan – budżet miesięczny 192 000 PLN):**
+**Zespół:**
 
-| Stanowisko | Liczba | Wynagrodzenie (PLN) |
-|------------|--------|---------------------|
-| Compliance & DPO Officer | 1 | 13 000 |
-| Quality Director | 1 | 22 000 |
-| HR Officer | 1 | 16 000 |
-| CMO | 1 | 20 000 |
-| Manager | 1 | 18 000 |
-| Supervisor | 1 | 16 000 |
-| Operator | 2 | 12 000 (każdy) |
-| Training Engineer | 1 | 17 000 |
-| MLOps/SRE Engineer | 1 | 15 000 |
-| Customer Success Specialist | 1 | 10 000 |
-| Cybersecurity Officer | 1 | 9 000 |
-| Księgowy | 1 | 7 000 |
-| **Razem payroll** | **13** | **187 000** |
-| Pozostały budżet (narzędzia, licencje, rezerwa) | | 5 000 |
+Firma operuje w pełni autonomicznie — nie ma pracowników. Wszystkie role (Manager, Quality Director, HR, CMO, DPO, Supervisor, Operator) to agenty AI. Staffing plan w systemie (`data/company/state.json`) jest narzędziem planowania przyszłego skalowania, ale **nie reprezentuje rzeczywistych kosztów**.
+
+**Rzeczywiste koszty stałe:** **5 000 PLN / miesiąc**
+
+| Kategoria | Kwota (PLN/mies) |
+|-----------|------------------|
+| API LLM (OpenRouter) | ~2 000 |
+| Hosting i infrastruktura | ~1 000 |
+| Narzędzia (GitHub, monitoring) | ~500 |
+| Rezerwa (compliance, audyty, DPA) | ~1 000 |
+| Usługi księgowe (zewnętrzne) | ~500 |
+| **Razem** | **5 000** |
 
 **Infrastruktura:**  
 - Model AI: dostęp przez OpenRouter (wymaga DPA – Art. 28 RODO)  
@@ -128,7 +124,8 @@ Firma samodzielnie testuje warianty skryptów w symulacji i wdraża wygraną wer
 
 **Skalowanie:**  
 - Dodawanie nowego seniora: wymaga zgody (Art. 9), konfiguracji w systemie, testowej rozmowy symulacyjnej  
-- Docelowo: 1 operator na 50 seniorów (nadzór, eskalacje)  
+- Brak konieczności zatrudniania — system w pełni autonomiczny (agenty AI pełnią wszystkie role)  
+- Staffing plan w systemie jest narzędziem planowania, nie reprezentuje rzeczywistych kosztów  
 - Automatyzacja: pełne wdrożenie Family Feedback Loop i Proactive Risk Signals
 
 ## 7. Plan finansowy
@@ -141,34 +138,38 @@ Firma samodzielnie testuje warianty skryptów w symulacji i wdraża wygraną wer
 
 | Kategoria | Kwota (PLN) |
 |-----------|-------------|
-| Payroll | 187 000 |
-| Hosting i API (OpenRouter) | 2 000 |
-| Narzędzia (GitHub, monitoring) | 1 000 |
-| Rezerwa compliance (DPA, audyty) | 2 000 |
-| **Razem** | **192 000** |
+| API LLM (OpenRouter) | 2 000 |
+| Hosting i infrastruktura | 1 000 |
+| Narzędzia (GitHub, monitoring) | 500 |
+| Rezerwa compliance (DPA, audyty) | 1 000 |
+| Usługi księgowe | 500 |
+| **Razem** | **5 000** |
 
 **Prognoza 12-miesięczna (zakładając start od lipca 2026):**
 
 | Miesiąc | Liczba seniorów | Przychód (PLN) | Koszty (PLN) | Wynik (PLN) |
 |---------|----------------|----------------|--------------|-------------|
-| Lip 2026 | 2 | 200 | 192 000 | -191 800 |
-| Sie 2026 | 2 | 200 | 192 000 | -191 800 |
-| Wrz 2026 | 3 | 300 | 192 000 | -191 700 |
-| Paź 2026 | 5 | 500 | 192 000 | -191 500 |
-| Lis 2026 | 8 | 800 | 192 000 | -191 200 |
-| Gru 2026 | 12 | 1 200 | 192 000 | -190 800 |
-| Sty 2027 | 18 | 1 800 | 192 000 | -190 200 |
-| Lut 2027 | 25 | 2 500 | 192 000 | -189 500 |
-| Mar 2027 | 35 | 3 500 | 192 000 | -188 500 |
-| Kwi 2027 | 45 | 4 500 | 192 000 | -187 500 |
-| Maj 2027 | 55 | 5 500 | 192 000 | -186 500 |
-| Cze 2027 | 70 | 7 000 | 192 000 | -185 000 |
+| Lip 2026 | 2 | 200 | 5 000 | -4 800 |
+| Sie 2026 | 2 | 200 | 5 000 | -4 800 |
+| Wrz 2026 | 3 | 300 | 5 000 | -4 700 |
+| Paź 2026 | 5 | 500 | 5 000 | -4 500 |
+| Lis 2026 | 8 | 800 | 5 000 | -4 200 |
+| Gru 2026 | 12 | 1 200 | 5 000 | -3 800 |
+| Sty 2027 | 18 | 1 800 | 5 000 | -3 200 |
+| Lut 2027 | 25 | 2 500 | 5 000 | -2 500 |
+| Mar 2027 | 35 | 3 500 | 5 000 | -1 500 |
+| Kwi 2027 | 45 | 4 500 | 5 000 | -500 |
+| Maj 2027 | 55 | 5 500 | 5 000 | +500 |
+| Cze 2027 | 70 | 7 000 | 5 000 | +2 000 |
 
-**Break-even:** przy około **1 920 seniorów** (przychód 192 000 PLN) – cel długoterminowy (ok. 2–3 lata). W pierwszym roku priorytetem jest jakość i compliance, nie rentowność.
+**Break-even:** przy **50 seniorach** (przychód 5 000 PLN = koszty stałe) — realnie osiągalne w ~10-12 miesięcy.
 
 **Marginesy:**  
 - Koszt zmienny na seniora: bliski zeru (dodatkowy senior to tylko koszt API ~0,10 PLN/rozmowa)  
-- Po osiągnięciu skali (powyżej 500 seniorów) marża brutto przekroczy 90%
+- Przy 50 seniorach: wynik = 0 PLN (break-even)  
+- Przy 100 seniorach: zysk 5 000 PLN/mies (marża 50%)  
+- Przy 500 seniorach: zysk 45 000 PLN/mies (marża 90%)  
+- Skalowanie nie wymaga zatrudniania ludzi — system w pełni autonomiczny
 
 ## 8. Analiza ryzyk i mitigacji
 
