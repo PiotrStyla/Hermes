@@ -33,6 +33,16 @@ Hermes powstał z misją zapewnienia ciepłego, uważnego codziennego kontaktu z
 - TeleGO i Bezpieczna Rodzina to inna kategoria (SOS reaktywny, nie proaktywna rozmowa)
 - Przewaga Hermes: ciągłe self-play treningi, 4-osie jakości, innowacyjna agentic org, product-led referrals
 
+**Szacowana liczba klientów konkurencji (lipiec 2026):**
+
+| Serwis | Start | Szacowana baza klientów | Źródło szacunku |
+|--------|-------|------------------------|-----------------|
+| **eOpiekun.pl** | cze 2025 | ~200-500 rodzin | „setki polskich rodzin" (strona o nas) |
+| **opiekunek.pl** | 2025 | ~200-400 płatnych + darmowi | „ponad 500 rozmów" dziennie |
+| **Łącznie rynek** | | ~400-900 płatnych klientów | Wczesny rynek, dopiero się buduje |
+
+**Wniosek:** Rynek teleopieki głosowej w Polsce jest na wczesnym etapie — łącznie <1000 płatnych klientów. SOM 50-100 rodzin w 12 miesięcy = 5-10% obecnego rynku konkurencji. Jest przestrzeń na wejście nowego gracza z lepszą jakością rozmów (self-play treningi) i product-led growth.
+
 **Trendy demograficzne:**  
 - Liczba osób 80+ w Polsce wzrośnie o 50% do 2030 roku  
 - Coraz więcej dorosłych dzieci mieszka w innych miastach – potrzebują narzędzia do zdalnej opieki  
