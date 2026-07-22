@@ -44,9 +44,9 @@ class OperatorAgent(BaseAgent):
         model = model or os.getenv("OPERATOR_MODEL")
         super().__init__(model=model, temperature=0.7, max_tokens=400)
         self.skills_loader = SkillsLoader()
-        # Defaults to True so unit tests / direct usage don't accidentally
-        # restrict the operator. ManagerAgent overrides this from consent state.
-        self.health_consent: bool = True
+        # Defaults to False (RODO Art. 9) — explicit consent required before
+        # operator can ask about health. ManagerAgent sets this from consent state.
+        self.health_consent: bool = False
         # Optional company directive note injected by the Manager / TrainingLoop
         # from CompanyState. Empty string = no active directive (no effect).
         self.directive_note: str = ""
