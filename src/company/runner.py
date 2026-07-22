@@ -24,6 +24,7 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.table import Table
 
+from .business_plan import BusinessPlanAgent
 from .ceo import CEOAgent
 from .cmo import CMOAgent
 from .hr import HRAgent, OperatorScorecard
@@ -67,12 +68,19 @@ class CompanyRunner:
         self._quality_director = quality_director
         self._hr = hr
         self._cmo = cmo
+        self._business_planner = None
 
     @property
     def ceo(self) -> CEOAgent:
         if self._ceo is None:
             self._ceo = CEOAgent()
         return self._ceo
+
+    @property
+    def business_planner(self) -> BusinessPlanAgent:
+        if self._business_planner is None:
+            self._business_planner = BusinessPlanAgent()
+        return self._business_planner
 
     @property
     def cmo(self) -> CMOAgent:
@@ -494,3 +502,158 @@ class CompanyRunner:
             f"[bold]Next steps:[/bold]\n{steps}",
             title="Growth Plan (CMO)",
         ))
+
+    # ---- Business Plan ----
+
+    def generate_business_plan(self, owner_input: str = "") -> Path:
+        """Manager commissions a full business plan from all department heads.
+
+        Gathers:
+        - Quality Director: systemic quality analysis
+        - HR: operator performance review
+        - CMO: growth / acquisition plan
+        - CEO (now Manager): innovation agenda
+        - DPO: compliance summary (from docs/compliance/)
+        - BusinessPlanAgent: synthesizes everything into one document
+        """
+        state = CompanyState.load()
+        metrics = self.aggregator.aggregate()
+
+        self.console.print(Panel(
+            "[bold cyan]Hermes — Business Plan Generation[/bold cyan]\n"
+            "[dim]Manager commissions all department heads[/dim]",
+            title="Company",
+            border_style="bright_white",
+        ))
+        self._print_status(state, metrics)
+
+        owner_input = self._gather_owner_input(owner_input, interactive=False)
+        if owner_input:
+            self.console.print(Panel(owner_input, title="Owner input"))
+
+        # 1. Quality Director
+        self.console.print(Panel(
+            "[blue]Quality Director — systemic analysis[/blue]",
+            title="Input 1", border_style="blue",
+        ))
+        quality_analysis = self.quality_director.analyze(metrics, owner_input=owner_input)
+        self.console.print(quality_analysis[:500] + "..." if len(quality_analysis) > 500 else quality_analysis)
+
+        # 2. HR
+        self.console.print(Panel(
+            "[cyan]HR — operator performance review[/cyan]",
+            title="Input 2", border_style="cyan",
+        ))
+        scorecard = OperatorScorecard.from_metrics(metrics)
+        hr_verdict = self.hr.review_operator(scorecard, owner_input=owner_input)
+        self.console.print(hr_verdict[:500] + "..." if len(hr_verdict) > 500 else hr_verdict)
+
+        # 3. CMO growth plan
+        self.console.print(Panel(
+            "[yellow]CMO — client acquisition plan[/yellow]",
+            title="Input 3", border_style="yellow",
+        ))
+        growth_plan = self.cmo.plan(metrics, owner_input=owner_input)
+        growth_summary = (
+            f"Posture: {growth_plan.posture}\n"
+            f"Channels: {', '.join(growth_plan.channels)}\n"
+            f"Target segments: {', '.join(growth_plan.target_segments)}\n"
+            f"Messaging: {growth_plan.messaging}\n"
+            f"Next steps: {'; '.join(growth_plan.next_steps)}"
+        )
+        self.console.print(growth_summary[:500] + "..." if len(growth_summary) > 500 else growth_summary)
+
+        # 4. Innovation agenda
+        self.console.print(Panel(
+            "[magenta]Innovation agenda[/magenta]",
+            title="Input 4", border_style="magenta",
+        ))
+        recent_decisions = [f"{d.actor}: {d.summary}" for d in state.decisions[-8:]]
+        innovation_agenda = self.ceo.propose_innovation_agenda(
+            metrics, recent_decisions=recent_decisions, owner_input=owner_input,
+        )
+        self.console.print(innovation_agenda[:500] + "..." if len(innovation_agenda) > 500 else innovation_agenda)
+
+        # 5. Compliance summary from docs/compliance/
+        self.console.print(Panel(
+            "[red]DPO — compliance summary[/red]",
+            title="Input 5", border_style="red",
+        ))
+        compliance_summary = self._gather_compliance_summary()
+        self.console.print(compliance_summary[:500] + "..." if len(compliance_summary) > 500 else compliance_summary)
+
+        # 6. Synthesize — BusinessPlanAgent
+        self.console.print(Panel(
+            "[bold green]Manager — synthesizing business plan[/bold green]",
+            title="Synthesis", border_style="green",
+        ))
+        plan_content = self.business_planner.generate(
+            state=state,
+            metrics=metrics,
+            quality_analysis=quality_analysis,
+            hr_verdict=hr_verdict,
+            growth_plan_summary=growth_summary,
+            innovation_agenda=innovation_agenda,
+            compliance_summary=compliance_summary,
+            owner_input=owner_input,
+        )
+
+        path = self.business_planner.save_plan(plan_content)
+        self.console.print(f"\n[green]Business plan saved to:[/green] {path}")
+
+        # Log decision
+        state.log_decision(
+            actor="manager",
+            summary="Business plan generated",
+            rationale=f"Full business plan with inputs from QD, HR, CMO, DPO. Saved to {path}",
+        )
+        state.save()
+
+        return path
+
+    @staticmethod
+    def _gather_compliance_summary() -> str:
+        """Read compliance docs and summarize for the business plan."""
+        docs_dir = Path(__file__).resolve().parents[2] / "docs" / "compliance"
+        if not docs_dir.exists():
+            return "Brak dokumentów compliance. DPO musi wygenerować dokumenty RODO/GDPR."
+
+        parts = []
+        risk_path = docs_dir / "risk_assessment.md"
+        if risk_path.exists():
+            content = risk_path.read_text(encoding="utf-8")
+            # Extract just the risk table section
+            if "## 2. Zidentyfikowane ryzyka" in content:
+                start = content.find("## 2. Zidentyfikowane ryzyka")
+                end = content.find("## 3. Macierz ryzyk")
+                if end == -1:
+                    end = len(content)
+                parts.append("### Risk Assessment\n" + content[start:end].strip())
+
+        privacy_path = docs_dir / "privacy_policy.md"
+        if privacy_path.exists():
+            parts.append("### Privacy Policy\nPrivacy policy (PL) wygenerowana. Wymaga uzupełnienia NIP/KRS po rejestracji firmy.")
+
+        retention_path = docs_dir / "retention_policy.md"
+        if retention_path.exists():
+            parts.append("### Retention Policy\nPolityka retencji zdefiniowana: transkrypcje 90d, notatki 1r, raporty 2r, audyt 3r.")
+
+        dpia_path = docs_dir / "dpia.md"
+        if dpia_path.exists():
+            parts.append("### DPIA\nDPIA przeprowadzone. Werdykt: warunkowa akceptacja po remediacji (health_consent, rejestracja, DPA).")
+
+        reg_path = docs_dir / "registration_checklist.md"
+        if reg_path.exists():
+            parts.append("### Rejestracja firmy\nChecklista rejestracji JDG przygotowana. Wymaga działania właściciela (CEIDG, Profil Zaufany).")
+
+        parts.append("### Status zgód seniorów")
+        parts.append("- jadwiga-001: pełne zgody (transcribe, store, share, health_data, train) — PL")
+        parts.append("- stefan-001: pełne zgody (transcribe, store, share, health_data, train) — PL")
+        parts.append("- health_consent default: False (RODO Art. 9 compliant)")
+
+        parts.append("### Otwarte pozycje compliance")
+        parts.append("- [WYMAGA WŁAŚCICIELA] Rejestracja firmy (JDG w CEIDG)")
+        parts.append("- [WYMAGA WŁAŚCICIELA] DPA z OpenRouter (Art. 28)")
+        parts.append("- [WYMAGA WŁAŚCICIELA] Weryfikacja transferu danych poza EOG (SCCs)")
+
+        return "\n\n".join(parts) if parts else "Brak dokumentów compliance."

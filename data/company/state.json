@@ -2754,6 +2754,12 @@
       "actor": "ceo",
       "summary": "Innovation agenda: core + adjacent + moonshot",
       "rationale": "1. [core] info_quality Recovery Sprint | Owner: Quality Director | KPI: Raise info_quality by +0.4 within 14 days | Deadline: D+14\n   Why now: info_quality is the current bottleneck for overall service quality.\n2. [adjacent] Family Feedback Loop v1 | Owner: Customer Success Specialist | KPI: Collect 20 family ratings and close top 3 pain points | Deadline: D+21\n   Why now: Turns external feedback into faster product-learning cycles.\n3. [moonshot] Proactive Risk Signals Pilot | Owner: MLOps/SRE E"
+    },
+    {
+      "date": "2026-07-22T16:06:36.368824+00:00",
+      "actor": "manager",
+      "summary": "Business plan generated",
+      "rationale": "Full business plan with inputs from QD, HR, CMO, DPO. Saved to C:\\Users\\Hipek\\CascadeProjects\\windsurf-project-2\\docs\\business\\business_plan.md"
     }
   ]
 }

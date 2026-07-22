@@ -679,6 +679,12 @@ def cmd_company(args: argparse.Namespace) -> int:
             training_rounds=getattr(args, "train_rounds", 0) or 0,
         )
         return 0
+    if action == "plan":
+        path = runner.generate_business_plan(
+            owner_input=getattr(args, "owner_input", "") or "",
+        )
+        console.print(f"[green]Business plan saved to:[/green] {path}")
+        return 0
     console.print("[red]Unknown company command.[/red]")
     return 1
 
@@ -993,6 +999,16 @@ def build_parser() -> argparse.ArgumentParser:
              "generate fresh data (closes the strategy->action->data loop). 0 = off.",
     )
     pco_review.set_defaults(func=cmd_company)
+
+    pco_plan = company_sub.add_parser(
+        "plan",
+        help="Generate a full business plan (Manager commissions all department heads).",
+    )
+    pco_plan.add_argument(
+        "--owner-input",
+        help="Pass the owner's strategic input to the business plan (overrides owner_input.md).",
+    )
+    pco_plan.set_defaults(func=cmd_company)
 
     return parser
 

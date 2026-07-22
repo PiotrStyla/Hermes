@@ -7,6 +7,7 @@ plans client acquisition — all governing the company via a persistent
 CompanyState.
 """
 
+from .business_plan import BusinessPlanAgent
 from .ceo import CEOAgent
 from .cmo import CMOAgent
 from .hr import HRAgent, OperatorScorecard
@@ -23,6 +24,7 @@ from .state import (
 )
 
 __all__ = [
+    "BusinessPlanAgent",
     "CEOAgent",
     "CMOAgent",
     "QualityDirectorAgent",
