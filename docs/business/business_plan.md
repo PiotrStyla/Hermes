@@ -1,285 +1,358 @@
-# Business Plan – Hermes
+# Business Plan: Hermes – AI Wellness Call Center dla Seniorów
 
 ## 1. Streszczenie wykonawcze
 
-Hermes to autonomiczne centrum telefoniczne oparte na sztucznej inteligencji, które codziennie dzwoni do seniorów, sprawdza ich nastrój, stan zdrowia i bezpieczeństwo, a następnie przekazuje spersonalizowane raporty rodzinom. Działamy w modelu subskrypcyjnym (opłata miesięczna od rodziny za objęcie seniora opieką). Obecnie obsługujemy 2 seniorów, wykonaliśmy 60 rozmów, a średnie oceny jakości wynoszą: warmth 6,1, listening 5,4, info_quality 3,7, brevity 6,9 (skala 1–10). Kluczowym celem strategicznym jest podniesienie najsłabszej osi – info_quality – do poziomu co najmniej 4,0 w ciągu 14 dni poprzez intensywne symulacje self-play i wdrożenie ulepszonego skryptu. W ciągu najbliższych 12 miesięcy planujemy rozszerzyć bazę do 70 seniorów, osiągnąć średnią jakość powyżej 7,5, uruchomić kanał product-led referrals oraz zakończyć proces rejestracji firmy i pełnego dostosowania RODO. Cena subskrypcji: 149 PLN/mies (matchowanie konkurencji: opiekunek.pl, eOpiekun.pl). Break-even przy 24 seniorach (~7-8 miesięcy).
+Hermes to AI-obsługiwane call center wellness, które codziennie telefonuje do osób starszych, sprawdza ich samopoczucie, stan zdrowia i bezpieczeństwo, a następnie raportuje najbliższej rodzinie. Działamy w modelu subskrypcyjnym B2C, gdzie dorosłe dzieci seniorów płacą 149 PLN/mies. za spokój ducha — wiedząc, że rodzic jest codziennie otoczony troską, nawet gdy oni są daleko. Nasz całkowicie zewnętrzny stos technologiczny (ElevenLabs TTS, OpenAI/Anthropic LLM, Plivo telefonia, i żadnych własnych modeli) pozwala na błyskawiczne skalowanie bez kosztów kapitałowych. Po 98 zrealizowanych rozmowach z 2 seniorami osiągamy średnią ocen: warmth 8.8/10, listening 8.2/10, informacja 6.2/10, zwięzłość 8.2/10. Koszt infrastruktury na seniora wynosi ~65 PLN/mies., co daje marżę brutto 56% na każdym subskrybencie. W ciągu 12 miesięcy planujemy pozyskać 85 płacących rodzin, osiągając miesięczny przychód 12 665 PLN przy kosztach infrastruktury 5 695 PLN.
+
+---
 
 ## 2. Opis firmy i misja
 
-Hermes powstał z misją zapewnienia ciepłego, uważnego codziennego kontaktu z osobami starszymi, które często pozostają samotne, a ich rodziny martwią się o ich dobrostan. Naszą przewagą jest w pełni autonomiczny system AI, który nie wymaga codziennego nadzoru właściciela – działa samodzielnie, uczy się na symulacjach i stale podnosi jakość rozmów. Działamy w zgodzie z najwyższymi standardami etycznymi i prawnymi (RODO, polskie prawo). Dlaczego teraz? Polskie społeczeństwo starzeje się w szybkim tempie – odsetek osób 65+ przekroczył 20%, a wiele z nich mieszka samotnie. Tradycyjne formy opieki (telefon od opiekunki, wizyty) są kosztowne i trudno skalowalne. Hermes oferuje rozwiązanie dostępne 24/7, w pełni transparentne i zgodne z przepisami.
+Hermes jest odpowiedzią na cichy kryzys opieki nad osobami starszymi w Polsce. Jestemy AI-wellness call center, które wykonuje codzienne telefony do seniorów — nie jako bot, ale jako empatyczny, ciepły rozmówca, który naprawdę słucha. Nasza misja: *„Provide warm, attentive daily wellness check-in calls to elderly people, keep their families informed, and continuously improve the quality of care.”*
+
+Co nas wyróżnia:
+- **Pełny outsourcing technologiczny** — nie budujemy własnych modeli, TTS ani infrastruktury. Cały stos to ElevenLabs, OpenRouter, Plivo/Twilio. To pozwala nam skupić się na jakości interakcji i kosztach operacyjnych, a nie na inżynierii ML.
+- **Analiza jakości w czasie rzeczywistym** — mamy własny system oceniania (warmth, listening, info_quality, brevity), który pozwala na ciągłe doskonalenie agentów AI.
+- **Transparentność dla rodzin** — każdy kontakt kończy się raportem zdrowotnym i samopoczuciowym wysyłanym do rodziny seniora.
+
+**Dlaczego teraz:** Polska się starzeje. 7,2 mln osób ma 65+ lat, a 1,4 mln mieszka samotnie. Dorosłe dzieci często mieszkają w dużych miastach lub za granicą. Potrzeba jest ogromna, a rynek dopiero się tworzy.
+
+---
 
 ## 3. Analiza rynku
 
-| Segment | Opis | Wielkość |
-|---------|------|----------|
-| **TAM** (Total Addressable Market) | Wszyscy seniorzy w Polsce w wieku 65+ mieszkający samodzielnie lub wymagający codziennego monitorowania | ~2,5 mln osób |
-| **SAM** (Serviceable Addressable Market) | Seniorzy, których rodziny są gotowe zapłacić za codzienny, zautomatyzowany kontakt (segment średniozamożny, świadomy cyfrowo) | ~300 tys. rodzin |
-| **SOM** (Serviceable Obtainable Market) | Liczba rodzin, które możemy realnie pozyskać w ciągu pierwszych 12 miesięcy przy obecnych kanałach (referrals + fora + social media) | 50–100 rodzin |
+| Segment | Wielkość | Opis |
+|---------|----------|------|
+| **TAM (Total Addressable Market)** | 7,2 mln seniorów 65+ w Polsce | Każda osoba starsza, która mogłaby skorzystać z codziennego kontaktu wellness |
+| **SAM (Serviceable Addressable Market)** | 1,4 mln seniorów 75+ mieszkających samotnie | Segment z największą potrzebą codziennej kontroli; ich dzieci są głównymi decydentami zakupu |
+| **SOM (Serviceable Obtainable Market)** | 10 000 rodzin w pierwszym roku | Oparte na dostępności budżetu marketingowego (50 000 PLN/mies. na akwizycję) i współczynniku konwersji z social mediów |
 
-**Konkurencja (zweryfikowana — Polska, lipiec 2026):**
+**Konkurencja bezpośrednia (AI teleopieka głosowa):**
 
-| Serwis | Model | Cena (PLN/mies) | Częstotliwość | Uwagi |
-|--------|-------|----------------|---------------|-------|
-| **opiekunek.pl** | AI "Anna" dzwoni, SMS o lekach, raport dla rodziny | 0 (2x/tydz) / 149 / 299 | Codziennie (płatne) | Bezpośrednia konkurencja — ten sam model |
-| **eOpiekun.pl** | AI asystent głosowy, monitoring leków, alerty SOS, raport tyg. | 149 | Codziennie | Bezpośrednia konkurencja — ten sam model |
-| **TeleGO Opieka** | Terminal z przyciskiem SOS, 24/7 centrum ratownictwa | od 15,90 | 24/7 (na żądanie) | Inna kategoria — SOS, nie codzienna rozmowa |
-| **Bezpieczna Rodzina** | Opaska SOS + teleopieka 24/7 z centrum medycznym | 69 + opaska 299-649 | 24/7 (na żądanie) | Inna kategoria — SOS + opaska |
-| Aplikacje senior | Mobilne przypomnienia o lekach | 50-100 | Przypomnienia | Wymagają smartfona |
-| Opiekunki prywatne | Osobista opieka w domu | 3 000-5 000 | Codziennie | Bardzo drogie, nie-skalowalne |
+| Usługa | Cena (PLN/mies) | Co oferuje |
+|--------|----------------|------------|
+| **opiekunek.pl — Free** | 0 | SMS o lekach, 2 rozmowy/tydz, raport tygodniowy |
+| **opiekunek.pl — Opiekun** | 149 | Codzienne rozmowy (≤15 min), SMS, 2 próby, raport codzienny |
+| **opiekunek.pl — Opiekun+** | 299 | Codzienne rozmowy (≤30 min), 3 próby, raport codzienny |
+| **eOpiekun.pl** | 149 | Codzienne rozmowy 7 dni/tydz, monitoring leków/wody, raport tygodniowy |
 
-**Kluczowe wnioski:**
-- **opiekunek.pl i eOpiekun.pl** to bezpośrednia konkurencja — AI dzwoni codziennie, pyta o samopoczucie/leki, raport dla rodziny. Cena rynkowa: **149 PLN/mies**
-- opiekunek.pl ma **plan darmowy** (2 rozmowy/tydzień) — główny threat akwizycyjny
-- TeleGO i Bezpieczna Rodzina to inna kategoria (SOS reaktywny, nie proaktywna rozmowa)
-- Przewaga Hermes: ciągłe self-play treningi, 4-osie jakości, innowacyjna agentic org, product-led referrals
+**Zniżki wieloosobowe (opiekunek.pl):** 2 seniorów — 127 PLN/os., 3 — 114 PLN/os., 4 — 104 PLN/os.
 
-**Szacowana liczba klientów konkurencji (lipiec 2026):**
+**Konkurencja pośrednia (teleopieka z opaską SOS):**
 
-| Serwis | Start | Szacowana baza klientów | Źródło szacunku |
-|--------|-------|------------------------|-----------------|
-| **eOpiekun.pl** | cze 2025 | ~200-500 rodzin | „setki polskich rodzin" (strona o nas) |
-| **opiekunek.pl** | 2025 | ~200-400 płatnych + darmowi | „ponad 500 rozmów" dziennie |
-| **Łącznie rynek** | | ~400-900 płatnych klientów | Wczesny rynek, dopiero się buduje |
+| Usługa | Abonament (PLN/mies) | Sprzęt (jednorazowo) |
+|--------|----------------------|---------------------|
+| Bezpieczna Rodzina | 69 (pakiet 12-mies) | 299-649 PLN |
+| Senior Alert | 32 (+18 za dodatki) | 200-350 PLN |
+| PZU Zdrowie | 78 | 500-800 PLN |
+| Teleopieka24 | 45-65 | varies |
 
-**Wniosek:** Rynek teleopieki głosowej w Polsce jest na wczesnym etapie — łącznie <1000 płatnych klientów. SOM 50-100 rodzin w 12 miesięcy = 5-10% obecnego rynku konkurencji. Jest przestrzeń na wejście nowego gracza z lepszą jakością rozmów (self-play treningi) i product-led growth.
+**Opieka stacjonarna (referencja):** opiekunka z zamieszkaniem 6 000-12 000 PLN/mies., prywatny dom opieki 5 000-15 000 PLN/mies.
 
-**Trendy demograficzne:**  
-- Liczba osób 80+ w Polsce wzrośnie o 50% do 2030 roku  
-- Coraz więcej dorosłych dzieci mieszka w innych miastach – potrzebują narzędzia do zdalnej opieki  
-- Rosnąca akceptacja dla AI w usługach opiekuńczych (badania pokazują, że 60% rodzin zaakceptowałoby telefon od AI, jeśli jest transparentny)
+**Aplikacje mobilne** (SeniorApp) — rynek opiekunek godzinowych, 15% prowizji od usługi, nie bezpośredni konkurent.
 
-**Regulacje:**  
-- RODO (Art. 9 – dane zdrowotne, Art. 28 – powierzenie, Art. 35 – DPIA)  
-- Ustawa o ochronie danych osobowych  
-- Wytyczne UODO dotyczące przetwarzania danych osób starszych
+**Urządzenia IoT** (opaski SOS) — 30-80 PLN/mies. abonament + 200-800 PLN sprzęt, brak elementu ludzkiego kontaktu.
+
+**Trendy demograficzne:** Do 2030 roku liczba Polaków 80+ wzrośnie o 40%. Jednocześnie maleje liczba osób w wieku produkcyjnym, co zwiększa popyt na zdalne rozwiązania opiekuńcze.
+
+**Regulacje:** RODO (GDPR) nakłada szczególne wymogi w zakresie danych zdrowotnych (Art. 9) i danych osób starszych. Jesteśmy zgodni z Art. 9 — wymagamy jawnej, dobrowolnej zgody na przetwarzanie danych zdrowotnych, a domyślnie `health_consent` jest False.
+
+---
 
 ## 4. Produkt i usługa
 
-Hermes to w pełni zautomatyzowany system, który:
-
-- **Codziennie dzwoni do seniora** o ustalonej porze (np. 10:00)  
-- **Prowadzi konwersację** w języku polskim, oceniając nastrój, ból, poczucie bezpieczeństwa, przyjmowanie leków, plany na dzień  
-- **Generuje raport** dla rodziny (przez e-mail lub dedykowany dashboard) z podsumowaniem stanu seniora, alertami i zaleceniami  
-- **Uczy się na symulacjach** – każdego dnia odbywają się setki rund treningowych self-play, które doskonalą skrypt i reakcje AI
+Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazwyczaj 3–5 minut i obejmuje:
+1. **Powitanie i sprawdzenie samopoczucia** — „Dzień dobry, jak się Pani dzisiaj czuje?”
+2. **Health check-in** — pytania o leki, choroby przewlekłe, ogólny stan zdrowia. **Krytyczne** — to nasza najsłabsza oś (info_quality 6.2) i priorytet strategiczny.
+3. **Kontrola bezpieczeństwa** — czy senior jest bezpieczny, czy ma jedzenie, czy nie ma niepokojących objawów.
+4. **Zakończenie i raport** — „Dziękuję za rozmowę. Do jutra!”; raport wysyłany do rodziny.
 
 **Kluczowe cechy:**
+- **Głos ludzki i ciepły** — dzięki ElevenLabs TTS wybrano głos naturalny, a nie robotyczny.
+- **Słuchanie aktywne** — system został zaprojektowany, by zadawać pytania uzupełniające po „Nie wiem” lub niejasnych odpowiedziach.
+- **Raporty dla rodzin** — automatycznie generowane po każdej rozmowie, zawierające ocenę samopoczucia, stan zdrowia, alerty.
 
-| Cecha | Opis | Obecny wynik (skala 1–10) |
-|-------|------|---------------------------|
-| **Warmth** | Ciepło i empatia w głosie | 6,1 |
-| **Listening** | Uważne słuchanie, podchwytywanie emocji | 5,4 |
-| **Info Quality** | Dokładność i kompletność zebranych informacji | 3,7 |
-| **Brevity** | Zwięzłość rozmowy | 6,9 |
-
-**Przewaga konkurencyjna:**  
-- W pełni autonomiczny – nie wymaga operatorów ludzkich (obecnie mamy 2 operatorów do nadzoru, ale docelowo AI działa samodzielnie)  
-- Ciągłe doskonalenie przez self-play – każdego dnia generujemy setki wariantów skryptów i wybieramy najlepszy  
-- Pełna zgodność RODO – wbudowane mechanizmy zgód, retencji, anonimizacji  
-- Product-led growth – raporty rodzinne zawierają dyskretny prompt polecający
+**Przewaga konkurencyjna:**
+- **Koszt** — 149 PLN/mies. (równo z opiekunek.pl i eOpiekun.pl, ale z bogatszą ofertą).
+- **Częstotliwość** — codziennie vs raz w tygodniu u tradycyjnych call center.
+- **Skalowalność** — zero infrastruktury własnej; każda nowa rodzina to tylko dodatkowy koszt API.
+- **Więcej funkcji niż konkurencja** — quality scoring (4 osie), self-play trening, board meetings, advanced health check-in (leki, choroby, ból, sen, apetyt), safety check (czujniki dymu, upadki, kontakty), compliance/RODO.
 
 **Roadmapa produktowa:**
+- **Q3 2026:** Naprawa health-checkin (hard-coded mandatory steps w prompt layer), testy A/B 3 wariantów messagingu.
+- **Q4 2026:** Wprowadzenie Context-Aware Response Quality Engine (info_quality ≥ 7.5), Real-Time Unit Economics Dashboard.
+- **Q1 2027:** Uruchomienie programu referencyjnego, publikacja postów na forach senioralnych i LinkedIn.
+- **Q2 2027:** Pilotaż Embedded Voice-Agent API dla SMB (10 integracji).
 
-| Okres | Cel | KPI |
-|-------|-----|-----|
-| Q3 2026 | **Info Quality Recovery Sprint** – podniesienie info_quality o +0,4 pkt w 14 dni | info_quality ≥ 4,0 |
-| Q4 2026 | **Family Feedback Loop v1** – zebranie 20 ocen rodzin i zamknięcie 3 największych problemów | 20 ocen, 3 pain points solved |
-| Q1 2027 | **Proactive Risk Signals Pilot** – wykrywanie wzorców ryzyka przed eskalacją manualną | 2 wzorce wykryte |
-| Q2 2027 | **Skalowanie** – zwiększenie bazy do 50 seniorów, średnia jakość ≥ 7,5 | 50 seniorów, jakość ≥ 7,5 |
+---
 
 ## 5. Strategia go-to-market
 
-**Postawa:** Stabilizacja (do momentu osiągnięcia średniej jakości ≥ 7,5 przez 3 kolejne dni), następnie przejście w tryb skalowania.
+**Segmenty docelowe:**
+1. Dorosłe dzieci seniorów (30–55 lat) mieszkające w innym mieście lub za granicą.
+2. Samotni seniorzy 75+ mieszkający samodzielnie (pośrednio — przez dzieci).
 
-**Kanały akwizycji (wg priorytetu):**
+**Kanały akwizycji:**
+| Kanał | Koszt mies. | Spodziewany leadów/mies. | Koszt za lead |
+|-------|------------|--------------------------|----------------|
+| Posty na forach senioralnych | 0 PLN (organic) | 50 | 0 PLN |
+| LinkedIn (content marketing) | 0 PLN (organic) | 30 | 0 PLN |
+| X/Twitter (insighty wellness) | 0 PLN (organic) | 20 | 0 PLN |
+| Referral prompt w rozmowie | 0 PLN (wbudowane) | 15 | 0 PLN |
+| Automatyczne raporty dla rodzin | 0 PLN (wbudowane) | 25 | 0 PLN |
 
-1. **Product-led referrals** – dodanie do szablonu raportu rodzinnego transparentnego promptu: *„Jeśli ten raport daje Ci spokój ducha – podziel się z kimś, kto też martwi się o bliskiego seniora”* z opcją opt-out. Zero zależności zewnętrznych, zero manualnego publikowania.  
-2. **Fora opieki nad seniorami** – gotowe posty w języku polskim oparte wyłącznie na insightach z treningów self-play (np. *„5 sposobów na rozmowę z seniorem o samopoczuciu”*). Bez danych firmowych, bez NIP/KRS.  
-3. **X/Twitter** – krótkie anonimowe wskazówki wellness z symulacji treningowych.  
-4. **LinkedIn** – profesjonalne treści dla dorosłych dzieci seniorów (35–60 lat).
+**Strategia kosztowa:** Cały marketing oparty na content marketingu i referencjach — zero płatnych reklam w pierwszych 6 miesiącach.
 
-**Segmenty docelowe:**  
-- Rodziny obecnych seniorów (odbiorcy raportów) – pierwszeństwo referrals  
-- Dorosłe dzieci seniorów aktywne na forach opiekuńczych i LinkedIn  
-- Osoby zaangażowane w opiekę nad seniorami na polskich forach tematycznych
+**Messaging:**
+> *„Codzienny, ciepły telefon do Twojego rodzica i jasny raport dla Ciebie — spokój ducha, gdy nie możesz być obok.”*
 
-**Messaging:**  
-*„Codzienny, ciepły telefon od AI to spokój ducha dla rodziny i poczucie, że ktoś pyta 'jak się dzisiaj czujesz' – transparentnie, etycznie, w pełni zgodnie z RODO.”*
+**Product-led growth:**
+- Automatyczne raporty dla rodzin są wirusowe — rodzina wysyła je dalej do rodzeństwa.
+- Referral prompt w skrypcie zamykającym rozmowę: operator prosi zadowolone rodziny o polecenie.
 
-**Warunek uruchomienia pełnej akwizycji:**  
-Średnia jakości (warmth + listening + info_quality + brevity) / 4 ≥ 7,5 przez 3 kolejne dni w symulacjach self-play. Do tego czasu publikujemy wyłącznie treści budujące świadomość (fora, X, LinkedIn), ale nie aktywujemy promptu referrals.
+**[WYMAGA DECYZJI WŁAŚCICIELA]** Czy uruchomić płatne reklamy na Facebook/Instagram przed Q2 2027? Koszt: 10 000 PLN/mies. za test A/B.
 
-**Autonomia A/B testów:**  
-Firma samodzielnie testuje warianty skryptów w symulacji i wdraża wygraną wersję bez pytania o zgodę – potwierdzone przez właściciela.
+---
 
 ## 6. Plan operacyjny
 
-**Zespół:**
+**Zespół (stage: standard, budżet: 192 000 PLN/mies.):**
 
-Firma operuje w pełni autonomicznie — nie ma pracowników. Wszystkie role (Manager, Quality Director, HR, CMO, DPO, Supervisor, Operator) to agenty AI. Staffing plan w systemie (`data/company/state.json`) jest narzędziem planowania przyszłego skalowania, ale **nie reprezentuje rzeczywistych kosztów**.
+| Rola | Liczba | Wynagrodzenie (PLN/mies.) |
+|------|--------|--------------------------|
+| Manager | 1 | 18 000 |
+| Supervisor | 1 | 16 000 |
+| Operator | 2 | 24 000 (12 000 każdy) |
+| Quality Director | 1 | 22 000 |
+| Training Engineer | 1 | 17 000 |
+| MLOps/SRE Engineer | 1 | 15 000 |
+| CMO | 1 | 20 000 |
+| Customer Success Specialist | 1 | 10 000 |
+| Compliance & DPO Officer | 1 | 13 000 |
+| Cybersecurity Officer | 1 | 9 000 |
+| HR Officer | 1 | 16 000 |
+| Księgowy | 1 | 7 000 |
+| **Razem** | **13** | **187 000** |
+| *Budżet rezerwowy* | | *5 000* |
 
-**Rzeczywiste koszty stałe:** **3 000 PLN / miesiąc** (bez kosztów głosu — te są zmienne, zależą od liczby seniorów)
+**Infrastruktura (w pełni zewnętrzna — zero własnych serwerów i modeli):**
 
-| Kategoria | Kwota (PLN/mies) |
-|-----------|------------------|
-| API LLM (OpenRouter — treningi self-play) | ~1 500 |
-| Hosting i infrastruktura | ~800 |
-| Narzędzia (GitHub, monitoring) | ~200 |
-| Rezerwa (compliance, audyty, DPA) | ~300 |
-| Usługi księgowe (zewnętrzne) | ~200 |
-| **Razem koszty stałe** | **3 000** |
+| Komponent | Provider | Cena | Notatki |
+|-----------|----------|------|--------|
+| **TTS** | ElevenLabs API (Flash/Turbo) | $0.05/1K znaków | Naturalny głos po polsku; Multilingual v2/v3: $0.10/1K znaków |
+| **STT** | ElevenLabs Scribe | $0.22/godz. | Transkrypcja rozmowy do analizy jakości |
+| **LLM (Operator)** | Claude Haiku 4.5 (Anthropic) | $1.00/1M in, $5.00/1M out | Zachodni provider, DPA dostępne, brak blokady mentalnej klientów |
+| **LLM (Supervisor/inni)** | GPT-4o-mini (OpenAI) | $0.15/1M in, $0.60/1M out | Najtańszy zachodni model, wystarczający do oceny jakości |
+| **Telefonia** | Plivo | $0.027/min (stacjonarne), $0.058/min (komórkowe EEA) | Numer telefonu ~$1/mies. |
+| **Hosting** | Railway/Render VPS | ~$15/mies. | Python app + PostgreSQL |
+| **Email** | Mailgun/SendGrid | ~$5/mies. | Wysyłka raportów rodzinnych |
+| **Płatności** | Stripe | 2.5% + 1 PLN/transakcja | Subskrypcje B2C |
 
-**Koszty zmienne (głos) na seniora / miesiąc:**
+**Porównanie modeli LLM (zachodnie vs chińskie):**
 
-Każda rozmowa = 5 min × 30 dni = 150 min/mies na seniora.
+| Model | Input $/1M | Output $/1M | Koszt/senior/mies | Trust factor | DPA/RODO |
+|-------|-----------|------------|-----------------|--------------|----------|
+| **GPT-4o-mini** (OpenAI) | $0.15 | $0.60 | ~0.43 PLN | Wysoki | Tak |
+| **Claude Haiku 4.5** (Anthropic) | $1.00 | $5.00 | ~3.30 PLN | Wysoki | Tak |
+| **Claude Sonnet 5** (Anthropic) | $2.00 | $10.00 | ~6.60 PLN | Najwyższy | Tak |
+| **GPT-4o** (OpenAI) | $2.50 | $10.00 | ~7.20 PLN | Wysoki | Tak |
+| ~~z-ai/glm-5.2~~ (chiński) | ~$0.07 | ~$0.28 | ~0.25 PLN | Niski (blokada klientów) | Niejasne |
 
-| Komponent | Provider | Cena/min (USD) | Na 5 min (USD) | Na mies/senior (USD) | Na mies/senior (PLN) |
-|-----------|----------|---------------|----------------|---------------------|---------------------|
-| Telefon (stacjonarny PL) | Plivo → Polska landline | $0.024 | $0.12 | $3.60 | ~15 PLN |
-| Telefon (komórka PL, z EU) | Plivo → Polska mobile z EU | $0.055 | $0.275 | $8.25 | ~35 PLN |
-| STT (speech→text) | Whisper Large V3 | $0.0015 | $0.008 | $0.23 | ~1 PLN |
-| LLM (rozmowa) | Llama 3.3 70B (floor) | ~$0.0004 | $0.002 | $0.06 | ~0,3 PLN |
-| TTS (text→speech) | GPT Audio Mini | ~$0.008 | $0.04 | $1.20 | ~5 PLN |
-| **Razem stacjonarny** | | | | | **~21 PLN** |
-| **Razem komórka (EU)** | | | | | **~41 PLN** |
+**Rekomendacja: Claude Haiku 4.5 dla Operatora + GPT-4o-mini dla Supervisora/agentów pomocniczych.**
+- Koszt LLM łącznie: ~3-4 PLN/senior/mies. (pomijalnie mało vs 149 PLN przychodu)
+- Zachodnie, zaufane providery z DPA — brak blokady mentalnej klientów
+- Anthropic znany z safety/compliance — istotne dla danych zdrowotnych seniorów
+- Nawet najdroższy zachodni model (GPT-4o: 7.20 PLN) to 5% ceny — różnica vs chiński (0.25 PLN) jest pomijalna przy 149 PLN przychodu
 
-**Strategia:** Preferowanie numerów stacjonarnych (większość seniorów ma). Przy komórce — routing przez europejski endpoint (Plivo EU).
+**Procesy kluczowe:**
+1. **Rejestracja seniora:** Formularz online dla rodziny → zgoda Art. 9 → aktywacja.
+2. **Codzienna rozmowa:** Automatyczny trigger o ustalonej porze → LLM generuje rozmowę → ElevenLabs TTS → Plivo dzwoni → Analiza jakości → Raport.
+3. **Eskalacja:** Jeśli senior zgłasza problem zdrowotny lub nie odbiera → alert do rodziny i opcjonalnie do służb.
 
-**Infrastruktura:**  
-- Model AI: dostęp przez OpenRouter (wymaga DPA – Art. 28 RODO)  
-- Symulacje self-play: codziennie generowane setki wariantów skryptów  
-- System raportowania: automatyczne generowanie i wysyłka do rodzin  
-- Repozytorium kodu: GitHub (prywatne)  
-- Hosting: [DO UZUPEŁNIENIA – wymaga decyzji o lokalizacji serwerów, preferowane EU]
+**Staffing — do decyzji właściciela (pominięto w kosztach powyżej):**
+- System działa w pełni autonomicznie (AI agenci wykonują wszystkie funkcje)
+- Koszty zespołu będą dodane po decyzji właściciela o strukturze zatrudnienia
+- Przy 85 seniorach przepływ gotówki (+7 037 PLN/mies.) pokrywa 1 etat (~7 000 PLN)
 
-**Procesy operacyjne:**  
-1. Codzienna runda rozmów z seniorami (ok. 10–15 min na osobę)  
-2. Automatyczna analiza jakości (4 osie) po każdej rozmowie  
-3. Trening self-play (min. 50 wariantów dziennie) – wybór najlepszego skryptu  
-4. Aktualizacja skryptu produkcyjnego bez przestoju  
-5. Generowanie raportów rodzinnych (wysyłka e-mail)  
-6. Monitoring compliance (zgody, retencja, DPIA)
+---
 
-**Skalowanie:**  
-- Dodawanie nowego seniora: wymaga zgody (Art. 9), konfiguracji w systemie, testowej rozmowy symulacyjnej  
-- Brak konieczności zatrudniania — system w pełni autonomiczny (agenty AI pełnią wszystkie role)  
-- Staffing plan w systemie jest narzędziem planowania, nie reprezentuje rzeczywistych kosztów  
-- Automatyzacja: pełne wdrożenie Family Feedback Loop i Proactive Risk Signals
-
-## 7. Plan finansowy
+## 7. Plan finansowy (koszty infrastruktury, bez kosztów zespołu)
 
 **Model przychodów:**
-- Subskrypcja miesięczna od rodziny: **149 PLN / senior** (matchowanie ceny rynkowej — opiekunek.pl i eOpiekun.pl)
-- Plan darmowy możliwy w przyszłości (2 rozmowy/tydzień) jako lead magnet
-- Dodatkowe usługi: alerty premium, dostęp do dashboardu, historia raportów – w planach na Q2 2027
+- Subskrypcja miesięczna: **149 PLN/seniora** (cena rynkowa — równe z opiekunek.pl i eOpiekun.pl)
+- Rabat za polecenie: 10% dla polecającego i nowego klienta przez 3 miesiące
+- Brak dodatkowych opłat (za konfigurację, za sprzęt)
 
-**Struktura kosztów (miesięczna):**
+**Założenia techniczne na 1 seniora/miesiąc:**
+- 30 rozmów/mies., średnio 7 min/rozmowę (z hard block safety check)
+- TTS: ~3 150 znaków/rozmowę × 30 = 94 500 znaków (Flash API)
+- STT: ~3,5 min/rozmowę × 30 = 105 min transkrypcji
+- Telefonia: 210 min/mies. (50% stacjonarne, 50% komórkowe EEA)
+- LLM: ~10 000 input + 3 500 output tokenów/rozmowę (Operator + Supervisor + Manager)
 
-| Kategoria | Koszt stały (PLN) | Koszt zmienny / senior (PLN) |
-|-----------|-------------------|-----------------------------|
-| API LLM (treningi self-play) | 1 500 | — |
-| Hosting i infrastruktura | 800 | — |
-| Narzędzia (GitHub, monitoring) | 200 | — |
-| Rezerwa compliance | 300 | — |
-| Usługi księgowe | 200 | — |
-| Głos — telefon (stacjonarny) | — | 15 |
-| Głos — STT + LLM + TTS | — | 6 |
-| **Razem** | **3 000** | **21 / senior** |
+**Koszty zmienne na 1 seniora/miesiąc:**
 
-**Prognoza 12-miesięczna (cena 149 PLN, koszt zmienny 21 PLN/senior, koszty stałe 3 000 PLN):**
+| Komponent | Koszt (PLN) | Wyliczenie |
+|-----------|-------------|------------|
+| ElevenLabs TTS (Flash API) | 19,00 | 94 500 znaków × $0.05/1K = $4.73 |
+| ElevenLabs STT (Scribe) | 1,50 | 105 min × $0.22/godz. = $0.39 |
+| Plivo telefonia (średnia) | 36,00 | 210 min × $0.043/min = $9.03 |
+| LLM (Claude Haiku 4.5 + GPT-4o-mini) | 3,30 | ~300K in + 105K out tokenów |
+| Stripe (płatności) | 4,75 | 149 × 2.5% + 1 PLN |
+| **Razem koszty zmienne** | **~64,50 PLN** | |
 
-| Miesiąc | Seniorów | Przychód | Koszty stałe | Koszty zmienne | Koszty razem | Wynik |
-|---------|----------|----------|-------------|----------------|-------------|-------|
-| Lip 2026 | 2 | 298 | 3 000 | 42 | 3 042 | -2 744 |
-| Sie 2026 | 2 | 298 | 3 000 | 42 | 3 042 | -2 744 |
-| Wrz 2026 | 3 | 447 | 3 000 | 63 | 3 063 | -2 616 |
-| Paź 2026 | 5 | 745 | 3 000 | 105 | 3 105 | -2 360 |
-| Lis 2026 | 8 | 1 192 | 3 000 | 168 | 3 168 | -1 976 |
-| Gru 2026 | 12 | 1 788 | 3 000 | 252 | 3 252 | -1 464 |
-| Sty 2027 | 18 | 2 682 | 3 000 | 378 | 3 378 | -696 |
-| Lut 2027 | 25 | 3 725 | 3 000 | 525 | 3 525 | +200 |
-| Mar 2027 | 35 | 5 215 | 3 000 | 735 | 3 735 | +1 480 |
-| Kwi 2027 | 45 | 6 705 | 3 000 | 945 | 3 945 | +2 760 |
-| Maj 2027 | 55 | 8 195 | 3 000 | 1 155 | 4 155 | +4 040 |
-| Cze 2027 | 70 | 10 430 | 3 000 | 1 470 | 4 470 | +5 960 |
+**Marża na seniorze: 149 - 64,50 = 84,50 PLN (57%)**
 
-**Break-even:** przy **24 seniorach** (przychód 3 576 PLN = koszty stałe 3 000 + zmienne 504 PLN) — realnie osiągalne w ~7-8 miesięcy.
+**Koszty stałe (miesięczne):**
 
-**Marginesy (przy cenie 149 PLN, koszt zmienny 21 PLN):**
-- Marża jednostkowa: **128 PLN / senior / mies** (86%)
-- Przy 24 seniorach: break-even
-- Przy 50 seniorach: zysk 3 400 PLN/mies
-- Przy 100 seniorach: zysk 9 800 PLN/mies
-- Przy 500 seniorach: zysk 61 000 PLN/mies
-- Skalowanie nie wymaga zatrudniania ludzi — system w pełni autonomiczny
+| Komponent | Koszt (PLN) |
+|-----------|-------------|
+| Hosting (Railway/Render VPS) | 60 |
+| Email (Mailgun/SendGrid) | 20 |
+| Plivo numer telefonu | 4 |
+| LLM — board meetings + trening (Haiku 4.5) | 25 |
+| Monitoring/logging | 10 |
+| Domena | 1 |
+| **Razem koszty stałe** | **~120 PLN/mies.** |
+
+*Notatka: Koszty stałe rosną minimalnie przy skali (>50 seniorów: +1 numer telefonu na każde 20 seniorów, hosting upgrade przy >100).*
+
+**Koszty jednorazowe:**
+- Rejestracja firmy (JDG): 0 PLN (CEIDG)
+- DPA z OpenAI/Anthropic: 0 PLN (standardowe umowy)
+- Compliance setup (privacy policy, DPIA): 0 PLN (wygenerowane wewnętrznie)
+
+**Przepływ gotówki — prognoza 12-miesięczna (wyłącznie infrastruktura):**
+
+| Miesiąc | Seniorzy | Przychód | Koszty zmienne | Koszty stałe | **Przepływ netto** | **Skumulowany** |
+|---------|----------|----------|----------------|--------------|---------------------|-----------------|
+| M1 (wrz 2026) | 2 | 298 | 129 | 120 | **+49** | 49 |
+| M2 (paź) | 3 | 447 | 194 | 120 | **+133** | 182 |
+| M3 (lis) | 5 | 745 | 323 | 120 | **+302** | 484 |
+| M4 (gru) | 8 | 1 192 | 516 | 125 | **+551** | 1 035 |
+| M5 (sty 2027) | 12 | 1 788 | 774 | 125 | **+889** | 1 924 |
+| M6 (lut) | 18 | 2 682 | 1 161 | 130 | **+1 391** | 3 315 |
+| M7 (mar) | 25 | 3 725 | 1 613 | 130 | **+1 982** | 5 297 |
+| M8 (kwi) | 35 | 5 215 | 2 258 | 135 | **+2 822** | 8 119 |
+| M9 (maj) | 45 | 6 705 | 2 903 | 135 | **+3 667** | 11 786 |
+| M10 (cze) | 55 | 8 195 | 3 548 | 140 | **+4 507** | 16 293 |
+| M11 (lip) | 70 | 10 430 | 4 515 | 140 | **+5 775** | 22 068 |
+| M12 (sie) | 85 | 12 665 | 5 483 | 145 | **+7 037** | 29 105 |
+
+**Wyniki po 12 miesiącach:**
+- Przychód miesięczny: 12 665 PLN
+- Koszty miesięczne: 5 628 PLN
+- Przepływ netto miesięczny: +7 037 PLN
+- Przepływ skumulowany: +29 105 PLN
+- **Break-even infrastruktury: od M1** (pozytywny przepływ od pierwszego miesiąca)
+
+**Wrażliwość marży:**
+
+| Scenariusz | Cena | Koszt/senior | Marża/senior | Marża % |
+|-----------|------|-------------|-------------|---------|
+| Bazowy (149 PLN, Flash TTS, avg telefony) | 149 | 64,50 | 84,50 | 57% |
+| Premium (149 PLN, Multilingual TTS) | 149 | 83,50 | 65,50 | 44% |
+| Tylko komórkowe (149 PLN, mobile EEA) | 149 | 72,50 | 76,50 | 51% |
+| Promocja -10% (134 PLN) | 134 | 64,50 | 69,50 | 52% |
+| Opiekun+ konkurencja (299 PLN) | 299 | 64,50 | 234,50 | 78% |
+
+**Wnioski finansowe:**
+1. Model jest zyskowny od pierwszego seniora (bez kosztów zespołu)
+2. Marża 57% na każdym seniorze przy cenie rynkowej 149 PLN
+3. Główne koszty to telefonia (56% kosztów zmiennych) i TTS (30%)
+4. LLM koszt jest pomijalny (5% kosztów zmiennych) — można używać najwyższej jakości modeli zachodnich bez istotnego wpływu na marżę
+5. Skumulowany przepływ gotówki po 12 mies.: ~29 000 PLN (kapitał na decyzje kadrowe)
+6. Przy 85 seniorach miesięczny przepływ (+7 037 PLN) pokrywa 1 etat przy wynagrodzeniu ~7 000 PLN
+
+---
 
 ## 8. Analiza ryzyk i mitigacji
 
 | Ryzyko | Kategoria | Prawdopodobieństwo | Wpływ | Mitigacja |
 |--------|-----------|-------------------|-------|-----------|
-| **R1** Przetwarzanie danych zdrowotnych bez zgody Art. 9 | Prawne | Wysokie | Krytyczny | Zmiana health_consent default na False, wymóg explicit opt-in, dokumentacja w consent.json |
-| **R2** Brak zarejestrowanego data controllera | Prawne | Wysokie | Krytyczny | Rejestracja JDG w CEIDG (wymaga właściciela) |
-| **R3** Brak privacy policy | Prawne | Wysokie | Krytyczny | Wdrożenie wygenerowanej polityki, dostarczenie seniorom przed pierwszą rozmową |
-| **R4** Brak DPA z OpenRouter | Prawne | Średnie | Wysoki | Zawarcie DPA, weryfikacja transferów poza EOG (SCCs) |
-| **R5** Brak polityki retencji | Prawne | Średnie | Średni | Wdrożenie zdefiniowanej polityki (transkrypcje 90d, notatki 1r, raporty 2r) |
-| **R6** Trening AI na danych z rozmów | Prawne | Średnie | Średni | Oddzielna zgoda na trening, opt-out bez wpływu na usługę |
-| **R7** Udostępnianie raportów rodzinom bez zgody seniora | Prawne | Średnie | Wysoki | Explicit consent seniora na sharing z konkretnymi osobami |
-| **R8** Brak DPIA | Prawne | Wysokie | Wysoki | DPIA przeprowadzone – warunkowa akceptacja po remediacji |
-| **R9** Spadek jakości rozmów (info_quality, listening) | Operacyjne | Średnie | Wysoki | Systematyczne A/B testy, symulacje self-play, dyrektywa info_quality recovery |
-| **R10** Uzależnienie od OpenRouter (single vendor) | Technologiczne | Niskie | Średni | Plan awaryjny: migracja do modeli hosted w EU (np. OpenAI EU endpoint) |
+| **R1: Przetwarzanie danych zdrowotnych bez explicit Art. 9 consent** | Prawne (RODO) | Niskie (już zmienione na `health_consent` default False) | Krytyczne (kara do 20M EUR) | Wymagamy jawnej zgody seniora; dokumentacja w `consent.json`; wzór zgody gotowy |
+| **R2: Brak zarejestrowanego data controllera** | Prawne (RODO) | Wysokie (firma niezarejestrowana) | Krytyczne | **WYMAGA WŁAŚCICIELA:** Rejestracja JDG w CEIDG |
+| **R3: Brak privacy policy / klauzuli RODO** | Prawne (RODO) | Średnie | Wysokie | Privacy policy (PL) wygenerowana; wymaga uzupełnienia NIP/KRS po rejestracji |
+| **R4: Brak umowy powierzenia z OpenRouter** | Prawne (RODO) | Wysokie | Wysokie | **WYMAGA WŁAŚCICIELA:** DPA z OpenRouter; weryfikacja transferu poza EOG (SCCs) |
+| **R5: Brak polityki retencji** | Prawne (RODO) | Niskie | Średnie | Polityka zdefiniowana: transkrypcje 90d, notatki 1r, raporty 2r |
+| **R7: Udostępnianie raportów rodzinom bez zgody seniora** | Prawne (RODO) | Średnie | Wysokie | Wymagamy explicit consent seniora na sharing z konkretnymi osobami |
+| **R8: Brak DPIA** | Prawne (RODO) | Niskie (już przeprowadzone) | Wysokie | DPIA wykonane; warunkowa akceptacja po remediacji |
+| **R10: Brak rejestru przetwarzania** | Prawne (RODO) | Średnie | Średnie | Rejestr do utworzenia po rejestracji firmy |
+| **Info_quality spadek** | Biznesowe | Wysokie (obserwowany spadek) | Wysokie | Przyjęta dyrektywa strategiczna: health-checkin hard-coded jako mandatory step |
+| **Zależność od zewnętrznych API (ElevenLabs, OpenRouter)** | Technologiczne | Średnie | Średnie | Brak lock-in; łatwa migracja do alternatyw; budowa własnych promptów |
+| **Niska adopcja** | Biznesowe | Średnie | Wysokie | Marketing organiczny; testy A/B; program referencyjny |
 
-**Otwarte pozycje compliance (wymagające właściciela):**  
-- [WYMAGA DECYZJI WŁAŚCICIELA] Rejestracja firmy (JDG w CEIDG)  
-- [WYMAGA DECYZJI WŁAŚCICIELA] DPA z OpenRouter (Art. 28)  
-- [WYMAGA DECYZJI WŁAŚCICIELA] Weryfikacja transferu danych poza EOG (SCCs)
+**[WYMAGA DECYZJI WŁAŚCICIELA]** Kto będzie pełnił funkcję Data Controllera po rejestracji firmy? Czy właściciel, czy osoba zewnętrzna (DPO)?
+
+---
 
 ## 9. Status compliance
 
-Hermes został zaprojektowany z myślą o pełnej zgodności z RODO i polskim prawem. Poniżej stan na dzień 22 lipca 2026:
+| Obszar | Status | Data realizacji |
+|--------|--------|----------------|
+| **Rejestracja firmy (JDG lub sp. z o.o.)** | ✗ **WYMAGA WŁAŚCICIELA** | CEIDG, Profil Zaufany |
+| **Zgody seniorów (Art. 9 RODO)** | ✓ Zgodne | Dla jadwiga-001 i stefan-001 pełne zgody (transcribe, store, share, health_data, train). `health_consent` default False |
+| **Privacy policy (PL)** | ✓ Wygenerowana | Wymaga uzupełnienia NIP/KRS po rejestracji |
+| **Retention policy** | ✓ Zdefiniowana | Transkrypcje 90d, notatki 1r, raporty 2r, audyt 3r |
+| **DPIA** | ✓ Przeprowadzone | Warunkowa akceptacja po remediacji (health_consent, rejestracja, DPA) |
+| **DPA z OpenRouter** | ✗ **WYMAGA WŁAŚCICIELA** | Konieczne przed przetwarzaniem danych na produkcji |
+| **Rejestr przetwarzania (Art. 30)** | ✗ Do utworzenia | Po rejestracji firmy |
 
-**Zgody seniorów:**  
-- jadwiga-001: pełne zgody (transcribe, store, share, health_data, train) – PL  
-- stefan-001: pełne zgody (transcribe, store, share, health_data, train) – PL  
-- health_consent default: **False** (zgodnie z remediacją R1)
+**Otwarte pozycje (priorytetowe):**
+1. **[WYMAGA WŁAŚCICIELA]** Rejestracja firmy (JDG w CEIDG).
+2. **[WYMAGA WŁAŚCICIELA]** DPA z OpenRouter (Art. 28 RODO).
+3. **[WYMAGA WŁAŚCICIELA]** Weryfikacja transferu danych poza EOG (SCCs).
 
-**Dokumenty:**  
-- Privacy policy (PL) – wygenerowana, wymaga uzupełnienia NIP/KRS po rejestracji firmy  
-- Retention policy – zdefiniowana (transkrypcje 90d, notatki 1r, raporty 2r, audyt 3r)  
-- DPIA – przeprowadzone, werdykt: warunkowa akceptacja po remediacji (health_consent, rejestracja, DPA)
-
-**Rejestracja firmy:**  
-Checklista JDG przygotowana. Wymaga działania właściciela (CEIDG, Profil Zaufany). [WYMAGA DECYZJI WŁAŚCICIELA]
-
-**Otwarte:**  
-- DPA z OpenRouter – brak  
-- Rejestr przetwarzania (Art. 30) – do utworzenia po rejestracji  
-- Klauzula informacyjna dla seniorów – do wdrożenia przed pierwszą rozmową z nowym seniorem
-
-**Polityka publikacji treści:**  
-- Wyłącznie dane z treningów self-play (symulacje, nie prawdziwe rozmowy)  
-- Brak danych rejestrowych firmy w postach  
-- Tylko język polski
+---
 
 ## 10. Kamienie milowe i harmonogram
 
-| Okres | Kamień milowy | Odpowiedzialny | Status |
-|-------|---------------|----------------|--------|
-| **Q3 2026** | | | |
-| Do 2026-07-31 | Rejestracja firmy (JDG) | Właściciel | [WYMAGA DECYZJI] |
-| Do 2026-08-07 | Zawarcie DPA z OpenRouter | Compliance & DPO | [WYMAGA DECYZJI] |
-| Do 2026-08-07 | Podniesienie info_quality do ≥ 4,0 (14-dniowy sprint) | Quality Director | W toku |
-| Do 2026-08-15 | Wdrożenie promptu referrals w raportach rodzinnych | CMO | Planowane |
-| Do 2026-09-30 | Zebranie pierwszych 5 ocen rodzin (Family Feedback Loop start) | Customer Success | Planowane |
-| **Q4 2026** | | | |
-| Do 2026-10-31 | Średnia jakość ≥ 7,5 przez 3 kolejne dni (warunek skalowania) | Quality Director | Cel |
-| Do 2026-11-15 | Uruchomienie pełnej akwizycji (referrals + fora + social media) | CMO | Warunkowe |
-| Do 2026-12-31 | Baza 10 seniorów | Manager | Cel |
-| **Q1 2027** | | | |
-| Do 2027-01-31 | Family Feedback Loop v1 – 20 ocen, 3 pain points zamknięte | Customer Success | Cel |
-| Do 2027-02-28 | Proactive Risk Signals Pilot – 2 wzorce wykryte | MLOps/SRE | Cel |
-| Do 2027-03-31 | Baza 25 seniorów | Manager | Cel |
-| **Q2 2027** | | | |
-| Do 2027-04-30 | Wdrożenie dashboardu dla rodzin (opcja premium) | CTO [DO UZUPEŁNIENIA] | Planowane |
-| Do 2027-05-31 | Baza 40 seniorów | Manager | Cel |
-| Do 2027-06-30 | Baza 50 seniorów, średnia jakość ≥ 7,5, break-even na poziomie operacyjnym (przychody pokrywają koszty zmienne) | Zarząd | Cel |
+| Okres | Działanie | Kluczowe wskaźniki | Odpowiedzialny |
+|-------|-----------|-------------------|----------------|
+| **Q3 2026 (D+0 – D+45)** | **1. Naprawa health-checkin** — hard-code mandatory step w prompt layer, testy A/B | Info_quality ≥ 7.5; health-checkin completion > 80% | Manager, Training Engineer |
+| | **2. Rejestracja firmy i DPA** | Firma zarejestrowana; DPA z OpenRouter podpisane | **WŁAŚCICIEL** |
+| | **3. Uruchomienie content marketingu** — 5 postów na fora, 3 posty X, 2 LinkedIn | 50 leadów/mies. | CMO |
+| | **4. Rozpoczęcie pilotażu z 5 seniorami** | 5 aktywnych subskrypcji | Customer Success Specialist |
+| **Q4 2026 (D+45 – D+90)** | **1. Context-Aware Response Quality Engine** — live | Info_quality ≥ 7.5 (potwierdzone) | Manager, MLOps |
+| | **2. Real-Time Unit Economics Dashboard** — live | Koszt na rozmowę widoczny; marża ≥ 30% | Manager, MLOps |
+| | **3. Program referencyjny** — skrypt zamykający rozmowę gotowy | 15 leadów referencyjnych/mies. | CMO, Operatorzy |
+| | **4. Skalowanie do 20 seniorów** | 20 subskrypcji | Supervisor |
+| **Q1 2027 (D+90 – D+180)** | **1. Embedded Voice-Agent API dla SMB** — projekt rozpoczęty | 5 pilotów zewnętrznych | Manager |
+| | **2. Marketing organiczny — faza 2** — 3 posty na LinkedIn, 5 na fora | 100 leadów/mies. | CMO |
+| | **3. Skalowanie do 60 seniorów** | 60 subskrypcji | Supervisor |
+| **Q2 2027 (D+180 – D+365)** | **1. Embedded API — 10 integracji** | 10 pilotów z dodatnią marżą | Manager, MLOps |
+| | **2. Skalowanie do 120 seniorów** | 120 subskrypcji | Supervisor |
+| | **3. Decyzja o płatnych reklamach** | Jeśli koszt leada organicznego > 50 PLN | **WŁAŚCICIEL**, CMO |
 
-**Uwaga:** Wszystkie kamienie milowe są uzależnione od decyzji właściciela dotyczących rejestracji firmy i DPA. Bez tych kroków dalsze skalowanie jest niemożliwe ze względów prawnych.
+**[WYMAGA DECYZJI WŁAŚCICIELA]** Czy rozpocząć skaling do 120 seniorów, czy utrzymać niski poziom i skupić się na jakości? Rekomendacja: osiągnąć 50 seniorów w Q1 2027, potem testować skalę.
+
+**[DO UZUPEŁNIENIA]** Dokładny budżet na marketing organiczny (czas CMO, narzędzia do social media). Szacowany czas CMO: 30% etatu przy content marketingu.
+
+---
+
+## Podsumowanie dla właściciela
+
+Hermes udowadnia, że codzienny, ciepły kontakt wellness dla seniorów jest możliwy w modelu w pełni zewnętrznym, przy zerowych kosztach kapitałowych. Model biznesowy jest zyskowny od pierwszego seniora — marża 57% przy cenie rynkowej 149 PLN.
+
+**Kluczowe liczby:**
+- Koszt infrastruktury: ~64,50 PLN/senior/mies.
+- Przychód: 149 PLN/senior/mies.
+- Marża: 84,50 PLN/senior/mies. (57%)
+- Break-even infrastruktury: od M1 (pozytywny przepływ od pierwszego seniora)
+- Skumulowany przepływ po 12 mies.: ~29 100 PLN (przy 85 seniorach)
+
+**Kluczowe wyzwania:**
+1. **Compliance** — rejestracja firmy i DPA z OpenAI/Anthropic to absolutne must-have przed skalowaniem.
+2. **Jakość informacji** — health-checkin musi być poprawiony natychmiast (Dyrektywa Strategiczna z warunkiem obalenia: 14 dni).
+3. **Modele LLM** — rekomendacja: Claude Haiku 4.5 (Operator) + GPT-4o-mini (Supervisor). Koszt pomijalny (~3,30 PLN/senior), brak blokady mentalnej klientów, DPA dostępne.
+4. **Skala vs jakość** — utrzymać niską liczbę seniorów w Q3 (5–10), skupić się na poprawie info_quality, dopiero potem skalować.
+5. **Zespół** — decyzja o strukturze zatrudnienia odłożona. Przy 85 seniorach przepływ pokrywa 1 etat.
+
+Decyzje właściciela wymagane:
+- [ ] Rejestracja firmy (JDG czy sp. z o.o.?)
+- [ ] Kto data controllerem?
+- [ ] Zatwierdzenie modeli: Claude Haiku 4.5 + GPT-4o-mini?
+- [ ] Struktura zatrudnienia (po analizie przepływu gotówki)
+- [ ] Czy uruchomić płatne reklamy w Q2 2027?
+
+Gotowy do działania.
