@@ -1,6 +1,6 @@
 # Hermes — Podsumowanie finansowe i przepływ gotówki
 
-> **Ostatnia aktualizacja:** 2026-08-19
+> **Ostatnia aktualizacja:** 2026-08-19 (rev 2 — model Operatora: Claude Sonnet 5)
 > **Status:** Aktywny dokument referencyjny
 > **Repozytorium:** https://github.com/PiotrStyla/Hermes
 
@@ -20,14 +20,14 @@
 |-----------|----------|------|
 | TTS | ElevenLabs API (Flash/Turbo) | $0.05/1K znaków |
 | STT | ElevenLabs Scribe | $0.22/godz. |
-| LLM (Operator) | Claude Haiku 4.5 (Anthropic) | $1.00/1M in, $5.00/1M out |
+| LLM (Operator) | Claude Sonnet 5 (Anthropic) | $2.00/1M in, $10.00/1M out |
 | LLM (Supervisor/inni) | GPT-4o-mini (OpenAI) | $0.15/1M in, $0.60/1M out |
 | Telefonia | Plivo | $0.027/min (stacjonarne), $0.058/min (komórkowe EEA) |
 | Hosting | Railway/Render VPS | ~$15/mies. |
 | Email | Mailgun/SendGrid | ~$5/mies. |
 | Płatności | Stripe | 2.5% + 1 PLN/transakcja |
 
-**Notatka:** ElevenAgents (gotowa platforma conversational AI od ElevenLabs) rozważona i odrzucona — koszt ~113 PLN/senior vs ~66 PLN/senior w modelu API, brak quality scoring/trening/raportów. Szczegóły w `business_plan.md` sekcja 6.
+**Notatka:** ElevenAgents (gotowa platforma conversational AI od ElevenLabs) rozważona i odrzucona — koszt ~113 PLN/senior vs ~68 PLN/senior w modelu API, brak quality scoring/trening/raportów. Szczegóły w `business_plan.md` sekcja 6.
 
 ---
 
@@ -40,11 +40,11 @@
 | ElevenLabs TTS (Flash API) | 19,00 |
 | ElevenLabs STT (Scribe) | 1,50 |
 | Plivo telefonia (średnia) | 36,00 |
-| LLM (Claude Haiku 4.5 + GPT-4o-mini) | 3,30 |
+| LLM (Claude Sonnet 5 + GPT-4o-mini) | 7,00 |
 | Stripe (płatności) | 4,75 |
-| **Razem koszty zmienne** | **64,50 PLN** |
+| **Razem koszty zmienne** | **68,30 PLN** |
 
-**Marża na seniorze: 149 - 64,50 = 84,50 PLN (57%)**
+**Marża na seniorze: 149 - 68,30 = 80,70 PLN (54%)**
 
 ---
 
@@ -55,10 +55,10 @@
 | Hosting (Railway/Render VPS) | 60 |
 | Email (Mailgun/SendGrid) | 20 |
 | Plivo numer telefonu | 4 |
-| LLM — board meetings + trening | 25 |
+| LLM — board meetings + trening (Sonnet 5) | 35 |
 | Monitoring/logging | 10 |
 | Domena | 1 |
-| **Razem** | **~120 PLN/mies.** |
+| **Razem** | **~130 PLN/mies.** |
 
 ---
 
@@ -68,18 +68,18 @@
 
 | Miesiąc | Seniorzy | Przychód (PLN) | Koszty zmienne (PLN) | Koszty stałe (PLN) | Przepływ netto (PLN) | Skumulowany (PLN) |
 |---------|----------|----------------|----------------------|---------------------|----------------------|-------------------|
-| M1 (wrz 2026) | 2 | 298 | 129 | 120 | +49 | 49 |
-| M2 (paź 2026) | 3 | 447 | 194 | 120 | +133 | 182 |
-| M3 (lis 2026) | 5 | 745 | 323 | 120 | +302 | 484 |
-| M4 (gru 2026) | 8 | 1 192 | 516 | 125 | +551 | 1 035 |
-| M5 (sty 2027) | 12 | 1 788 | 774 | 125 | +889 | 1 924 |
-| M6 (lut 2027) | 18 | 2 682 | 1 161 | 130 | +1 391 | 3 315 |
-| M7 (mar 2027) | 25 | 3 725 | 1 613 | 130 | +1 982 | 5 297 |
-| M8 (kwi 2027) | 35 | 5 215 | 2 258 | 135 | +2 822 | 8 119 |
-| M9 (maj 2027) | 45 | 6 705 | 2 903 | 135 | +3 667 | 11 786 |
-| M10 (cze 2027) | 55 | 8 195 | 3 548 | 140 | +4 507 | 16 293 |
-| M11 (lip 2027) | 70 | 10 430 | 4 515 | 140 | +5 775 | 22 068 |
-| M12 (sie 2027) | 85 | 12 665 | 5 483 | 145 | +7 037 | 29 105 |
+| M1 (wrz 2026) | 2 | 298 | 137 | 130 | +31 | 31 |
+| M2 (paź 2026) | 3 | 447 | 205 | 130 | +112 | 143 |
+| M3 (lis 2026) | 5 | 745 | 342 | 130 | +273 | 416 |
+| M4 (gru 2026) | 8 | 1 192 | 546 | 135 | +511 | 927 |
+| M5 (sty 2027) | 12 | 1 788 | 820 | 135 | +833 | 1 760 |
+| M6 (lut 2027) | 18 | 2 682 | 1 229 | 140 | +1 313 | 3 073 |
+| M7 (mar 2027) | 25 | 3 725 | 1 708 | 140 | +1 877 | 4 950 |
+| M8 (kwi 2027) | 35 | 5 215 | 2 391 | 145 | +2 679 | 7 629 |
+| M9 (maj 2027) | 45 | 6 705 | 3 074 | 145 | +3 486 | 11 115 |
+| M10 (cze 2027) | 55 | 8 195 | 3 757 | 150 | +4 288 | 15 403 |
+| M11 (lip 2027) | 70 | 10 430 | 4 781 | 150 | +5 499 | 20 902 |
+| M12 (sie 2027) | 85 | 12 665 | 5 806 | 155 | +6 704 | 27 606 |
 
 ---
 
@@ -89,11 +89,11 @@
 |----------|---------|
 | Liczba seniorów | 85 |
 | Przychód miesięczny | 12 665 PLN |
-| Koszty miesięczne | 5 628 PLN |
-| Przepływ netto miesięczny | +7 037 PLN |
-| Przepływ skumulowany | +29 105 PLN |
+| Koszty miesięczne | 5 961 PLN |
+| Przepływ netto miesięczny | +6 704 PLN |
+| Przepływ skumulowany | +27 606 PLN |
 | Break-even infrastruktury | Od M1 (pozytywny od pierwszego seniora) |
-| Marża na seniorze | 84,50 PLN (57%) |
+| Marża na seniorze | 80,70 PLN (54%) |
 
 ---
 
@@ -101,11 +101,12 @@
 
 | Scenariusz | Cena (PLN) | Koszt/senior (PLN) | Marża/senior (PLN) | Marża % |
 |-----------|------------|-------------------|-------------------|---------|
-| Bazowy (149, Flash TTS, avg telefony) | 149 | 64,50 | 84,50 | 57% |
-| Premium (149, Multilingual TTS) | 149 | 83,50 | 65,50 | 44% |
-| Tylko komórkowe (149, mobile EEA) | 149 | 72,50 | 76,50 | 51% |
-| Promocja -10% (134 PLN) | 134 | 64,50 | 69,50 | 52% |
-| Opiekun+ konkurencja (299 PLN) | 299 | 64,50 | 234,50 | 78% |
+| Bazowy (149, Sonnet 5, Flash TTS, avg telefony) | 149 | 68,30 | 80,70 | 54% |
+| Haiku zamiast Sonnet (149, Haiku 4.5) | 149 | 64,50 | 84,50 | 57% |
+| Premium (149, Multilingual TTS) | 149 | 87,30 | 61,70 | 41% |
+| Tylko komórkowe (149, mobile EEA) | 149 | 76,30 | 72,70 | 49% |
+| Promocja -10% (134 PLN) | 134 | 68,30 | 65,70 | 49% |
+| Opiekun+ konkurencja (299 PLN) | 299 | 68,30 | 230,70 | 77% |
 
 ---
 
@@ -168,18 +169,28 @@
 | GPT-4o (OpenAI) | $2.50 | $10.00 | ~7.20 PLN | Wysoki | ✅ |
 | ~~z-ai/glm-5.2~~ (chiński) | ~$0.07 | ~$0.28 | ~0.25 PLN | Niski | Niejasne |
 
-**Rekomendacja:** Claude Haiku 4.5 (Operator) + GPT-4o-mini (Supervisor). Koszt łącznie ~3-4 PLN/senior/mies. — pomijalny vs 149 PLN przychodu.
+**Rekomendacja (zatwierdzona):** Claude Sonnet 5 (Operator) + GPT-4o-mini (Supervisor). Koszt łącznie ~7 PLN/senior/mies. — pomijalny vs 149 PLN przychodu.
+
+**Wyniki treningu (30 rund, 2026-08-19):**
+
+| Model Operatora | Warmth | Listening | Info Quality | Brevity | Średnia |
+|----------------|--------|-----------|-------------|---------|---------|
+| Claude Sonnet 5 | 8.1 | 7.8 | **7.3** | 6.7 | **7.48** |
+| GPT-4o | 7.9 | 8.3 | 6.2 | 7.4 | 7.45 |
+| z-ai/glm-5.2 (chiński) | 8.8 | 8.2 | 6.2 | 8.2 | 7.85 |
+
+Sonnet 5 wybrany mimo nieco niższego brevity — **info_quality 7.3 vs 6.2** (GPT-4o) to kluczowy skok jakościowy. Warmth 8.1 bardzo dobry. Anthropic safety-first — istotne dla danych zdrowotnych.
 
 ---
 
 ## 11. Kluczowe wnioski
 
 1. **Break-even od pierwszego seniora** (bez kosztów zespołu)
-2. **Marża 57%** (84,50 PLN/senior) przy cenie rynkowej 149 PLN
-3. **Główne koszty:** telefonia (56% kosztów zmiennych) + TTS (30%) — LLM to tylko 5%
-4. **Skumulowany cash po 12 mies.: ~29 100 PLN** — kapitał na decyzje kadrowe
-5. **Przy 85 seniorach** przepływ miesięczny (+7 037 PLN) pokrywa 1 etat (~7 000 PLN)
-6. **Modele zachodnie** (Anthropic/OpenAI) eliminują blokadę mentalną klientów przy pomijalnym koszcie
+2. **Marża 54%** (80,70 PLN/senior) przy cenie rynkowej 149 PLN
+3. **Główne koszty:** telefonia (53% kosztów zmiennych) + TTS (28%) — LLM to 10%
+4. **Skumulowany cash po 12 mies.: ~27 600 PLN** — kapitał na decyzje kadrowe
+5. **Przy 85 seniorach** przepływ miesięczny (+6 704 PLN) pokrywa 1 etat (~7 000 PLN)
+6. **Claude Sonnet 5** (Operator) daje info_quality 7.3 vs 6.2 (GPT-4o) — kluczowa poprawa naszej najsłabszej osi
 7. **Hermes oferuje więcej niż konkurencja:** quality scoring, trening, board meetings, advanced health check-in, safety check, compliance
 
 ---

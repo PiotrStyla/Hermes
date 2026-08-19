@@ -2,7 +2,7 @@
 
 ## 1. Streszczenie wykonawcze
 
-Hermes to AI-obsługiwane call center wellness, które codziennie telefonuje do osób starszych, sprawdza ich samopoczucie, stan zdrowia i bezpieczeństwo, a następnie raportuje najbliższej rodzinie. Działamy w modelu subskrypcyjnym B2C, gdzie dorosłe dzieci seniorów płacą 149 PLN/mies. za spokój ducha — wiedząc, że rodzic jest codziennie otoczony troską, nawet gdy oni są daleko. Nasz całkowicie zewnętrzny stos technologiczny (ElevenLabs TTS, OpenAI/Anthropic LLM, Plivo telefonia, i żadnych własnych modeli) pozwala na błyskawiczne skalowanie bez kosztów kapitałowych. Po 98 zrealizowanych rozmowach z 2 seniorami osiągamy średnią ocen: warmth 8.8/10, listening 8.2/10, informacja 6.2/10, zwięzłość 8.2/10. Koszt infrastruktury na seniora wynosi ~65 PLN/mies., co daje marżę brutto 56% na każdym subskrybencie. W ciągu 12 miesięcy planujemy pozyskać 85 płacących rodzin, osiągając miesięczny przychód 12 665 PLN przy kosztach infrastruktury 5 695 PLN.
+Hermes to AI-obsługiwane call center wellness, które codziennie telefonuje do osób starszych, sprawdza ich samopoczucie, stan zdrowia i bezpieczeństwo, a następnie raportuje najbliższej rodzinie. Działamy w modelu subskrypcyjnym B2C, gdzie dorosłe dzieci seniorów płacą 149 PLN/mies. za spokój ducha — wiedząc, że rodzic jest codziennie otoczony troską, nawet gdy oni są daleko. Nasz całkowicie zewnętrzny stos technologiczny (ElevenLabs TTS, Anthropic Claude Sonnet 5 + OpenAI GPT-4o-mini, Plivo telefonia, i żadnych własnych modeli) pozwala na błyskawiczne skalowanie bez kosztów kapitałowych. Po 30 rundach treningu z Claude Sonnet 5 osiągamy: warmth 8.1/10, listening 7.8/10, info_quality 7.3/10 (poprawa z 6.2), brevity 6.7/10. Koszt infrastruktury na seniora wynosi ~68 PLN/mies., co daje marżę brutto 54% na każdym subskrybencie. W ciągu 12 miesięcy planujemy pozyskać 85 płacących rodzin, osiągając miesięczny przychód 12 665 PLN przy kosztach infrastruktury 5 961 PLN.
 
 ---
 
@@ -141,7 +141,7 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 |-----------|----------|------|--------|
 | **TTS** | ElevenLabs API (Flash/Turbo) | $0.05/1K znaków | Naturalny głos po polsku; Multilingual v2/v3: $0.10/1K znaków |
 | **STT** | ElevenLabs Scribe | $0.22/godz. | Transkrypcja rozmowy do analizy jakości |
-| **LLM (Operator)** | Claude Haiku 4.5 (Anthropic) | $1.00/1M in, $5.00/1M out | Zachodni provider, DPA dostępne, brak blokady mentalnej klientów |
+| **LLM (Operator)** | Claude Sonnet 5 (Anthropic) | $2.00/1M in, $10.00/1M out | Najlepszy info_quality (7.3 vs 6.2 GPT-4o), safety-first, DPA dostępne |
 | **LLM (Supervisor/inni)** | GPT-4o-mini (OpenAI) | $0.15/1M in, $0.60/1M out | Najtańszy zachodni model, wystarczający do oceny jakości |
 | **Telefonia** | Plivo | $0.027/min (stacjonarne), $0.058/min (komórkowe EEA) | Numer telefonu ~$1/mies. |
 | **Hosting** | Railway/Render VPS | ~$15/mies. | Python app + PostgreSQL |
@@ -158,8 +158,9 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 | **GPT-4o** (OpenAI) | $2.50 | $10.00 | ~7.20 PLN | Wysoki | Tak |
 | ~~z-ai/glm-5.2~~ (chiński) | ~$0.07 | ~$0.28 | ~0.25 PLN | Niski (blokada klientów) | Niejasne |
 
-**Rekomendacja: Claude Haiku 4.5 dla Operatora + GPT-4o-mini dla Supervisora/agentów pomocniczych.**
-- Koszt LLM łącznie: ~3-4 PLN/senior/mies. (pomijalnie mało vs 149 PLN przychodu)
+**Rekomendacja (zatwierdzona): Claude Sonnet 5 dla Operatora + GPT-4o-mini dla Supervisora/agentów pomocniczych.**
+- Koszt LLM łącznie: ~7 PLN/senior/mies. (pomijalnie mało vs 149 PLN przychodu)
+- Sonnet 5 daje info_quality 7.3 vs 6.2 (GPT-4o) — kluczowa poprawa naszej najsłabszej osi
 - Zachodnie, zaufane providery z DPA — brak blokady mentalnej klientów
 - Anthropic znany z safety/compliance — istotne dla danych zdrowotnych seniorów
 - Nawet najdroższy zachodni model (GPT-4o: 7.20 PLN) to 5% ceny — różnica vs chiński (0.25 PLN) jest pomijalna przy 149 PLN przychodu
@@ -172,7 +173,7 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 **Staffing — do decyzji właściciela (pominięto w kosztach powyżej):**
 - System działa w pełni autonomicznie (AI agenci wykonują wszystkie funkcje)
 - Koszty zespołu będą dodane po decyzji właściciela o strukturze zatrudnienia
-- Przy 85 seniorach przepływ gotówki (+7 037 PLN/mies.) pokrywa 1 etat (~7 000 PLN)
+- Przy 85 seniorach przepływ gotówki (+6 704 PLN/mies.) pokrywa 1 etat (~7 000 PLN)
 
 ---
 
@@ -197,11 +198,11 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 | ElevenLabs TTS (Flash API) | 19,00 | 94 500 znaków × $0.05/1K = $4.73 |
 | ElevenLabs STT (Scribe) | 1,50 | 105 min × $0.22/godz. = $0.39 |
 | Plivo telefonia (średnia) | 36,00 | 210 min × $0.043/min = $9.03 |
-| LLM (Claude Haiku 4.5 + GPT-4o-mini) | 3,30 | ~300K in + 105K out tokenów |
+| LLM (Claude Sonnet 5 + GPT-4o-mini) | 7,00 | ~300K in + 105K out tokenów (Sonnet 5 Operator + GPT-4o-mini Supervisor) |
 | Stripe (płatności) | 4,75 | 149 × 2.5% + 1 PLN |
-| **Razem koszty zmienne** | **~64,50 PLN** | |
+| **Razem koszty zmienne** | **~68,30 PLN** | |
 
-**Marża na seniorze: 149 - 64,50 = 84,50 PLN (57%)**
+**Marża na seniorze: 149 - 68,30 = 80,70 PLN (54%)**
 
 **Koszty stałe (miesięczne):**
 
@@ -210,10 +211,10 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 | Hosting (Railway/Render VPS) | 60 |
 | Email (Mailgun/SendGrid) | 20 |
 | Plivo numer telefonu | 4 |
-| LLM — board meetings + trening (Haiku 4.5) | 25 |
+| LLM — board meetings + trening (Sonnet 5) | 35 |
 | Monitoring/logging | 10 |
 | Domena | 1 |
-| **Razem koszty stałe** | **~120 PLN/mies.** |
+| **Razem koszty stałe** | **~130 PLN/mies.** |
 
 *Notatka: Koszty stałe rosną minimalnie przy skali (>50 seniorów: +1 numer telefonu na każde 20 seniorów, hosting upgrade przy >100).*
 
@@ -226,43 +227,44 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 
 | Miesiąc | Seniorzy | Przychód | Koszty zmienne | Koszty stałe | **Przepływ netto** | **Skumulowany** |
 |---------|----------|----------|----------------|--------------|---------------------|-----------------|
-| M1 (wrz 2026) | 2 | 298 | 129 | 120 | **+49** | 49 |
-| M2 (paź) | 3 | 447 | 194 | 120 | **+133** | 182 |
-| M3 (lis) | 5 | 745 | 323 | 120 | **+302** | 484 |
-| M4 (gru) | 8 | 1 192 | 516 | 125 | **+551** | 1 035 |
-| M5 (sty 2027) | 12 | 1 788 | 774 | 125 | **+889** | 1 924 |
-| M6 (lut) | 18 | 2 682 | 1 161 | 130 | **+1 391** | 3 315 |
-| M7 (mar) | 25 | 3 725 | 1 613 | 130 | **+1 982** | 5 297 |
-| M8 (kwi) | 35 | 5 215 | 2 258 | 135 | **+2 822** | 8 119 |
-| M9 (maj) | 45 | 6 705 | 2 903 | 135 | **+3 667** | 11 786 |
-| M10 (cze) | 55 | 8 195 | 3 548 | 140 | **+4 507** | 16 293 |
-| M11 (lip) | 70 | 10 430 | 4 515 | 140 | **+5 775** | 22 068 |
-| M12 (sie) | 85 | 12 665 | 5 483 | 145 | **+7 037** | 29 105 |
+| M1 (wrz 2026) | 2 | 298 | 137 | 130 | **+31** | 31 |
+| M2 (paź) | 3 | 447 | 205 | 130 | **+112** | 143 |
+| M3 (lis) | 5 | 745 | 342 | 130 | **+273** | 416 |
+| M4 (gru) | 8 | 1 192 | 546 | 135 | **+511** | 927 |
+| M5 (sty 2027) | 12 | 1 788 | 820 | 135 | **+833** | 1 760 |
+| M6 (lut) | 18 | 2 682 | 1 229 | 140 | **+1 313** | 3 073 |
+| M7 (mar) | 25 | 3 725 | 1 708 | 140 | **+1 877** | 4 950 |
+| M8 (kwi) | 35 | 5 215 | 2 391 | 145 | **+2 679** | 7 629 |
+| M9 (maj) | 45 | 6 705 | 3 074 | 145 | **+3 486** | 11 115 |
+| M10 (cze) | 55 | 8 195 | 3 757 | 150 | **+4 288** | 15 403 |
+| M11 (lip) | 70 | 10 430 | 4 781 | 150 | **+5 499** | 20 902 |
+| M12 (sie) | 85 | 12 665 | 5 806 | 155 | **+6 704** | 27 606 |
 
 **Wyniki po 12 miesiącach:**
 - Przychód miesięczny: 12 665 PLN
-- Koszty miesięczne: 5 628 PLN
-- Przepływ netto miesięczny: +7 037 PLN
-- Przepływ skumulowany: +29 105 PLN
+- Koszty miesięczne: 5 961 PLN
+- Przepływ netto miesięczny: +6 704 PLN
+- Przepływ skumulowany: +27 606 PLN
 - **Break-even infrastruktury: od M1** (pozytywny przepływ od pierwszego miesiąca)
 
 **Wrażliwość marży:**
 
 | Scenariusz | Cena | Koszt/senior | Marża/senior | Marża % |
 |-----------|------|-------------|-------------|---------|
-| Bazowy (149 PLN, Flash TTS, avg telefony) | 149 | 64,50 | 84,50 | 57% |
-| Premium (149 PLN, Multilingual TTS) | 149 | 83,50 | 65,50 | 44% |
-| Tylko komórkowe (149 PLN, mobile EEA) | 149 | 72,50 | 76,50 | 51% |
-| Promocja -10% (134 PLN) | 134 | 64,50 | 69,50 | 52% |
-| Opiekun+ konkurencja (299 PLN) | 299 | 64,50 | 234,50 | 78% |
+| Bazowy (149 PLN, Sonnet 5, Flash TTS, avg telefony) | 149 | 68,30 | 80,70 | 54% |
+| Haiku zamiast Sonnet (149 PLN, Haiku 4.5) | 149 | 64,50 | 84,50 | 57% |
+| Premium (149 PLN, Multilingual TTS) | 149 | 87,30 | 61,70 | 41% |
+| Tylko komórkowe (149 PLN, mobile EEA) | 149 | 76,30 | 72,70 | 49% |
+| Promocja -10% (134 PLN) | 134 | 68,30 | 65,70 | 49% |
+| Opiekun+ konkurencja (299 PLN) | 299 | 68,30 | 230,70 | 77% |
 
 **Wnioski finansowe:**
 1. Model jest zyskowny od pierwszego seniora (bez kosztów zespołu)
-2. Marża 57% na każdym seniorze przy cenie rynkowej 149 PLN
-3. Główne koszty to telefonia (56% kosztów zmiennych) i TTS (30%)
-4. LLM koszt jest pomijalny (5% kosztów zmiennych) — można używać najwyższej jakości modeli zachodnich bez istotnego wpływu na marżę
-5. Skumulowany przepływ gotówki po 12 mies.: ~29 000 PLN (kapitał na decyzje kadrowe)
-6. Przy 85 seniorach miesięczny przepływ (+7 037 PLN) pokrywa 1 etat przy wynagrodzeniu ~7 000 PLN
+2. Marża 54% na każdym seniorze przy cenie rynkowej 149 PLN
+3. Główne koszty to telefonia (53% kosztów zmiennych) i TTS (28%)
+4. LLM koszt jest pomijalny (10% kosztów zmiennych) — można używać najwyższej jakości modeli zachodnich bez istotnego wpływu na marżę
+5. Skumulowany przepływ gotówki po 12 mies.: ~27 600 PLN (kapitał na decyzje kadrowe)
+6. Przy 85 seniorach miesięczny przepływ (+6 704 PLN) pokrywa 1 etat przy wynagrodzeniu ~7 000 PLN
 
 ---
 
@@ -332,26 +334,27 @@ Hermes to codzienny, automatyczny telefon wellness do seniora. Rozmowa trwa zazw
 
 ## Podsumowanie dla właściciela
 
-Hermes udowadnia, że codzienny, ciepły kontakt wellness dla seniorów jest możliwy w modelu w pełni zewnętrznym, przy zerowych kosztach kapitałowych. Model biznesowy jest zyskowny od pierwszego seniora — marża 57% przy cenie rynkowej 149 PLN.
+Hermes udowadnia, że codzienny, ciepły kontakt wellness dla seniorów jest możliwy w modelu w pełni zewnętrznym, przy zerowych kosztach kapitałowych. Model biznesowy jest zyskowny od pierwszego seniora — marża 54% przy cenie rynkowej 149 PLN.
 
 **Kluczowe liczby:**
-- Koszt infrastruktury: ~64,50 PLN/senior/mies.
+- Koszt infrastruktury: ~68,30 PLN/senior/mies.
 - Przychód: 149 PLN/senior/mies.
-- Marża: 84,50 PLN/senior/mies. (57%)
+- Marża: 80,70 PLN/senior/mies. (54%)
 - Break-even infrastruktury: od M1 (pozytywny przepływ od pierwszego seniora)
-- Skumulowany przepływ po 12 mies.: ~29 100 PLN (przy 85 seniorach)
+- Skumulowany przepływ po 12 mies.: ~27 600 PLN (przy 85 seniorach)
+- Info_quality: 7.3/10 (poprawa z 6.2 po przejściu na Claude Sonnet 5)
 
 **Kluczowe wyzwania:**
 1. **Compliance** — rejestracja firmy i DPA z OpenAI/Anthropic to absolutne must-have przed skalowaniem.
-2. **Jakość informacji** — health-checkin musi być poprawiony natychmiast (Dyrektywa Strategiczna z warunkiem obalenia: 14 dni).
-3. **Modele LLM** — rekomendacja: Claude Haiku 4.5 (Operator) + GPT-4o-mini (Supervisor). Koszt pomijalny (~3,30 PLN/senior), brak blokady mentalnej klientów, DPA dostępne.
+2. **Jakość informacji** — info_quality poprawione do 7.3 dzięki Claude Sonnet 5 (z 6.2). Cel: ≥7.5.
+3. **Modele LLM** — zatwierdzono: Claude Sonnet 5 (Operator) + GPT-4o-mini (Supervisor). Koszt ~7 PLN/senior, brak blokady mentalnej klientów, DPA dostępne.
 4. **Skala vs jakość** — utrzymać niską liczbę seniorów w Q3 (5–10), skupić się na poprawie info_quality, dopiero potem skalować.
 5. **Zespół** — decyzja o strukturze zatrudnienia odłożona. Przy 85 seniorach przepływ pokrywa 1 etat.
 
 Decyzje właściciela wymagane:
 - [ ] Rejestracja firmy (JDG czy sp. z o.o.?)
 - [ ] Kto data controllerem?
-- [ ] Zatwierdzenie modeli: Claude Haiku 4.5 + GPT-4o-mini?
+- [x] Zatwierdzenie modeli: Claude Sonnet 5 + GPT-4o-mini ✅
 - [ ] Struktura zatrudnienia (po analizie przepływu gotówki)
 - [ ] Czy uruchomić płatne reklamy w Q2 2027?
 
